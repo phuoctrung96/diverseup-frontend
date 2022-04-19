@@ -1,0 +1,23 @@
+.breadcrumbs {
+  padding-top: 30px;
+
+  .breadcrumb {
+    font-weight: 400;
+    color: var(--color-secondary-dark-gray);
+    line-height: 19px;
+
+    &:after {
+      content: url("../../../assets/images/icons/breadcrumb-arrow.svg");
+      padding: 0 12px;
+    }
+
+    &.breadcrumbActive {
+      font-weight: 600;
+      color: var(--color-primary-yellow);
+
+      &:after {
+        content: none;
+      }
+    }
+  }
+}

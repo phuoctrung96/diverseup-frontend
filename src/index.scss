@@ -1,0 +1,58 @@
+@import "styles/main";
+
+html { height: 100%; overflow: auto; }
+body { height: 100%; }
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  font-size: $indent-font-size;
+  line-height: 19px;
+  color: var(--color-primary-black);
+}
+
+.section {
+  max-width: 1140px;
+  margin: 0 auto;
+
+  @include small-desktop-min() {
+    padding: 0 20px;
+  }
+
+  &__block {
+    padding-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &:first-child {
+      padding-top: 120px;
+
+      &.no-top-padding {
+        padding-top: 0;
+      }
+    }
+
+    &--title {
+      text-align: center;
+      padding-bottom: 40px;
+
+      h1 {
+        padding-bottom: 15px;
+      }
+
+      span {
+        color: var(--color-secondary-dark-gray);
+        letter-spacing: 0.2px;
+      }
+    }
+  }
+}
+
+.flexWrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  &--center {
+    justify-content: center;
+  }
+}

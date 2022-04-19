@@ -1,0 +1,52 @@
+.button {
+  color: var(--color-primary-white);
+  background-color: var(--color-primary-yellow);
+  padding: 16px 32px;
+  font-weight: 700;
+  border-radius: 8px;
+  width: max-content;
+  height: max-content;
+
+  &:hover {
+    filter: drop-shadow(0px 2px 20px rgba(255, 163, 37, 0.3));
+  }
+
+  &.footer {
+    padding: 11px 20px;
+  }
+
+  &.red {
+    background-color: #C4214A;
+
+    &:hover {
+      filter: drop-shadow(0px 2px 20px rgba(196, 33, 74, 0.3));
+    }
+  }
+
+  &.withPlus {
+    &:before {
+      content: url("../../../assets/images/icons/plus.svg");
+      width: 12px;
+      height: 12px;
+      margin-right: 6px;
+      font-weight: normal;
+    }
+  }
+
+  &.link {
+    padding: 0;
+    background-color: transparent;
+    color: var(--color-secondary-accent);
+    display: flex;
+
+    &:after {
+      content: url("../../../assets/images/icons/arrow.svg");
+      margin-left: 10px;
+      padding-top: 2px;
+    }
+  }
+  &.auth {
+    padding: 12px 60px;
+    margin-bottom: 16px;
+  }
+}

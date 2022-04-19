@@ -1,0 +1,113 @@
+.form {
+  .form-group {
+    width: 100%;
+    position: relative;
+
+    .label {
+      display: block;
+      font-size: 12px;
+      line-height: 15px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--color-primary-black);
+    }
+
+    .validation-error {
+      display: none;
+      margin-top: -17px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-validation-error);
+      font-feature-settings: 'pnum' on, 'lnum' on;
+
+      & ~ .validation-error {
+        margin: 0;
+      }
+    }
+
+    .input {
+      width: 100%;
+      border: 1px solid;
+      border-color: var(--color-secondary-light-gray);
+      box-sizing: border-box;
+      border-radius: 8px;
+      background: var(--color-secondary-extra-light-gray);
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-primary-black);
+      line-height: 22px;
+      margin-bottom: 22px;
+      position: relative;
+      display: block;
+
+      &::placeholder {
+        font-size: 14px;
+        color: var(--color-secondary-dark-gray);
+      }
+
+      &.field-invalid {
+        border-color: var(--color-validation-error);
+
+        & ~ .validation-error {
+          display: block;
+        }
+      }
+
+      & ~ .eye-icon {
+        position: absolute;
+        right: 16px;
+        top: 57%;
+        transform: translateY(-50%);
+        cursor: pointer;
+
+        &:before {
+          content: url("../../assets/images/icons/eye-invisible.svg");
+          width: 20px;
+          height: 20px;
+        }
+
+        &.show {
+          &:before {
+            content: url("../../assets/images/icons/eye-visible.svg");
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  &.horizontal {
+    display: flex;
+
+    .form-group {
+      &:before {
+        content: "";
+        position: absolute;
+        top: 25%;
+        right: 0;
+        height: 50%;
+        border-right: 1px solid var(--color-secondary-light-gray);
+        transform: rotate(180deg);
+        z-index: 99;
+      }
+
+      .input {
+        border-radius: 0;
+        border: none;
+        margin: 0;
+      }
+
+      &:first-child {
+        .input {
+          border-radius: 8px 0 0 8px;
+        }
+      }
+    }
+
+    button {
+      border-radius: 0 8px 8px 0;
+    }
+  }
+}

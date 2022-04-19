@@ -1,0 +1,9 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .Layout {
+    flex: 1 0 auto;
+  }
+}

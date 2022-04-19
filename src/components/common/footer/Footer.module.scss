@@ -1,0 +1,101 @@
+.footer {
+  flex-shrink: 0;
+
+  .mainFooter {
+    background-color: var(--color-secondary-extra-light-gray);
+    padding: 40px 0;
+
+    .mainFooterWrapper {
+      display: flex;
+      justify-content: space-between;
+
+      .leftPart {
+        display: flex;
+        flex-direction: column;
+
+        .socialLinks {
+          display: flex;
+          padding-top: 30px;
+
+          .socialLink {
+            width: 35px;
+            height: 35px;
+            margin-right: 15px;
+
+            &.facebook {
+              background: url("../../../assets/images/icons/facebook.svg") no-repeat;
+            }
+
+            &.linkedin {
+              background: url("../../../assets/images/icons/linkedin.svg") no-repeat;
+            }
+
+            &.twitter {
+              background: url("../../../assets/images/icons/twitter.svg") no-repeat;
+            }
+          }
+        }
+      }
+
+      .rightPart {
+        padding-top: 22px;
+
+        .footerMenu {
+          display: flex;
+          font-weight: 600;
+
+          li {
+            padding-right: 45px;
+
+            &:last-child {
+              padding-right: 0;
+            }
+
+            .title {
+              padding-bottom: 5px;
+            }
+          }
+
+          .footerSubMenu {
+            font-weight: normal;
+
+            li {
+              padding-right: 0;
+              padding-top: 15px;
+              font-size: 14px;
+              display: flex;
+              align-items: center;
+
+              &.withIcon:before {
+                content: '';
+                width: 16px;
+                height: 16px;
+                margin-right: 5px;
+              }
+
+              &.phone:before {
+                content: url("../../../assets/images/icons/phone-receiver-silhouette.svg");
+              }
+
+              &.mail:before {
+                content: url("../../../assets/images/icons/email.svg");
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .subFooter {
+    background-color: var(--color-secondary-light-gray);
+    display: flex;
+    justify-content: center;
+    color: var(--color-secondary-dark-gray);
+    font-size: 0.75rem;
+
+    span {
+      padding: 8px 0;
+    }
+  }
+}

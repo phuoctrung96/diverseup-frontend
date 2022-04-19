@@ -1,0 +1,64 @@
+.title {
+  margin-bottom: 20px;
+}
+
+.text {
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.social {
+  margin-bottom: 30px;
+
+  .linkedin, .gmail {
+    cursor: pointer;
+  }
+
+  .linkedin {
+    margin-right: 13px;
+  }
+}
+
+.form {
+  width: 100%;
+
+  .label {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .forgot {
+    margin-bottom: 24px;
+    margin-right: 0;
+    padding: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-primary-black);
+    line-height: 16px;
+    border-bottom: 1px solid var(--color-primary-black);
+    cursor: pointer;
+  }
+
+}
+
+.variant {
+  color: var(--color-secondary-dark-gray);
+  font-size: 14px;
+  line-height: 22px;
+
+  .selectLogin {
+    margin-left: 8px;
+    padding: 0;
+    color: #171717;
+    font-weight: 600;
+    line-height: 16px;
+    border-bottom: 1px solid var(--color-primary-black);
+  }
+}

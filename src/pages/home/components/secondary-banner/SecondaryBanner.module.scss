@@ -1,0 +1,35 @@
+.bannerWrapper {
+  display: flex;
+
+  .bannerImage {
+    width: 100%;
+    background: url("../../../../assets/images/review-banner.jpg") center center;
+    background-size: cover;
+  }
+
+  .infoWrapper {
+    width: 100%;
+    background-color: var(--color-secondary-extra-light-gray);
+
+    .infoContent {
+      padding: 50px;
+      line-height: 32px;
+
+      .headerText {
+        color: var(--color-secondary-dark-gray);
+        font-size: 14px;
+        padding-bottom: 10px;
+      }
+
+      .mainText {
+        font-weight: 700;
+        font-size: 24px;
+      }
+
+      .description {
+        font-weight: 400;
+        padding: 20px 0 30px 0;
+      }
+    }
+  }
+}
