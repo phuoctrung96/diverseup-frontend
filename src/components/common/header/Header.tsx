@@ -6,37 +6,36 @@ import { INavLink } from 'interfaces';
 import AppLogo from 'components/shared/logo/Logo';
 import SearchForm from 'components/shared/search-form/SearchForm';
 
-interface IHeader {
+interface IHeaderProps {
   showSearch: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>
+  setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Header: FC<IHeader> = ({showSearch, setShowModal}) => {
-
+export const Header: FC<IHeaderProps> = ({ showSearch, setShowModal }) => {
   return (
     <header className={styles.header}>
       <div className="section">
         <div className={styles.headerWrapper}>
           <Link to={ROUTE_ROOT}>
-            <AppLogo width={128} height={38}/>
+            <AppLogo width={128} height={38} />
           </Link>
           <div className={styles.rightPart}>
             <nav className={styles.headerMenu}>
               <ul>
-                {
-                  NAV_LINKS.map((link: INavLink) => {
-                    return (
-                      <li key={link.id}>
-                        <NavLink
-                          className={({isActive}) => {
-                            return isActive ? styles.active : '';
-                          }}
-                          to={link.link}>{link.label}
-                        </NavLink>
-                      </li>
-                    );
-                  })
-                }
+                {NAV_LINKS.map((link: INavLink) => {
+                  return (
+                    <li key={link.id}>
+                      <NavLink
+                        className={({ isActive }) => {
+                          return isActive ? styles.active : '';
+                        }}
+                        to={link.link}
+                      >
+                        {link.label}
+                      </NavLink>
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
             <button
@@ -49,12 +48,11 @@ export const Header: FC<IHeader> = ({showSearch, setShowModal}) => {
           </div>
         </div>
       </div>
-      {
-        showSearch &&
+      {showSearch && (
         <div className={styles.searchForm}>
-          <SearchForm/>
+          <SearchForm />
         </div>
-      }
+      )}
     </header>
   );
 };

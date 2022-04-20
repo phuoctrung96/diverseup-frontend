@@ -23,15 +23,15 @@
             margin-right: 15px;
 
             &.facebook {
-              background: url("../../../assets/images/icons/facebook.svg") no-repeat;
+              background: url('../../../assets/images/icons/facebook.svg') no-repeat;
             }
 
             &.linkedin {
-              background: url("../../../assets/images/icons/linkedin.svg") no-repeat;
+              background: url('../../../assets/images/icons/linkedin.svg') no-repeat;
             }
 
             &.twitter {
-              background: url("../../../assets/images/icons/twitter.svg") no-repeat;
+              background: url('../../../assets/images/icons/twitter.svg') no-repeat;
             }
           }
         }
@@ -74,11 +74,11 @@
               }
 
               &.phone:before {
-                content: url("../../../assets/images/icons/phone-receiver-silhouette.svg");
+                content: url('../../../assets/images/icons/phone-receiver-silhouette.svg');
               }
 
               &.mail:before {
-                content: url("../../../assets/images/icons/email.svg");
+                content: url('../../../assets/images/icons/email.svg');
               }
             }
           }

@@ -1,6 +1,6 @@
 .bgImage {
   width: 100%;
-  background: url("../../assets/images/employer-bg.jpg") center center;
+  background: url('../../assets/images/employer-bg.jpg') center center;
   height: calc(100vh - 80px);
   background-size: cover;
   color: var(--color-primary-white);
@@ -68,11 +68,11 @@
           }
 
           &.infoPhone:before {
-            content: url("../../assets/images/icons/phone-receiver-yellow.svg");
+            content: url('../../assets/images/icons/phone-receiver-yellow.svg');
           }
 
           &.infoEmail:before {
-            content: url("../../assets/images/icons/email-yellow.svg");
+            content: url('../../assets/images/icons/email-yellow.svg');
           }
         }
       }

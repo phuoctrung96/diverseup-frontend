@@ -5,31 +5,21 @@ import Button from 'components/shared/button/Button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 export const SearchForm: FC = () => {
-	const { register, handleSubmit } = useForm<any>();
+  const { register, handleSubmit } = useForm<any>();
 
-	const onSubmit: SubmitHandler<any> = data => {
-		alert(JSON.stringify(data));
-	};
+  const onSubmit: SubmitHandler<any> = (data) => {
+    alert(JSON.stringify(data));
+  };
 
-	return (
-		<div className={styles.searchFormWrapper}>
-			<form className={'form horizontal'} onSubmit={handleSubmit(onSubmit)}>
-				<Input
-					label="companyName"
-					type={'text'}
-					placeholder={'Company Name'}
-					register={register}
-				/>
-				<Input
-					label="location"
-					type={'text'}
-					placeholder={'Location'}
-					register={register}
-				/>
-				<Button text={'Search'} />
-			</form>
-		</div>
-	);
+  return (
+    <div className={styles.searchFormWrapper}>
+      <form className={'form horizontal'} onSubmit={handleSubmit(onSubmit)}>
+        <Input label="companyName" type={'text'} placeholder={'Company Name'} register={register} />
+        <Input label="location" type={'text'} placeholder={'Location'} register={register} />
+        <Button text={'Search'} />
+      </form>
+    </div>
+  );
 };
 
 export default SearchForm;

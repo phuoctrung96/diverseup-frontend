@@ -1,0 +1,62 @@
+.scaleWrapper {
+  display: flex;
+
+  .circleContent {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+
+    &:last-child {
+      .circle {
+        margin-right: 0;
+
+        &:after {
+          content: unset;
+        }
+      }
+    }
+
+    .circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--color-primary-yellow);
+      position: relative;
+      margin: 0 10px;
+
+      &.clickable {
+        cursor: pointer;
+      }
+
+      .circleNumber {
+        font-weight: 700;
+        font-size: 18px;
+        position: absolute;
+        top: 25%;
+        left: 35%;
+      }
+
+      &.selected {
+        background-color: var(--color-primary-yellow);
+      }
+
+      &:after {
+        content: '';
+        height: 1px;
+        width: 20px;
+        position: absolute;
+        background-color: var(--color-primary-yellow);
+        right: -55%;
+        top: 50%;
+      }
+    }
+
+    .circleDescription {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 21px;
+      padding-top: 10px;
+    }
+  }
+}

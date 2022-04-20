@@ -1,4 +1,4 @@
-@import "src/styles/utilities/mixins";
+@import 'src/styles/utilities/mixins';
 
 .checkbox-group {
   display: flex;
@@ -41,7 +41,7 @@
     &.checked {
       + .checkbox--label {
         &:before {
-          content: url("../../assets/images/icons/selected.svg");
+          content: url('../../assets/images/icons/selected.svg');
           border: 1px solid var(--color-primary-yellow);
           padding: 3px;
 

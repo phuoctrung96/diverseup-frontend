@@ -1,0 +1,48 @@
+.ratingWrapper {
+  display: flex;
+  font-size: 14px;
+
+  .star {
+    height: 22px;
+    position: relative;
+    width: 24px;
+
+    &:before {
+      background-image: url('../../../assets/images/icons/star.svg') !important;
+      background-repeat: no-repeat;
+      bottom: 0;
+      content: '';
+      display: block;
+      background-size: 24px;
+      height: 24px;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 24px;
+    }
+
+    > span {
+      display: block;
+      text-indent: -10000px;
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      overflow: hidden;
+
+      &:before {
+        background-image: url('../../../assets/images/icons/star-filled.svg') !important;
+        background-repeat: no-repeat;
+        background-size: 24px;
+        bottom: 0;
+        content: '';
+        display: block;
+        height: 24px;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
+  }
+}

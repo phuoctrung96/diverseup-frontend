@@ -1,13 +1,25 @@
-@import "styles/main";
+@import 'styles/main';
 
-html { height: 100%; overflow: auto; }
-body { height: 100%; }
+html {
+  height: 100%;
+  overflow: auto;
+}
+body {
+  height: 100%;
+}
 
-html, body {
+html,
+body {
   font-family: 'Inter', sans-serif;
   font-size: $indent-font-size;
   line-height: 19px;
   color: var(--color-primary-black);
+
+  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
+  font-smooth: always;
+
+  font-smoothing: antialiased;
 }
 
 .section {
@@ -30,19 +42,9 @@ html, body {
       &.no-top-padding {
         padding-top: 0;
       }
-    }
 
-    &--title {
-      text-align: center;
-      padding-bottom: 40px;
-
-      h1 {
-        padding-bottom: 15px;
-      }
-
-      span {
-        color: var(--color-secondary-dark-gray);
-        letter-spacing: 0.2px;
+      &.no-bottom-padding {
+        padding-bottom: 0;
       }
     }
   }

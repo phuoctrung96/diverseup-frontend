@@ -1,0 +1,24 @@
+.infoCardRating {
+  display: flex;
+  font-weight: 500;
+  margin-bottom: 20px;
+  flex: 0 0 100%;
+  align-items: center;
+
+  &.editable {
+    font-weight: 700;
+    font-size: 18px;
+
+    button {
+      margin-left: 20px;
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .question {
+    padding-right: 20px;
+  }
+}

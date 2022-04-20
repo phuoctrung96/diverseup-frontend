@@ -34,7 +34,8 @@
     }
   }
 
-  .next, .previous {
+  .next,
+  .previous {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -60,14 +61,14 @@
 
   .next {
     &:before {
-      content: url("../../assets/images/icons/pagination-arrow.svg");
+      content: url('../../assets/images/icons/pagination-arrow.svg');
       right: 0;
     }
   }
 
   .previous {
     &:before {
-      content: url("../../assets/images/icons/pagination-arrow.svg");
+      content: url('../../assets/images/icons/pagination-arrow.svg');
       transform: rotate(180deg);
     }
   }

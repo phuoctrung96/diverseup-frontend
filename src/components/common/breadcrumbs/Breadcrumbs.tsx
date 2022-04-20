@@ -5,28 +5,28 @@ import ROUTES from 'routes';
 import styles from './Breadcrumbs.module.scss';
 
 export const Breadcrumbs: FC = () => {
-	const breadcrumbs = useBreadcrumbs(ROUTES);
-	const location = useLocation();
+  const breadcrumbs = useBreadcrumbs(ROUTES);
+  const location = useLocation();
 
-	return (
-		<div className={`${breadcrumbs?.length > 0 && styles.breadcrumbs} section`}>
-			{
-				breadcrumbs?.length > 0 && <span className={styles.breadcrumb}><Link to={'/'}>Home Page</Link></span>
-			}
-			{
-				breadcrumbs.map(({
-					match, 
-					breadcrumb,
-
-				}) => (
-					<span
-						className={`${styles.breadcrumb} ${location.pathname === match.pathname ? styles.breadcrumbActive : undefined}`}
-						key={match.pathname}>
-						<Link to={match.pathname}>{ breadcrumb }</Link>
-					</span>
-				))}
-		</div>
-	);
+  return (
+    <div className={`${breadcrumbs?.length > 0 && styles.breadcrumbs} section`}>
+      {breadcrumbs?.length > 0 && (
+        <span className={styles.breadcrumb}>
+          <Link to={'/'}>Home Page</Link>
+        </span>
+      )}
+      {breadcrumbs.map(({ match, breadcrumb }) => (
+        <span
+          className={`${styles.breadcrumb} ${
+            location.pathname === match.pathname ? styles.breadcrumbActive : undefined
+          }`}
+          key={match.pathname}
+        >
+          <Link to={match.pathname}>{breadcrumb}</Link>
+        </span>
+      ))}
+    </div>
+  );
 };
 
 export default Breadcrumbs;

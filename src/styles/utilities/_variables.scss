@@ -1,32 +1,33 @@
 //colors
 :root {
   //primary-colors
-  --color-primary-yellow: #FFA425;
+  --color-primary-yellow: #ffa425;
   --color-primary-black: #171717;
-  --color-primary-white: #FFF;
+  --color-primary-white: #fff;
   //secondary-colors
-  --color-secondary-accent: #C4214A;
+  --color-secondary-accent: #c4214a;
   --color-secondary-dark-gray: #838383;
-  --color-secondary-light-gray: #DBDBDB;
-  --color-secondary-extra-light-gray: #F9F9F9;
+  --color-secondary-light-gray: #dbdbdb;
+  --color-secondary-extra-light-gray: #f9f9f9;
 
-  --color-validation-error: #DA0000;
+  --color-validation-error: #da0000;
+
+  --color-green-recommended: #96d25a;
+  --color-green-recommended-to-friends: #79b140;
 }
-
 
 //variables
 $indent-font-size: 16px;
 
-$MAX_LIMIT_WIDTH: "1366px";
-$MAX_WIDTH_EXTRA_SMALL: "575.98px";
-$MAX_WIDTH_SMALL: "767.98px";
-$MAX_WIDTH_MEDIUM: "991.98px";
-$MAX_WIDTH_LARGE: "1199.98px";
-$MAX_WIDTH_X_LARGE: "1366.98px";
+$MAX_LIMIT_WIDTH: '1366px';
+$MAX_WIDTH_EXTRA_SMALL: '575.98px';
+$MAX_WIDTH_SMALL: '767.98px';
+$MAX_WIDTH_MEDIUM: '991.98px';
+$MAX_WIDTH_LARGE: '1199.98px';
+$MAX_WIDTH_X_LARGE: '1366.98px';
 
-$MIN_WIDTH_EXTRA_SMALL: "576px";
-$MIN_WIDTH_SMALL: "768px";
-$MIN_WIDTH_MEDIUM: "992px";
-$MIN_WIDTH_LARGE: "1200px";
-$MIN_WIDTH_X_LARGE: "1367px";
-
+$MIN_WIDTH_EXTRA_SMALL: '576px';
+$MIN_WIDTH_SMALL: '768px';
+$MIN_WIDTH_MEDIUM: '992px';
+$MIN_WIDTH_LARGE: '1200px';
+$MIN_WIDTH_X_LARGE: '1367px';

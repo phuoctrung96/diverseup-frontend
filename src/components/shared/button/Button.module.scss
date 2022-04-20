@@ -6,6 +6,8 @@
   border-radius: 8px;
   width: max-content;
   height: max-content;
+  line-height: normal;
+  min-width: 170px;
 
   &:hover {
     filter: drop-shadow(0px 2px 20px rgba(255, 163, 37, 0.3));
@@ -16,7 +18,7 @@
   }
 
   &.red {
-    background-color: #C4214A;
+    background-color: #c4214a;
 
     &:hover {
       filter: drop-shadow(0px 2px 20px rgba(196, 33, 74, 0.3));
@@ -25,7 +27,7 @@
 
   &.withPlus {
     &:before {
-      content: url("../../../assets/images/icons/plus.svg");
+      content: url('../../../assets/images/icons/plus.svg');
       width: 12px;
       height: 12px;
       margin-right: 6px;
@@ -40,13 +42,63 @@
     display: flex;
 
     &:after {
-      content: url("../../../assets/images/icons/arrow.svg");
+      content: url('../../../assets/images/icons/arrow.svg');
       margin-left: 10px;
       padding-top: 2px;
     }
   }
+
   &.auth {
-    padding: 12px 60px;
     margin-bottom: 16px;
+    margin-top: 24px;
+  }
+
+  &.linkBtn {
+    background-color: white;
+    border-radius: 0;
+    margin-right: 0;
+    padding: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-primary-black);
+    line-height: 16px;
+    border-bottom: 1px solid var(--color-primary-black);
+    cursor: pointer;
+    min-width: auto;
+
+    &:hover {
+      filter: none;
+    }
+  }
+
+  &.btnNA {
+    padding: 2px 10px;
+    background-color: var(--color-secondary-light-gray);
+    border-radius: 4px;
+    color: var(--color-secondary-dark-gray);
+    font-size: 14px;
+    line-height: 21px;
+    min-width: auto;
+
+    &.active {
+      color: var(--color-primary-black);
+      background-color: var(--color-primary-yellow);
+    }
+
+    &:hover {
+      filter: none;
+    }
+  }
+
+  &.white {
+    border: 1px solid var(--color-secondary-dark-gray);
+    color: var(--color-secondary-dark-gray);
+    background-color: var(--color-primary-white);
+    padding: 11px 18px;
+    min-width: auto;
+
+    &:hover {
+      filter: none;
+    }
   }
 }

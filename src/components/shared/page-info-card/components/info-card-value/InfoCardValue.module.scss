@@ -1,0 +1,36 @@
+.valueWrapper {
+  display: flex;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  flex: 1 1 50%;
+  padding-right: 30px;
+  margin-bottom: 10px;
+
+  &:nth-last-of-type(-n + 2) {
+    margin-bottom: 0;
+  }
+
+  .valueLabel {
+    flex: 0 0 40%;
+    font-weight: 500;
+    padding-right: 20px;
+  }
+
+  .valueText {
+    font-weight: 400;
+    color: var(--color-secondary-dark-gray);
+  }
+
+  &.fullWidth {
+    flex: 1 1 100%;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .valueLabel {
+      flex: 0 0 15%;
+    }
+  }
+}
