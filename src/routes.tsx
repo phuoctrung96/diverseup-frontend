@@ -17,6 +17,8 @@ import Employer from 'pages/employer/Employer';
 import AboutUs from 'pages/about-us/AboutUs';
 import CompanyInfo from 'pages/company-rating/sub-pages/company-info/CompanyInfo';
 import CompanyList from 'pages/company-rating/sub-pages/company-list/CompanyList';
+import StepOne from 'components/common/form/StepOne';
+import StepTwo from 'components/common/form/StepTwo';
 
 export const ROUTES: BreadcrumbsRoute[] = [
   { path: ROUTE_ROOT, element: <HomePage />, breadcrumb: null },
@@ -30,6 +32,7 @@ export const ROUTES: BreadcrumbsRoute[] = [
     ],
   },
   { path: ROUTE_JOB_PLACEMENT, element: <JobPlacement />, breadcrumb: 'Job Placement' },
+
   { path: ROUTE_BLOG, element: <Blog />, breadcrumb: 'Blog' },
   { path: ROUTE_EMPLOYER, element: <Employer />, breadcrumb: null },
   { path: ROUTE_ABOUT, element: <AboutUs />, breadcrumb: 'About us' },
