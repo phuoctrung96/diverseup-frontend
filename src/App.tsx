@@ -59,13 +59,13 @@ function App() {
             <Route path={''} element={<CompanyList />} />
             <Route path={':id'} element={<CompanyInfo />} />
           </Route>
-          <Route path={ROUTE_JOB_PLACEMENT} element={<JobPlacement />}></Route>
-          <Route path={ROUTE_JOB_PLACEMENT + '/step1'} element={<JPStepOne />}></Route>
-          <Route path={ROUTE_JOB_PLACEMENT + '/step2'} element={<JPStepTwo />}></Route>
-          <Route path={ROUTE_JOB_PLACEMENT + '/step3'} element={<JPStepThree />}></Route>
-          <Route path={ROUTE_JOB_PLACEMENT + '/step4'} element={<JPStepFour />}></Route>
-          <Route path={ROUTE_JOB_PLACEMENT + '/step5'} element={<JPStepFive />}></Route>
-
+          <Route path={ROUTE_JOB_PLACEMENT} element={<JobPlacement />}>
+            <Route index element={<JPStepOne />}></Route>
+            <Route path={'step2'} element={<JPStepTwo />}></Route>
+            <Route path={'step3'} element={<JPStepThree />}></Route>
+            <Route path={'step4'} element={<JPStepFour />}></Route>
+            <Route path={'step5'} element={<JPStepFive />}></Route>
+          </Route>
           <Route path={ROUTE_BLOG} element={<Blog />} />
           <Route path={ROUTE_EMPLOYER} element={<Employer />} />
           <Route path={ROUTE_ABOUT} element={<AboutUs />} />
