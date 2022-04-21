@@ -59,7 +59,7 @@
     max-width: 600px;
     margin: 0 auto;
 
-    $t-align-cen : center;
+    $t-align-cen: center;
     h2 {
       text-align: center;
     }
@@ -363,9 +363,9 @@
       color: #939393;
       display: inline-block;
       position: relative;
-  }
-  span:after {
-      content: "";
+    }
+    span:after {
+      content: '';
       position: absolute;
       top: 50%;
       left: 100%;
@@ -376,11 +376,11 @@
       margin-left: 76px;
 
       @media screen and (max-width: 767px) {
-          width: 30px;
-          margin-left: 11px;
+        width: 30px;
+        margin-left: 11px;
       }
-  }
-  h6 {
+    }
+    h6 {
       padding: 0 1.5rem;
       font-size: 12px;
       font-weight: 600;
@@ -390,7 +390,7 @@
       @media screen and (max-width: 767px) {
         display: none;
       }
-  }
+    }
   }
   li.active {
     span {

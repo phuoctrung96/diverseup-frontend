@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 
 export const StepThree: FC = () => {
   return (
-
     <div className="ls-multi-form">
       <div className="login-form">
-      <Auth />
+        <Auth />
       </div>
     </div>
   );
