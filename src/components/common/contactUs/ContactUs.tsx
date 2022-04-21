@@ -8,16 +8,15 @@ import style from './ContactUs.module.scss';
 
 interface IContactUs {
   showContactUs: boolean;
-  setShowContactUs: Dispatch<SetStateAction<boolean>>
+  setShowContactUs: Dispatch<SetStateAction<boolean>>;
 }
 
-const ContactUs: FC<IContactUs> = ({showContactUs, setShowContactUs}) => {
+const ContactUs: FC<IContactUs> = ({ showContactUs, setShowContactUs }) => {
+  const { register, handleSubmit } = useForm<any>();
 
-  const {register, handleSubmit} = useForm<any>();
-
-  const onSubmit: SubmitHandler<any> = data => {
+  const onSubmit: SubmitHandler<any> = (data) => {
     alert('contact us' + JSON.stringify(data));
-    setShowContactUs(false)
+    setShowContactUs(false);
   };
 
   return (
@@ -27,20 +26,17 @@ const ContactUs: FC<IContactUs> = ({showContactUs, setShowContactUs}) => {
         If you want to share something with us, please contact us via:
       </span>
       <div className={style.contacts}>
-        <a href="tel:+650-397-1446" className={style.phone}>650-397-1446</a>
-        <a href="mailto:info@diverseup.com" className={style.mail}>info@diverseup.com</a>
+        <a href="tel:+650-397-1446" className={style.phone}>
+          650-397-1446
+        </a>
+        <a href="mailto:info@diverseup.com" className={style.mail}>
+          info@diverseup.com
+        </a>
       </div>
-      <span className={[auth.variant, style.subtext].join(' ')}>
-        or fill in this Contact form:
-      </span>
+      <span className={[auth.variant, style.subtext].join(' ')}>or fill in this Contact form:</span>
       <form className={`form ${auth.form}`} onSubmit={handleSubmit(onSubmit)}>
         <label className={auth.label}>Name</label>
-        <Input
-          label="name"
-          register={register}
-          type="text"
-          placeholder="Enter your name"
-        />
+        <Input label="name" register={register} type="text" placeholder="Enter your name" />
         <label className={auth.label}>E-mail address</label>
         <Input
           label="email"
@@ -49,26 +45,17 @@ const ContactUs: FC<IContactUs> = ({showContactUs, setShowContactUs}) => {
           placeholder="Enter your e-mail address"
         />
         <label className={auth.label}>Subject</label>
-        <Input
-          label="subject"
-          register={register}
-          type="text"
-          placeholder="Enter e-mail subject"
-        />
+        <Input label="subject" register={register} type="text" placeholder="Enter e-mail subject" />
         <div className="form-group">
           <label className={auth.label}>Message</label>
           <textarea
-
             className={`input ${style.textarea}`}
             {...register('message')}
             placeholder="Enter your message"
           />
         </div>
 
-        <Button
-          text="Send"
-          classList={['auth']}
-        />
+        <Button text="Send" classList={['auth']} />
       </form>
     </ModalWindow>
   );

@@ -9,20 +9,21 @@
     margin-right: 46px;
   }
 
-  .phone, .mail {
+  .phone,
+  .mail {
     position: relative;
   }
 
   .phone:before {
     position: absolute;
     left: -24px;
-    content: url("../../../assets/images/icons/phone16x16.svg");
+    content: url('../../../assets/images/icons/phone16x16.svg');
   }
 
   .mail:before {
     position: absolute;
     left: -24px;
-    content: url("../../../assets/images/icons/email16x16.svg");
+    content: url('../../../assets/images/icons/email16x16.svg');
   }
 }
 
