@@ -6,12 +6,11 @@ import { matchRoutes, Route, Routes, useLocation } from 'react-router-dom';
 import HomePage from 'pages/home/Home';
 import CompanyRating from 'pages/company-rating/CompanyRating';
 import JobPlacement from 'pages/job-placement/JobPlacement';
-import JPStepOne from 'pages/job-placement/sub-page/StepOne';
-import JPStepTwo from 'pages/job-placement/sub-page/StepTwo';
-import JPStepThree from 'pages/job-placement/sub-page/StepThree';
-import JPStepFour from 'pages/job-placement/sub-page/StepFour';
-import JPStepFive from 'pages/job-placement/sub-page/StepFive';
-
+import JPStepOne from 'pages/job-placement/sub-pages/StepOne';
+import JPStepTwo from 'pages/job-placement/sub-pages/StepTwo';
+import JPStepThree from 'pages/job-placement/sub-pages/StepThree';
+import JPStepFour from 'pages/job-placement/sub-pages/StepFour';
+import JPStepFive from 'pages/job-placement/sub-pages/StepFive';
 import {
   ROUTE_ABOUT,
   ROUTE_BLOG,
@@ -60,11 +59,11 @@ function App() {
             <Route path={':id'} element={<CompanyInfo />} />
           </Route>
           <Route path={ROUTE_JOB_PLACEMENT} element={<JobPlacement />}>
-            <Route index element={<JPStepOne />}></Route>
-            <Route path={'step2'} element={<JPStepTwo />}></Route>
-            <Route path={'step3'} element={<JPStepThree />}></Route>
-            <Route path={'step4'} element={<JPStepFour />}></Route>
-            <Route path={'step5'} element={<JPStepFive />}></Route>
+            <Route index element={<JPStepOne />} />
+            <Route path={'step2'} element={<JPStepTwo />} />
+            <Route path={'step3'} element={<JPStepThree />} />
+            <Route path={'step4'} element={<JPStepFour />} />
+            <Route path={'step5'} element={<JPStepFive />} />
           </Route>
           <Route path={ROUTE_BLOG} element={<Blog />} />
           <Route path={ROUTE_EMPLOYER} element={<Employer />} />

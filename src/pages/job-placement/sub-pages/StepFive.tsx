@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import Button from 'components/shared/button/Button';
 
-export const StepFive: FC = () => {
+export const JPStepFive: FC = () => {
   return (
     <div className="ls-multi-form">
       <h3 className="ls-form-heading">Thanks for using diverseUp!</h3>
@@ -53,15 +53,11 @@ export const StepFive: FC = () => {
       </div>
 
       <div className="step-buttons">
-        <Link to={'/job-placement/step4'} className="btn outline-btn">
-          Skip
-        </Link>
-        <Link to={'/job-placement/step5'} className="btn filled-btn">
-          Recommend to friends
-        </Link>
+        <Button text={'Skip'} classList={['white']} />
+        <Button text={'Recommend to friends'} />
       </div>
     </div>
   );
 };
 
-export default StepFive;
+export default JPStepFive;
