@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { Path, UseFormRegister } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 
-type InputType = 'text' | 'password';
+type InputType = 'text' | 'password' | 'number';
 
 type InputProps = {
   label: Path<any>;
@@ -33,7 +33,7 @@ export const Input: FC<InputProps> = ({
   }, [showPass]);
 
   return (
-    <div className="form-group">
+    <div className={`form-group ${type === 'number' ? 'number' : ''}`}>
       {inputLabel && <label className="label">{inputLabel}</label>}
       <input
         className={`input ${errors && errors[label] && 'field-invalid'}`}

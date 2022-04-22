@@ -2,75 +2,53 @@ import React, { useEffect, useState } from 'react';
 import styles from './App.module.scss';
 import Header from './components/common/header/Header';
 import Footer from './components/common/footer/Footer';
-import { matchRoutes, Route, Routes, useLocation } from 'react-router-dom';
-import HomePage from 'pages/home/Home';
-import CompanyRating from 'pages/company-rating/CompanyRating';
-import JobPlacement from 'pages/job-placement/JobPlacement';
-import JPStepOne from 'pages/job-placement/sub-pages/StepOne';
-import JPStepTwo from 'pages/job-placement/sub-pages/StepTwo';
-import JPStepThree from 'pages/job-placement/sub-pages/StepThree';
-import JPStepFour from 'pages/job-placement/sub-pages/StepFour';
-import JPStepFive from 'pages/job-placement/sub-pages/StepFive';
-import {
-  ROUTE_ABOUT,
-  ROUTE_BLOG,
-  ROUTE_COMPANY_RATING,
-  ROUTE_EMPLOYER,
-  ROUTE_JOB_PLACEMENT,
-  ROUTE_ROOT,
-} from 'app-constants';
-import Blog from 'pages/blog/Blog';
-import Employer from 'pages/employer/Employer';
+import { matchRoutes, useLocation, useRoutes } from 'react-router-dom';
+import { ROUTE_BLOG, ROUTE_COMPANY_RATING, ROUTE_EMPLOYER } from 'app-constants';
 import Breadcrumbs from 'components/common/breadcrumbs/Breadcrumbs';
-import AboutUs from 'pages/about-us/AboutUs';
-import CompanyInfo from 'pages/company-rating/sub-pages/company-info/CompanyInfo';
-import CompanyList from 'pages/company-rating/sub-pages/company-list/CompanyList';
-import AuthModal from './components/common/AuthModal';
-import routes from 'routes';
+import routes, { ROUTES } from 'routes';
+import useBreadcrumbs from 'use-react-router-breadcrumbs';
+import ScrollToTop from 'ScrollToTop';
+
+function AppRoutes() {
+  return useRoutes(ROUTES);
+}
 
 function App() {
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [showFooter, setShowFooter] = useState<boolean>(true);
-  const [showModal, setShowModal] = useState<boolean>(false);
   const [showCompanyPageBanner, setShowCompanyPageBanner] = useState<boolean>(false);
+  const [showBlogPageBanner, setShowBlogPageBanner] = useState<boolean>(false);
 
   const location = useLocation();
+  const breadcrumbs = useBreadcrumbs(ROUTES);
 
   useEffect(() => {
     setShowFooter(location.pathname !== `/${ROUTE_EMPLOYER}`);
     setShowSearch(location.pathname.includes(ROUTE_COMPANY_RATING));
+    if (breadcrumbs.length > 1 && breadcrumbs[0].key === `/${ROUTE_BLOG}`) {
+      setShowBlogPageBanner(true);
+    } else {
+      setShowBlogPageBanner(false);
+    }
+
     setShowCompanyPageBanner(
       !!matchRoutes(routes, location)?.find(
-        (route) => location.pathname === `/${ROUTE_COMPANY_RATING}/${route.params.id}`
+        (route) => location.pathname === `/${ROUTE_COMPANY_RATING}/${route.params.slug}`
       )
     );
   }, [location]);
 
   return (
     <div className={styles.App}>
-      <Header showSearch={showSearch} setShowModal={setShowModal} />
+      <Header showSearch={showSearch} />
       <div className={styles.Layout}>
         {showCompanyPageBanner && <div className={styles.companyPageBanner} />}
+        {showBlogPageBanner && <div className={styles.blogPageBanner} />}
         <Breadcrumbs />
-        <Routes>
-          <Route path={ROUTE_ROOT} element={<HomePage />} />
-          <Route path={ROUTE_COMPANY_RATING} element={<CompanyRating />}>
-            <Route path={''} element={<CompanyList />} />
-            <Route path={':id'} element={<CompanyInfo />} />
-          </Route>
-          <Route path={ROUTE_JOB_PLACEMENT} element={<JobPlacement />}>
-            <Route index element={<JPStepOne />} />
-            <Route path={'step2'} element={<JPStepTwo />} />
-            <Route path={'step3'} element={<JPStepThree />} />
-            <Route path={'step4'} element={<JPStepFour />} />
-            <Route path={'step5'} element={<JPStepFive />} />
-          </Route>
-          <Route path={ROUTE_BLOG} element={<Blog />} />
-          <Route path={ROUTE_EMPLOYER} element={<Employer />} />
-          <Route path={ROUTE_ABOUT} element={<AboutUs />} />
-        </Routes>
+        <ScrollToTop>
+          <AppRoutes />
+        </ScrollToTop>
       </div>
-      <AuthModal visible={showModal} setVisible={setShowModal} />
       {showFooter && <Footer />}
     </div>
   );

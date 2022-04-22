@@ -1,0 +1,16 @@
+.wrapper {
+  position: relative;
+  margin-bottom: 60px;
+  padding-left: 30px;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 500;
+
+  &:before {
+    position: absolute;
+    left: 0;
+    content: '';
+    height: 100%;
+    border-left: 3px solid var(--color-primary-black);
+  }
+}

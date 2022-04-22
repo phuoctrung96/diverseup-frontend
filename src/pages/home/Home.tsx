@@ -4,8 +4,12 @@ import Cards from 'components/shared/cards/Cards';
 import { ICard } from 'interfaces/card';
 import SecondaryBanner from 'pages/home/components/secondary-banner/SecondaryBanner';
 import PageTitle from 'components/common/page-title/PageTitle';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_BLOG, ROUTE_COMPANY_RATING } from 'app-constants';
 
 export const HomePage: FC = () => {
+  const navigate = useNavigate();
+
   const cardsCompany: ICard[] = [
     {
       type: 'company',
@@ -73,7 +77,10 @@ export const HomePage: FC = () => {
             subTitle={'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.'}
             classList={['sectionTitle']}
           />
-          <Cards cards={cardsCompany} button={{ text: 'View more', onClick: () => void 0 }} />
+          <Cards
+            cards={cardsCompany}
+            button={{ text: 'View more', onClick: () => navigate(ROUTE_COMPANY_RATING) }}
+          />
         </div>
       </section>
       <SecondaryBanner />
@@ -84,7 +91,10 @@ export const HomePage: FC = () => {
             subTitle={'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.'}
             classList={['sectionTitle']}
           />
-          <Cards cards={cardsCard} button={{ text: 'View more', onClick: () => void 0 }} />
+          <Cards
+            cards={cardsCard}
+            button={{ text: 'View more', onClick: () => navigate(ROUTE_BLOG) }}
+          />
         </div>
       </section>
     </>

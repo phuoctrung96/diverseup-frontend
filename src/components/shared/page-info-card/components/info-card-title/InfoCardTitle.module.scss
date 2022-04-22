@@ -1,4 +1,31 @@
-.cardTitle {
+.cardTitleContent {
   flex: 1 1 100%;
-  margin-bottom: 20px;
+
+  &.withClear {
+    padding-bottom: 25px;
+
+    .cardTitleWrapper {
+      display: flex;
+
+      .cardTitle {
+        flex: none;
+        margin-right: 30px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .cardTitleWrapper {
+    .cardTitle {
+      flex: 1 1 100%;
+      margin-bottom: 20px;
+    }
+  }
+
+  .cardSubText {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--color-secondary-dark-gray);
+  }
 }

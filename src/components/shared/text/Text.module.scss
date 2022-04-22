@@ -1,0 +1,18 @@
+.wrapper {
+  h1 {
+    text-align: left;
+    font-size: 26px;
+    line-height: 31px;
+    font-weight: 600;
+  }
+
+  .text {
+    font-size: 18px;
+    line-height: 27px;
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-bottom: 60px;
+    }
+  }
+}

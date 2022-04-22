@@ -10,6 +10,7 @@ interface ISelect {
   required?: boolean;
   selectLabel?: string;
   errors?: FieldErrors<any>;
+  selectPlaceholder?: string;
 }
 
 export const FormSelect: FC<ISelect> = ({
@@ -19,6 +20,7 @@ export const FormSelect: FC<ISelect> = ({
   errors,
   name,
   required,
+  selectPlaceholder,
 }) => {
   return (
     <div className="form-group">
@@ -26,7 +28,14 @@ export const FormSelect: FC<ISelect> = ({
       <Controller
         name={name}
         control={control}
-        render={({ field }) => <Select {...field} styles={customStyles} options={options} />}
+        render={({ field }) => (
+          <Select
+            {...field}
+            styles={customStyles}
+            options={options}
+            placeholder={selectPlaceholder || ''}
+          />
+        )}
       />
       {errors && errors['filter']?.type === 'required' && (
         <span className={'validation-error'}>This field must be filled</span>
@@ -38,6 +47,10 @@ export const FormSelect: FC<ISelect> = ({
 export default FormSelect;
 
 const customStyles = {
+  container: (provided: any) => ({
+    ...provided,
+    width: '100%',
+  }),
   control: (provided: any, state: any) => ({
     ...provided,
     border: '1px solid var(--color-secondary-light-gray)',
@@ -93,12 +106,3 @@ const customStyles = {
     },
   }),
 };
-
-// border: 1px solid var(--color-secondary-gray);
-// box-sizing: border-box;
-// border-radius: 8px;
-// background: var(--color-secondary-extra-light-gray) !important;
-// font-size: 16px;
-// color: var(--color-primary-black);
-// line-height: 22px;
-// margin-bottom: 22px;

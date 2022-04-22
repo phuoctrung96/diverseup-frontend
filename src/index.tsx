@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { GlobalModal } from 'GlobalModal';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <GlobalModal>
+        <App />
+      </GlobalModal>
     </BrowserRouter>
   </React.StrictMode>
 );

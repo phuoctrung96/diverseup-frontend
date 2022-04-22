@@ -3,6 +3,12 @@
   flex-direction: column;
   padding-bottom: 9px;
 
+  &__label {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
   .radio-button {
     &.checked {
       .radio-button--label {

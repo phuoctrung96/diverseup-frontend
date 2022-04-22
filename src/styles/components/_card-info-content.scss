@@ -1,0 +1,48 @@
+.info-card-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px 0 0 0;
+
+  &.short-form {
+    .form {
+      max-width: 430px;
+    }
+  }
+
+  &.center {
+    align-items: center;
+  }
+
+  &.left {
+    .form {
+      max-width: 450px;
+
+      .textarea {
+        height: 250px;
+      }
+    }
+  }
+
+  .form {
+    padding: 20px 0;
+
+    &.no-padding {
+      padding: 0;
+    }
+  }
+
+  .buttons-group {
+    display: flex;
+    padding-top: 20px;
+
+    button {
+      margin-right: 14px;
+      height: auto;
+    }
+  }
+
+  .card-section {
+    padding: 20px 0;
+  }
+}

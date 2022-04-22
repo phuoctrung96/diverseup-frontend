@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 750px;
+
+  .item {
+    margin-bottom: 15px;
+    width: 50%;
+    img {
+      width: 360px;
+    }
+  }
+}
+.image {
+  margin-bottom: 15px;
+}
+.text {
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--color-grey-img-description);
+}

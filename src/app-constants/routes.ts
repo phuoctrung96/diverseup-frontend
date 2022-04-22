@@ -7,6 +7,7 @@ export const ROUTE_BLOG = 'blog';
 export const ROUTE_EMPLOYER = 'employer';
 export const ROUTE_ABOUT = 'about';
 export const ROUTE_TERMS_OF_USE = 'terms';
+export const ROUTE_ADD_RATING = 'add-rating';
 
 export const NAV_LINKS: INavLink[] = [
   { id: 1, link: `/${ROUTE_COMPANY_RATING}`, label: 'Company Rating' },

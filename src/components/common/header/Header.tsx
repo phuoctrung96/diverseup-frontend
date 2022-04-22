@@ -4,14 +4,16 @@ import { Link, NavLink } from 'react-router-dom';
 import { NAV_LINKS, ROUTE_ROOT } from 'app-constants';
 import { INavLink } from 'interfaces';
 import AppLogo from 'components/shared/logo/Logo';
-import SearchForm from 'components/shared/search-form/SearchForm';
+import SearchForm from 'components/shared/forms/search-form/SearchForm';
+import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
 
 interface IHeaderProps {
   showSearch: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Header: FC<IHeaderProps> = ({ showSearch, setShowModal }) => {
+export const Header: FC<IHeaderProps> = ({ showSearch }) => {
+  const { showModal } = useGlobalModalContext();
+
   return (
     <header className={styles.header}>
       <div className="section">
@@ -41,7 +43,7 @@ export const Header: FC<IHeaderProps> = ({ showSearch, setShowModal }) => {
             <button
               type="button"
               className={styles.signInButton}
-              onClick={() => setShowModal(true)}
+              onClick={() => showModal(MODAL_TYPES.SIGN_IN_MODAL)}
             >
               Sing in
             </button>

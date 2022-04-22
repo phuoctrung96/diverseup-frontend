@@ -12,11 +12,10 @@ import {
 import { Link } from 'react-router-dom';
 import { FooterNavLink } from 'interfaces';
 import Button from 'components/shared/button/Button';
-import ContactUs from '../contact-us/ContactUs';
-import ModalWindow from '../../shared/modal-window/ModalWindow';
+import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
 
 export const Footer: FC = () => {
-  const [showContactUs, setShowContactUs] = useState<boolean>(false);
+  const { hideModal, showModal } = useGlobalModalContext();
 
   const socialLinks = [
     { icon: 'facebook', link: '' },
@@ -25,8 +24,7 @@ export const Footer: FC = () => {
   ];
 
   const onContactsClick = () => {
-    setShowContactUs(true);
-    console.log('click');
+    showModal(MODAL_TYPES.CONTACT_US_MODAL);
   };
 
   const footerLinks: FooterNavLink[] = [
@@ -128,9 +126,6 @@ export const Footer: FC = () => {
       <div className={styles.subFooter}>
         <span>Copyright DiverseUp 2022. All Right Reserved. </span>
       </div>
-      <ModalWindow visible={showContactUs} setVisible={setShowContactUs}>
-        <ContactUs isHide={setShowContactUs} />
-      </ModalWindow>
     </footer>
   );
 };

@@ -3,10 +3,19 @@ import styles from './PageInfoCard.module.scss';
 
 interface IPageInfoCard {
   children: ReactNode;
+  classList?: string[];
 }
 
-export const PageInfoCard: FC<IPageInfoCard> = ({ children }) => {
-  return <div className={styles.pageInfoCardWrapper}>{children}</div>;
+export const PageInfoCard: FC<IPageInfoCard> = ({ children, classList }) => {
+  return (
+    <div
+      className={`${styles.pageInfoCardWrapper} ${
+        classList?.length && classList.map((item) => styles[item]).join(' ')
+      }`}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default PageInfoCard;

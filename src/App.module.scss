@@ -23,5 +23,23 @@
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
       }
     }
+
+    .blogPageBanner {
+      width: 100%;
+      background: url('./assets/images/blog/blog-banner.jpg') center center;
+      height: 100vh;
+      max-height: 550px;
+      background-size: cover;
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 27, 54, 0.23);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      }
+    }
   }
 }

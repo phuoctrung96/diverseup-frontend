@@ -1,0 +1,30 @@
+.wrapper {
+  position: relative;
+  top: 60px;
+  left: -60%;
+  height: 0;
+  font-size: 12px;
+  line-height: 24px;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .facebook {
+    &:before {
+      content: url('../../../assets/images/icons/share-social/facebook.svg');
+    }
+  }
+
+  .twitter {
+    &:before {
+      content: url('../../../assets/images/icons/share-social/twitter.svg');
+    }
+  }
+
+  .linkedin {
+    &:before {
+      content: url('../../../assets/images/icons/share-social/linkedin.svg');
+    }
+  }
+}

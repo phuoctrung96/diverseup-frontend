@@ -4,10 +4,16 @@ import { Path, UseFormRegister } from 'react-hook-form';
 interface IRadioButtonGroup {
   label: Path<any>;
   register: UseFormRegister<any>;
-  radioButtons: any[];
+  radioButtons: { value: string; label: string }[];
+  groupLabel?: string;
 }
 
-export const RadioButtonGroup: FC<IRadioButtonGroup> = ({ label, register, radioButtons }) => {
+export const RadioButtonGroup: FC<IRadioButtonGroup> = ({
+  label,
+  register,
+  radioButtons,
+  groupLabel,
+}) => {
   const [selectedInput, setSelectedInput] = useState('');
   const { name } = register(label);
 
@@ -17,6 +23,7 @@ export const RadioButtonGroup: FC<IRadioButtonGroup> = ({ label, register, radio
 
   return (
     <div className="radio-buttons-group">
+      {groupLabel && <span className="radio-buttons-group__label">{groupLabel}</span>}
       {radioButtons.map((buttonInfo, index) => {
         return (
           <div

@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import Button from 'components/shared/button/Button';
 
 export const JPStepFour: FC = () => {
-  const { register, handleSubmit, reset } = useForm<any>();
+  const { register } = useForm<any>();
   return (
     <div className="ls-multi-form">
       <h3 className="ls-form-heading">Notifications</h3>
