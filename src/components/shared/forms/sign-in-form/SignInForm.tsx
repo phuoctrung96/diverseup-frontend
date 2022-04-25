@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import style from 'styles/modules/Auth.module.scss';
 import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
+import { loginApi } from 'api/user';
 
 interface ISignInForm {
   switchOnSignUpForm: () => void;
@@ -17,11 +18,22 @@ export const SignInForm: FC<ISignInForm> = ({
 }) => {
   const { register, handleSubmit, reset } = useForm<any>();
 
+  const onLogin = async (data: any) => {
+    try {
+      const res = await loginApi({
+        username: data.email,
+        password: data.password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <form
         className={`form ${style.form} ${formClassList?.join(' ')}`}
-        onSubmit={handleSubmit(() => void 0)}
+        onSubmit={handleSubmit(onLogin)}
       >
         <Input
           inputLabel="E-mail address"

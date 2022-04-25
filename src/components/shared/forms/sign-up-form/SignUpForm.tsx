@@ -4,6 +4,7 @@ import style from 'styles/modules/Auth.module.scss';
 import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
+import { registerApi } from 'api/user';
 
 interface ISignUpForm {
   switchOnLogin: () => void;
@@ -18,9 +19,23 @@ export const SignUpForm: FC<ISignUpForm> = ({
 }) => {
   const { register, handleSubmit, reset } = useForm<any>();
 
+  const onRegister = async (data: any) => {
+    try {
+      await registerApi({
+        email: data.email,
+        password: data.password,
+        is_active: true,
+        is_superuser: false,
+        is_verified: false,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <form className={`form ${style.form}`} onSubmit={handleSubmit(() => void 0)}>
+      <form className={`form ${style.form}`} onSubmit={handleSubmit(onRegister)}>
         <Input
           inputLabel="Username"
           label="username"
