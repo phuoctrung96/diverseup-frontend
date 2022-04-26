@@ -5,14 +5,19 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GlobalModal } from 'GlobalModal';
+import { Provider } from 'react-redux';
+import configureStore from 'redux/stores';
+const store = configureStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <BrowserRouter>
-    <GlobalModal>
-      <App />
-    </GlobalModal>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <GlobalModal>
+        <App />
+      </GlobalModal>
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

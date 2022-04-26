@@ -7,6 +7,7 @@ type CheckboxProps = {
   checkboxLabel: string;
   required: boolean;
   checked?: boolean;
+  onChange?: any;
 };
 
 const Checkbox: FC<CheckboxProps> = ({
@@ -15,11 +16,13 @@ const Checkbox: FC<CheckboxProps> = ({
   checkboxLabel,
   required,
   checked = false,
+  onChange,
 }) => {
   const [isChecked, setIsChecked] = useState(checked);
   const { name } = register(label);
 
   const handleChange = () => {
+    onChange?.(!isChecked);
     setIsChecked(!isChecked);
   };
 
