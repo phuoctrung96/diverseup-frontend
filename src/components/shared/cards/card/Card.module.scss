@@ -19,6 +19,9 @@
 
   .cardImage {
     width: 100%;
+    min-height: 250px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
   }
 
   .cardWrapper {
@@ -34,6 +37,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      .companyInfoImage {
+        img {
+          height: 30px;
+          max-width: 150px;
+        }
+      }
     }
 
     .title {
@@ -41,6 +51,11 @@
       color: #333333;
       font-weight: 700;
       line-height: 30px;
+
+      @include tablet-min() {
+        font-size: 18px;
+        line-height: 28px;
+      }
     }
 
     .description {
@@ -52,21 +67,37 @@
     &--card {
       padding: 20px;
 
+      @include tablet-min() {
+        flex-basis: 48%;
+      }
+
       .description {
         padding: 15px 0;
+
+        @include tablet-min() {
+          padding: 10px 0 15px 0;
+        }
       }
     }
 
     &--company {
       padding: 30px;
 
+      @include tablet-min() {
+        padding: 25px;
+      }
+
       .description {
         padding: 6px 0 20px 0;
       }
 
       .title {
-        font-size: 18px;
+        font-size: 1.125rem;
         padding-top: 15px;
+
+        @include tablet-min() {
+          padding-top: 10px;
+        }
       }
     }
   }

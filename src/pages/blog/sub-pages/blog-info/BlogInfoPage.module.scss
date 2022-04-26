@@ -1,4 +1,11 @@
+@import 'src/styles/utilities/mixins';
+
 .wrapper {
   max-width: 840px;
+  width: 100%;
   padding: 0 45px;
+
+  @include tablet-desktop-small() {
+    padding: 0;
+  }
 }

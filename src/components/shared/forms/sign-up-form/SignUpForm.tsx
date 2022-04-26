@@ -1,61 +1,107 @@
-import React, { FC } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { FC, useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import style from 'styles/modules/Auth.module.scss';
 import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import { registerApi } from 'api/user';
+import { MODAL_TYPES, useGlobalModalContext } from '../../../../GlobalModal';
 
-interface ISignUpForm {
+interface ISignUpFormProps {
   switchOnLogin: () => void;
   formClassList?: string[];
   showSubscribeCheckbox?: boolean;
 }
 
-export const SignUpForm: FC<ISignUpForm> = ({
+interface IForm {
+  email: string;
+  password: string;
+  confirm: string;
+  subscribe: boolean;
+}
+
+export const SignUpForm: FC<ISignUpFormProps> = ({
   switchOnLogin,
   showSubscribeCheckbox = true,
-  formClassList = [],
 }) => {
-  const { register, handleSubmit, reset } = useForm<any>();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    watch,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm<IForm>();
 
-  const onRegister = async (data: any) => {
+  const { showModal } = useGlobalModalContext();
+  const [validateTimeout, setValidateTimeout] = useState<any>(false);
+
+  const onRegister: SubmitHandler<IForm> = async ({ email, password, subscribe }) => {
     try {
       await registerApi({
-        email: data.email,
-        password: data.password,
+        email: email,
+        password: password,
         is_active: true,
         is_superuser: false,
         is_verified: false,
+        want_newsletter: subscribe,
       });
-    } catch (error) {
-      console.log(error);
+      showModal(MODAL_TYPES.SIGN_IN_MODAL);
+    } catch (e: any) {
+      console.log(e);
+      if (e.detail === 'REGISTER_USER_ALREADY_EXISTS') {
+        setError('email', {
+          type: 'required',
+          message: `user with email: ${email} already exist`,
+        });
+      }
     }
   };
+
+  useEffect(() => {
+    if (validateTimeout != false) {
+      clearTimeout(validateTimeout);
+    }
+    setValidateTimeout(
+      setTimeout(() => {
+        if (getValues('confirm') !== getValues('password')) {
+          setError('confirm', {
+            type: 'confirm',
+            message: 'Passwords do not match',
+          });
+        } else {
+          clearErrors();
+        }
+      }, 500)
+    );
+  }, [watch('confirm')]);
 
   return (
     <>
       <form className={`form ${style.form}`} onSubmit={handleSubmit(onRegister)}>
         <Input
-          inputLabel="Username"
-          label="username"
-          register={register}
-          type="text"
-          placeholder="Enter you username"
-        />
-        <Input
           inputLabel="E-mail address"
           label="email"
           register={register}
           type="text"
-          placeholder="Enter you e-mail address"
+          placeholder="Enter your e-mail address"
+          errors={errors}
         />
         <Input
           inputLabel="Password"
           label="password"
           register={register}
           type="password"
-          placeholder="Enter you password"
+          placeholder="Enter your password"
+        />
+        <Input
+          inputLabel="Confirm password"
+          label="confirm"
+          register={register}
+          type="password"
+          placeholder="Confirm your password"
+          errors={errors}
         />
 
         {showSubscribeCheckbox && (

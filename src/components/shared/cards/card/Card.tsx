@@ -12,7 +12,9 @@ export const Card: FC<ICard> = ({ type, description, imageUrl, link, rating, tit
       <div className={`${styles.cardWrapper} ${styles[`cardWrapper--${type}`]}`}>
         {type === 'company' && (
           <div className={styles.companyInfo}>
-            <img src={imageUrl} alt={'company logo'} />
+            <div className={styles.companyInfoImage}>
+              {imageUrl && <img src={imageUrl} alt={'company logo'} />}
+            </div>
             <RatingStars rating={rating || 0} clickable={false} />
           </div>
         )}

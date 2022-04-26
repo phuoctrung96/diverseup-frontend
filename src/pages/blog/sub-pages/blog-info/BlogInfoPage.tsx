@@ -80,7 +80,6 @@ const BlogInfoPage: FC = () => {
   return (
     <>
       <div className={style.wrapper}>
-        <ShareSocial />
         <PageTitle
           title={'How to make an impression on my first interview'}
           classList={['blogTitle']}
@@ -90,9 +89,10 @@ const BlogInfoPage: FC = () => {
         <Note text={note} />
         <Image images={images2} />
         <Text content={content_2} />
+        <ShareSocial />
       </div>
       <PageTitle title={'Related articles'} classList={['blogTitle']} />
-      <Cards cards={blogCards} button={null} pagination={false} />
+      <Cards cards={blogCards} button={null} pagination={undefined} />
     </>
   );
 };

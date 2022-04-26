@@ -62,7 +62,7 @@ export const Footer: FC = () => {
         <div className="section">
           <div className={styles.mainFooterWrapper}>
             <div className={styles.leftPart}>
-              <AppLogo width={150} height={45} />
+              <AppLogo footer={true} />
               <div className={styles.socialLinks}>
                 {socialLinks.map((link, index) => {
                   return (

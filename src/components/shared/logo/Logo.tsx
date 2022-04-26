@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
 
 interface IAppLogo {
-  width: number;
-  height: number;
+  footer?: boolean;
 }
 
-export const AppLogo: FC<IAppLogo> = ({ width, height }) => {
+export const AppLogo: FC<IAppLogo> = ({ footer = false }) => {
   return (
     <div>
-      <img src="/Logo.svg" alt="Logo" width={width} height={height} />
+      <img src="/Logo.svg" alt="Logo" className={`logo ${footer && 'footer'}`} />
     </div>
   );
 };

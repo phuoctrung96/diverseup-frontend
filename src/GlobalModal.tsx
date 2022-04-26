@@ -31,13 +31,13 @@ type GlobalModalContext = {
 };
 
 /* eslint-disable */
-const initalState: GlobalModalContext = {
+const initialState: GlobalModalContext = {
   showModal: () => {},
   hideModal: () => {},
   store: {},
 };
 
-const GlobalModalContext = createContext(initalState);
+const GlobalModalContext = createContext(initialState);
 export const useGlobalModalContext = () => useContext(GlobalModalContext);
 
 export const GlobalModal: FC<{ children: ReactNode }> = ({ children }) => {

@@ -1,19 +1,30 @@
+@import 'src/styles/utilities/mixins';
+
 .wrapper {
   display: flex;
   flex-wrap: wrap;
-  max-height: 750px;
+  gap: 30px;
+
+  @include mobile-max() {
+    flex-direction: column;
+    align-items: center;
+
+    .item {
+      width: 100%;
+    }
+  }
 
   .item {
     margin-bottom: 15px;
-    width: 50%;
-    img {
-      width: 360px;
-    }
+    flex: 1 1 calc((100% / 3) - 30px);
   }
 }
+
 .image {
   margin-bottom: 15px;
+  width: 100%;
 }
+
 .text {
   font-size: 12px;
   line-height: 15px;

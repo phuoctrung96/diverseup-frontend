@@ -1,9 +1,14 @@
+@import 'src/styles/utilities/mixins';
+
 .footer {
   flex-shrink: 0;
 
   .mainFooter {
     background-color: var(--color-secondary-extra-light-gray);
     padding: 40px 0;
+    @include tablet-desktop-small() {
+      padding-bottom: 30px;
+    }
 
     .mainFooterWrapper {
       display: flex;
@@ -79,6 +84,45 @@
 
               &.mail:before {
                 content: url('../../../assets/images/icons/email.svg');
+              }
+            }
+          }
+        }
+      }
+
+      @include tablet-min() {
+        flex-direction: column;
+        align-items: center;
+      }
+      @include tablet-desktop-small() {
+        align-items: flex-start;
+        .rightPart {
+          .footerMenu {
+            flex-direction: column;
+            font-size: 16px;
+
+            li:not(:last-child) {
+              margin-bottom: 25px;
+            }
+
+            &:last-child {
+              p {
+                margin-bottom: 15px;
+              }
+
+              .mail {
+                margin-bottom: 30px;
+              }
+            }
+
+            .footerSubMenu {
+              li {
+                margin-bottom: 15px;
+                padding: 0;
+
+                &:last-child {
+                  margin: 0;
+                }
               }
             }
           }

@@ -1,12 +1,18 @@
+@import 'src/styles/utilities/mixins';
+
 .pageTitleWrapper {
   padding: 30px 0;
   letter-spacing: 0.2px;
   text-align: center;
 
   .pageSubtitle {
-    font-size: 14px;
+    font-size: 1rem;
     margin-top: 10px;
     display: block;
+
+    @include tablet-min() {
+      margin-top: 0;
+    }
   }
 
   &.card {
@@ -22,6 +28,10 @@
     text-align: center;
     padding: 0 0 40px 0;
 
+    @include tablet-min() {
+      padding-bottom: 30px;
+    }
+
     .pageTitle {
       padding-bottom: 15px;
     }
@@ -31,11 +41,17 @@
       letter-spacing: 0.2px;
     }
   }
+
   &.blogTitle {
     .pageTitle {
       font-size: 36px;
       line-height: 54px;
       padding: 20px 0 10px 0;
+
+      @include mobile-max() {
+        font-size: 28px;
+        line-height: 42px;
+      }
     }
   }
 }

@@ -1,4 +1,25 @@
+@import 'src/styles/utilities/mixins';
+
 .searchFormWrapper {
-  max-width: 580px;
-  margin: 0 auto;
+  width: 100%;
+
+  .form {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  @include tablet-min() {
+    margin: 0;
+
+    .form {
+      display: none;
+      padding-top: 20px;
+    }
+
+    &.opened {
+      .form {
+        display: flex;
+      }
+    }
+  }
 }

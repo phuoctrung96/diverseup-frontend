@@ -12,18 +12,11 @@ interface IImg {
 }
 
 const Image: FC<IImageProps> = ({ images }) => {
-  let countImg = 0;
-  if (images.length == 1) {
-    countImg = 1;
-  } else if (images.length == 3) {
-    countImg = 3;
-  }
-
   return (
-    <div className={countImg == 1 ? '' : style.wrapper}>
+    <div className={images.length == 1 ? '' : style.wrapper}>
       {images.map((img) => {
         return (
-          <div key={img.src} className={countImg == 1 ? style.oneItem : style.item}>
+          <div key={img.src} className={images.length == 1 ? style.oneItem : style.item}>
             <img src={img.src} alt={img.alt} className={style.image} />
             <p className={style.text}>{img.author}</p>
           </div>

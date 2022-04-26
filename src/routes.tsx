@@ -46,7 +46,7 @@ export const ROUTES: BreadcrumbsRoute[] = [
         path: ':slug',
         element: <CompanyInfoPage />,
         children: [
-          { path: '', element: <CompanyInfo />, breadcrumb: 'Company Name' },
+          { path: '', element: <CompanyInfo /> },
           {
             path: ROUTE_ADD_RATING,
             element: <AddRating />,

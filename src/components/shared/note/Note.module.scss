@@ -1,3 +1,5 @@
+@import 'src/styles/utilities/mixins';
+
 .wrapper {
   position: relative;
   margin-bottom: 60px;
@@ -12,5 +14,10 @@
     content: '';
     height: 100%;
     border-left: 3px solid var(--color-primary-black);
+  }
+
+  @include mobile-max() {
+    font-size: 18px;
+    line-height: 27px;
   }
 }

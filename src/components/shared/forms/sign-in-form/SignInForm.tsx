@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { FC, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import style from 'styles/modules/Auth.module.scss';
 import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
-import { loginApi } from 'api/user';
+import { getUserApi, loginApi } from 'api/user';
+import AuthHelpers from '../../../../utils/AuthHelpers';
+import { useGlobalModalContext } from 'GlobalModal';
 
 interface ISignInForm {
   switchOnSignUpForm: () => void;
@@ -11,21 +13,47 @@ interface ISignInForm {
   formClassList?: string[];
 }
 
+interface IForm {
+  email: string;
+  password: string;
+}
+
 export const SignInForm: FC<ISignInForm> = ({
   switchOnSignUpForm,
   formClassList = [],
   switchOnForgotForm,
 }) => {
-  const { register, handleSubmit, reset } = useForm<any>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors },
+  } = useForm<IForm>();
+  const { hideModal } = useGlobalModalContext();
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const onLogin = async (data: any) => {
+  const onLogin: SubmitHandler<IForm> = async ({ password, email }) => {
+    setIsDisabled(true);
     try {
-      const res = await loginApi({
-        username: data.email,
-        password: data.password,
+      const response = await loginApi({
+        username: email,
+        password: password,
       });
-    } catch (error) {
-      console.log(error);
+      AuthHelpers.storeAccessToken(response.access_token);
+      const user = await getUserApi(response.access_token);
+      AuthHelpers.storeUserInfo(user);
+      reset();
+      hideModal();
+    } catch (error: any) {
+      setError('password', {
+        type: 'required',
+        message: 'incorrect email or password',
+      });
+      setError('email', {
+        type: 'required',
+      });
+      setIsDisabled(false);
     }
   };
 
@@ -41,6 +69,7 @@ export const SignInForm: FC<ISignInForm> = ({
           register={register}
           type="text"
           placeholder="Enter you e-mail address"
+          errors={errors}
         />
         <Input
           inputLabel="Password"
@@ -48,6 +77,7 @@ export const SignInForm: FC<ISignInForm> = ({
           register={register}
           type="password"
           placeholder="Enter you password"
+          errors={errors}
         />
 
         <Button
@@ -59,7 +89,7 @@ export const SignInForm: FC<ISignInForm> = ({
           }}
         />
 
-        <Button text={'Sign In'} classList={['auth']} />
+        <Button text={'Sign In'} classList={['auth']} disabled={isDisabled} />
       </form>
       <div className={style.variant}>
         <span>{'Don’t have an account?'}</span>

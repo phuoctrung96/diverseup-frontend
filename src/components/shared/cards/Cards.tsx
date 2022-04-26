@@ -4,6 +4,8 @@ import { ICard } from 'interfaces/card';
 import Card from 'components/shared/cards/card/Card';
 import Button from 'components/shared/button/Button';
 import ReactPaginate from 'react-paginate';
+import { Pagination } from 'interfaces';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 interface ICards {
   cards: ICard[];
@@ -11,18 +13,35 @@ interface ICards {
     text: string;
     onClick: () => void;
   } | null;
-  pagination?: boolean;
+  pagination?: Pagination;
 }
 
-export const Cards: FC<ICards> = ({ cards, button, pagination = false }) => {
-  const itemsPerPage = 9;
-  const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
+export const Cards: FC<ICards> = ({ cards, button, pagination }) => {
+  const itemsPerPage = 12;
+  const [pageCount, setPageCount] = useState(pagination?.total || 0);
+  const [itemOffset, setItemOffset] = useState(pagination?.page || 0);
   const [currentItems, setCurrentItems] = useState(cards);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setCurrentItems(cards);
+    setPageCount(pagination?.total ? Math.ceil(pagination?.total / itemsPerPage) : 0);
+  }, [cards, pagination]);
+
   const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * itemsPerPage) % cards.length;
-    setItemOffset(newOffset);
+    const page = event.selected + 1;
+
+    if (page !== pagination?.page) {
+      setSearchParams({ ...searchParams, page });
+      navigate(
+        {
+          search: createSearchParams({ ...searchParams, page }).toString(),
+        },
+        { replace: true }
+      );
+    }
   };
 
   useEffect(() => {
@@ -53,7 +72,9 @@ export const Cards: FC<ICards> = ({ cards, button, pagination = false }) => {
           className="pagination"
           pageClassName="page"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={6}
+          pageRangeDisplayed={0}
+          marginPagesDisplayed={2}
+          initialPage={pagination?.page - 1 || 0}
           pageCount={pageCount}
           previousLabel=""
         />

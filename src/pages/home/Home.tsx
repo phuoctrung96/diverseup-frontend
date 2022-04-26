@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import MainBanner from 'pages/home/components/main-banner/MainBanner';
 import Cards from 'components/shared/cards/Cards';
 import { ICard } from 'interfaces/card';
@@ -6,66 +6,39 @@ import SecondaryBanner from 'pages/home/components/secondary-banner/SecondaryBan
 import PageTitle from 'components/common/page-title/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_BLOG, ROUTE_COMPANY_RATING } from 'app-constants';
+import { blogsApi, businessesApi } from 'api';
 
 export const HomePage: FC = () => {
   const navigate = useNavigate();
+  const [businesses, setBusinesses] = useState<ICard[] | []>([]);
+  const [blogs, setBlogs] = useState<ICard[] | []>([]);
 
-  const cardsCompany: ICard[] = [
-    {
-      type: 'company',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-company.png',
-      link: '',
-      rating: 5,
-      title: 'Company Name',
-    },
-    {
-      type: 'company',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-company.png',
-      link: '',
-      rating: 4.5,
-      title: 'Company Name',
-    },
-    {
-      type: 'company',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-company.png',
-      link: '',
-      rating: 2.9,
-      title: 'Company Name',
-    },
-  ];
+  useEffect(() => {
+    businessesApi({ page: 1, size: 3 }, true).then((res) => {
+      const newData: ICard[] | [] = res.items?.map((el) => ({
+        type: 'company',
+        description: el.short_description || '',
+        imageUrl: el.logo || '',
+        link: `/${ROUTE_COMPANY_RATING}/${el.slug}`,
+        rating: el.rating || 5,
+        title: el.name,
+      }));
 
-  const cardsCard: ICard[] = [
-    {
-      type: 'card',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-card.png',
-      link: '',
-      title: 'How to make an impression on my first interview',
-    },
-    {
-      type: 'card',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-card.png',
-      link: '',
-      title: 'How to make an impression on my first interview',
-    },
-    {
-      type: 'card',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-card.png',
-      link: '',
-      title: 'How to make an impression on my first interview',
-    },
-  ];
+      setBusinesses(newData || []);
+    });
+
+    blogsApi({ page: 1, size: 3 }).then((res) => {
+      const newData: ICard[] | [] = res.items?.map((el) => ({
+        type: 'card',
+        description: el.short_description,
+        imageUrl: el.image,
+        link: `/${ROUTE_BLOG}/${el.slug}`,
+        title: el.title,
+      }));
+
+      setBlogs(newData || []);
+    });
+  }, []);
 
   return (
     <>
@@ -78,7 +51,7 @@ export const HomePage: FC = () => {
             classList={['sectionTitle']}
           />
           <Cards
-            cards={cardsCompany}
+            cards={businesses}
             button={{ text: 'View more', onClick: () => navigate(ROUTE_COMPANY_RATING) }}
           />
         </div>
@@ -92,7 +65,7 @@ export const HomePage: FC = () => {
             classList={['sectionTitle']}
           />
           <Cards
-            cards={cardsCard}
+            cards={blogs}
             button={{ text: 'View more', onClick: () => navigate(ROUTE_BLOG) }}
           />
         </div>

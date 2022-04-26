@@ -1,28 +1,26 @@
 import axios from '../utils/axios.config';
+import { Pagination } from 'interfaces';
 
 export interface IBusinessesItem {
-  name: string;
-  logo: string;
   slug: string;
-  diverseup_score: string;
-  avg_recommended: string;
-  address: string;
-  city: string;
-  state: string;
-  sector: string;
-  website: string;
-  employees: string;
-  ceo_name: string;
-  ceo_photo: string;
-  percent_women_in_company: string;
-  percent_women_on_board: string;
-  created: string;
+  name: string;
+  logo: string | null;
+  website: string | null;
+  rating: number | null;
+  short_description: string | null;
 }
-export interface IBusinessesRes {
+export interface IBusinessesRes extends Pagination {
   items: IBusinessesItem[];
 }
-export const businessesApi = (): Promise<IBusinessesRes> => {
-  return axios.get('/api/businesses');
+export const businessesApi = (
+  p: Pick<Pagination, 'page' | 'size'>,
+  highlighted = false
+): Promise<IBusinessesRes> => {
+  if (highlighted) {
+    return axios.get(`/api/businesses?page=${p.page}&size=${p.size}&highlighted=true`);
+  }
+
+  return axios.get(`/api/businesses?page=${p.page}&size=${p.size}`);
 };
 
 export interface IBusinessDetailParams {

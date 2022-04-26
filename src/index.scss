@@ -4,6 +4,7 @@ html {
   height: 100%;
   overflow: auto;
 }
+
 body {
   height: 100%;
 }
@@ -20,6 +21,13 @@ body {
   font-smooth: always;
 
   font-smoothing: antialiased;
+
+  @include tablet-min() {
+    font-size: 14px;
+  }
+}
+button[disabled] {
+  background-color: rgba(131, 131, 131, 0.8);
 }
 
 .section {
@@ -47,6 +55,22 @@ body {
         padding-bottom: 0;
       }
     }
+
+    @include tablet-min() {
+      padding-top: 80px;
+
+      &:first-child {
+        padding-top: 80px;
+      }
+    }
+  }
+
+  &__block--blog {
+    position: relative;
+  }
+
+  &__block--blog {
+    position: relative;
   }
 }
 
@@ -56,5 +80,29 @@ body {
 
   &--center {
     justify-content: center;
+  }
+}
+
+.logo {
+  width: 128px;
+  height: 38px;
+
+  @include tablet-min() {
+    width: 100px;
+    height: 30px;
+  }
+
+  &.footer {
+    width: 150px;
+    height: 45px;
+  }
+}
+
+.filters {
+  padding-bottom: 30px;
+  align-self: flex-start;
+
+  @include tablet-min() {
+    width: 100%;
   }
 }

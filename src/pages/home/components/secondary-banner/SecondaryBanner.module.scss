@@ -1,10 +1,21 @@
+@import 'src/styles/utilities/mixins';
+
 .bannerWrapper {
   display: flex;
+
+  @include tablet-min() {
+    flex-direction: column;
+  }
 
   .bannerImage {
     width: 100%;
     background: url('../../../../assets/images/review-banner.jpg') center center;
     background-size: cover;
+
+    @include tablet-min() {
+      height: 100%;
+      min-height: 330px;
+    }
   }
 
   .infoWrapper {
@@ -15,10 +26,18 @@
       padding: 50px;
       line-height: 32px;
 
+      @include tablet-min() {
+        padding: 40px 20px;
+      }
+
       .headerText {
         color: var(--color-secondary-dark-gray);
         font-size: 14px;
         padding-bottom: 10px;
+
+        @include tablet-min() {
+          padding-bottom: 5px;
+        }
       }
 
       .mainText {
@@ -29,6 +48,11 @@
       .description {
         font-weight: 400;
         padding: 20px 0 30px 0;
+
+        @include tablet-min() {
+          padding: 15px 0 20px 0;
+          line-height: 24px;
+        }
       }
     }
   }

@@ -1,3 +1,5 @@
+@import 'src/styles/utilities/mixins';
+
 h1,
 h2,
 h3 {
@@ -7,6 +9,10 @@ h3 {
 h1 {
   font-size: 2rem;
   line-height: 44px;
+
+  @include tablet-min() {
+    line-height: 42px;
+  }
 }
 
 h2 {

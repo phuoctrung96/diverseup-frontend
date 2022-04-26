@@ -45,7 +45,10 @@ export const Input: FC<InputProps> = ({
         <span className={`eye-icon ${showPass && 'show'}`} onClick={() => setShowPass(!showPass)} />
       )}
       {errors && errors[label]?.type === 'required' && (
-        <span className={'validation-error'}>This field must be filled</span>
+        <span className={'validation-error'}>{errors[label].message}</span>
+      )}
+      {errors && errors[label]?.type === 'confirm' && (
+        <span className={'validation-error'}>{errors[label].message}</span>
       )}
     </div>
   );

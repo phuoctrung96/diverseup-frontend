@@ -8,6 +8,7 @@ import Breadcrumbs from 'components/common/breadcrumbs/Breadcrumbs';
 import routes, { ROUTES } from 'routes';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
 import ScrollToTop from 'ScrollToTop';
+import blogBanner from './assets/images/blog/blog-banner.jpg';
 
 function AppRoutes() {
   return useRoutes(ROUTES);
@@ -43,7 +44,11 @@ function App() {
       <Header showSearch={showSearch} />
       <div className={styles.Layout}>
         {showCompanyPageBanner && <div className={styles.companyPageBanner} />}
-        {showBlogPageBanner && <div className={styles.blogPageBanner} />}
+        {showBlogPageBanner && (
+          <div className={styles.blogPageBanner}>
+            <img src={blogBanner} alt="banner" />
+          </div>
+        )}
         <Breadcrumbs />
         <ScrollToTop>
           <AppRoutes />
