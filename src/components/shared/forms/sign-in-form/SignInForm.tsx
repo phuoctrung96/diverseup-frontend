@@ -11,6 +11,7 @@ interface ISignInForm {
   switchOnSignUpForm: () => void;
   switchOnForgotForm: () => void;
   formClassList?: string[];
+  onSignInClick?: () => void;
 }
 
 interface IForm {
@@ -22,6 +23,7 @@ export const SignInForm: FC<ISignInForm> = ({
   switchOnSignUpForm,
   formClassList = [],
   switchOnForgotForm,
+  onSignInClick,
 }) => {
   const {
     register,
@@ -45,6 +47,7 @@ export const SignInForm: FC<ISignInForm> = ({
       AuthHelpers.storeUserInfo(user);
       reset();
       hideModal();
+      onSignInClick?.();
     } catch (error: any) {
       setError('password', {
         type: 'required',

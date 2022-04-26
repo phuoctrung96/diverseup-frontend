@@ -1,10 +1,100 @@
-import React, { FC } from 'react';
-import { useForm } from 'react-hook-form';
-import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import Button from 'components/shared/button/Button';
+import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
+import React, { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setJobPlacementForm, setJobPlacementStep } from 'redux/actions/job-placement';
+import {
+  JOB_OPPORTUNITY_TYPE,
+  SELECTED_COMMUTE_OPTIONS,
+  SELECTED_TRAVEL_OPTIONS,
+  SELECTED_WORK_FLEXIBILITY,
+} from './data/Step.data';
 
 export const JPStepOne: FC = () => {
   const { register } = useForm<any>();
+  const jobPlacementForm = useSelector((state: any) => state?.jobPlacement?.jobPlacementForm);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [selectedJobOpportunityType, setSelectedJobOpportunityType] = useState<string[]>([]);
+  const [selectedWorkFlexibility, setSelectedWorkFlexibility] = useState<string[]>([]);
+  const [selectedCommuteOptions, setSelectedCommuteOptions] = useState<string[]>([]);
+  const [selectedTravelOptions, setSelectedTravelOptions] = useState<string[]>([]);
+
+  const handleOnChangeCheckBoxSelectedJob = (item, value: boolean) => {
+    if (value) {
+      setSelectedJobOpportunityType([...selectedJobOpportunityType, item.title]);
+    } else {
+      const filterSelected = selectedJobOpportunityType.filter(
+        (typFilter: any) => typFilter.id !== item.id
+      );
+      setSelectedJobOpportunityType(filterSelected);
+    }
+    dispatch(
+      setJobPlacementForm({
+        selected_job_opportunity_type: [...selectedJobOpportunityType, item.title],
+      })
+    );
+  };
+
+  const handleOnChangeCheckBoxFlexibility = (item, value: boolean) => {
+    if (value) {
+      setSelectedWorkFlexibility([...selectedWorkFlexibility, item.title]);
+    } else {
+      const filterSelected = selectedWorkFlexibility.filter(
+        (typFilter: any) => typFilter.id !== item.id
+      );
+      setSelectedWorkFlexibility(filterSelected);
+    }
+    dispatch(
+      setJobPlacementForm({
+        selected_work_flexibility: [...selectedWorkFlexibility, item.title],
+      })
+    );
+  };
+
+  const handleOnChangeCheckBoxCommuteOption = (item, value: boolean) => {
+    if (value) {
+      setSelectedCommuteOptions([...selectedCommuteOptions, item.title]);
+    } else {
+      const filterSelected = selectedCommuteOptions.filter(
+        (typFilter: any) => typFilter.id !== item.id
+      );
+      setSelectedCommuteOptions(filterSelected);
+    }
+    dispatch(
+      setJobPlacementForm({
+        selected_commute_options: [...selectedCommuteOptions, item.title],
+      })
+    );
+  };
+
+  const handleOnChangeCheckBoxTravelOption = (item, value: boolean) => {
+    if (value) {
+      setSelectedTravelOptions([...selectedTravelOptions, item.title]);
+    } else {
+      const filterSelected = selectedTravelOptions.filter(
+        (typFilter: any) => typFilter.id !== item.id
+      );
+      setSelectedTravelOptions(filterSelected);
+    }
+    dispatch(
+      setJobPlacementForm({
+        selected_travel_options: [...selectedTravelOptions, item.title],
+      })
+    );
+  };
+
+  const handleClickNext = () => {
+    console.log(';asdfasdf');
+    dispatch(
+      setJobPlacementStep(2, () => {
+        navigate('/job-placement/step2');
+      })
+    );
+  };
+
   return (
     <div className="ls-multi-form">
       <h3 className="ls-form-heading">Tell Us about your Job Preferences</h3>
@@ -15,30 +105,18 @@ export const JPStepOne: FC = () => {
       <div className="check-item-field">
         <h4 className="input-heading">What Kind of job opportunity are you looking for?</h4>
         <ul>
-          <li>
-            <Checkbox
-              label="full-time"
-              required={false}
-              checkboxLabel="Full Time"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="intership"
-              required={false}
-              checkboxLabel="Internship"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="part-time"
-              required={false}
-              checkboxLabel="Part time"
-              register={register}
-            />
-          </li>
+          {JOB_OPPORTUNITY_TYPE.map((item) => (
+            <li key={item.id}>
+              <Checkbox
+                label={item.label}
+                required={item.required}
+                checkboxLabel={item.title}
+                register={register}
+                onChange={(value: boolean) => handleOnChangeCheckBoxSelectedJob(item, value)}
+                checked={jobPlacementForm.selected_job_opportunity_type.includes(item.title)}
+              />
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -47,137 +125,58 @@ export const JPStepOne: FC = () => {
           Which of the following work flexibility options are you interested in?
         </h4>
         <ul>
-          <li>
-            <Checkbox
-              label="flexible-hours"
-              required={false}
-              checkboxLabel="Flexible hours"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="telecommuting"
-              required={false}
-              checkboxLabel="Telecommuting"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="job-sharing"
-              required={false}
-              checkboxLabel="Job Sharing"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="part-time"
-              required={false}
-              checkboxLabel="Part time"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="alternative-work-hour"
-              required={false}
-              checkboxLabel="Alernative work hour"
-              register={register}
-            />
-          </li>
+          {SELECTED_WORK_FLEXIBILITY.map((item) => (
+            <li key={item.id}>
+              <Checkbox
+                label={item.label}
+                required={item.required}
+                checkboxLabel={item.title}
+                register={register}
+                onChange={(value: boolean) => handleOnChangeCheckBoxFlexibility(item, value)}
+                checked={jobPlacementForm.selected_work_flexibility.includes(item.title)}
+              />
+            </li>
+          ))}
         </ul>
       </div>
 
       <div className="check-item-field">
         <h4 className="input-heading">How much commute are you willing to do for you job?</h4>
         <ul>
-          <li>
-            <Checkbox
-              label="25mi"
-              required={false}
-              checkboxLabel="Less than 25mi"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="25-50mi"
-              required={false}
-              checkboxLabel="25-50mi"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="50-100mi"
-              required={false}
-              checkboxLabel="50-100mi"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="relocate"
-              required={false}
-              checkboxLabel="Willing to relocate"
-              register={register}
-            />
-          </li>
+          {SELECTED_COMMUTE_OPTIONS.map((item) => (
+            <li key={item.id}>
+              <Checkbox
+                label={item.label}
+                required={item.required}
+                checkboxLabel={item.title}
+                register={register}
+                onChange={(value: boolean) => handleOnChangeCheckBoxCommuteOption(item, value)}
+                checked={jobPlacementForm.selected_commute_options.includes(item.title)}
+              />
+            </li>
+          ))}
         </ul>
       </div>
 
       <div className="check-item-field">
         <h4 className="input-heading">How much travel are you willing to do for you job?</h4>
         <ul>
-          <li>
-            <Checkbox label="none" required={false} checkboxLabel="None" register={register} />
-          </li>
-          <li>
-            <Checkbox
-              label="10%"
-              required={false}
-              checkboxLabel="Less than 10%"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="10%-25%"
-              required={false}
-              checkboxLabel="10%-25%"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="25%-50%"
-              required={false}
-              checkboxLabel="25%-50%"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="50%"
-              required={false}
-              checkboxLabel="More than 50%"
-              register={register}
-            />
-          </li>
-          <li>
-            <Checkbox
-              label="international%"
-              required={false}
-              checkboxLabel="No international travel"
-              register={register}
-            />
-          </li>
+          {SELECTED_TRAVEL_OPTIONS.map((item) => (
+            <li key={item.id}>
+              <Checkbox
+                label={item.label}
+                required={item.required}
+                checkboxLabel={item.title}
+                register={register}
+                onChange={(value: boolean) => handleOnChangeCheckBoxTravelOption(item, value)}
+                checked={jobPlacementForm.selected_travel_options.includes(item.title)}
+              />
+            </li>
+          ))}
         </ul>
       </div>
       <div className="step-buttons">
-        <Button text={'Next Step'} />
+        <Button text={'Next Step'} onClick={handleClickNext} />
       </div>
     </div>
   );

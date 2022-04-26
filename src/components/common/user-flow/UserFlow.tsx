@@ -13,6 +13,7 @@ interface IUserFlow {
   subTitle: string;
   note: string;
   socialButtonsLabel?: boolean;
+  onSignInClick?: () => void;
 }
 
 export const UserFlow: FC<IUserFlow> = ({
@@ -21,6 +22,7 @@ export const UserFlow: FC<IUserFlow> = ({
   subTitle,
   note,
   socialButtonsLabel,
+  onSignInClick,
 }) => {
   const [isLogin, setIsLogin] = useState<boolean>(loginFirst);
   const [showForgot, setShowForgot] = useState<boolean>(false);
@@ -52,6 +54,7 @@ export const UserFlow: FC<IUserFlow> = ({
               <SignInForm
                 switchOnSignUpForm={() => setIsLogin(!isLogin)}
                 switchOnForgotForm={() => setShowForgot(!showForgot)}
+                onSignInClick={onSignInClick}
               />
             ) : (
               <>
