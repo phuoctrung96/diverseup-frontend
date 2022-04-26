@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AuthHelpers from './AuthHelpers';
 
-export const baseURL = 'https://backend.diverseup.com';
+export const baseURL = process.env.REACT_APP_API_BASEURL || 'https://backend.diverseup.com';
 
 // Set config defaults when creating the instance
 const instance = axios.create({
