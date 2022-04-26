@@ -1,26 +1,60 @@
+@import 'src/styles/utilities/mixins';
+
 .mainInfoWrapper {
   display: flex;
   justify-content: space-between;
   width: 100%;
 
+  @include tablet-min() {
+    flex-direction: column;
+    position: relative;
+
+    button {
+      position: absolute;
+      right: 0;
+      top: 10px;
+    }
+  }
+
   .infoContent {
     display: flex;
+    width: 100%;
+
+    @include tablet-min() {
+      flex-direction: column;
+      position: relative;
+    }
 
     .companyImage {
       border-radius: 16px;
       margin-right: 40px;
+      max-width: 250px;
+      width: 100%;
+      object-fit: contain;
+
+      @include tablet-min() {
+        max-width: 120px;
+      }
     }
 
     .mainInfo {
+      @include tablet-min() {
+        padding-top: 20px;
+      }
+
       .mainInfoData {
         .companyName {
           line-height: 54px;
           padding-bottom: 5px;
+
+          @include tablet-min() {
+            line-height: 42px;
+          }
         }
 
         .companyLocation {
           font-weight: 400;
-          font-size: 18px;
+          font-size: 1.125rem;
           line-height: 27px;
           letter-spacing: 0.2px;
           color: var(--color-secondary-dark-gray);
@@ -39,7 +73,7 @@
           background-color: var(--color-green-recommended);
           border-radius: 100px;
           padding: 6px 20px 6px 45px;
-          font-size: 18px;
+          font-size: 1.125rem;
           line-height: 27px;
           color: var(--color-primary-white);
           display: flex;
@@ -56,7 +90,7 @@
         }
 
         .recommendationCount {
-          font-size: 16px;
+          font-size: 1rem;
           line-height: 24px;
           text-decoration: underline;
           color: var(--color-primary-yellow);
@@ -66,7 +100,7 @@
       .recommenderToFriends {
         color: var(--color-green-recommended-to-friends);
         font-weight: 700;
-        font-size: 18px;
+        font-size: 1.125rem;
         display: flex;
         align-items: center;
 

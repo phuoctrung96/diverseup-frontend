@@ -9,6 +9,39 @@ export interface IBusinessesItem {
   rating: number | null;
   short_description: string | null;
 }
+
+export interface IBusinessItemInfo {
+  slug: string;
+  name: string;
+  logo: string;
+  website: string;
+  rating: number | null;
+  short_description: string | null;
+  created: string;
+  city: string;
+  state: string;
+  address: string;
+  avg_recommended: string;
+  review_count: number;
+  sector: string;
+  country: string;
+  employees_count: number | null;
+  rate_sponsorship_mentorship_opportunity: null;
+  rate_equal_treatment_of_men_and_women: null;
+  rate_equal_pay_for_equal_performance: null;
+  rate_equal_opportunities_to_move_up_organization: null;
+  paid_leave: null;
+  unpaid_leave: null;
+  motherhood_supports: null;
+  flexible_hours: null;
+  job_sharing: null;
+  working_remotely: null;
+  part_time_opportunity: null;
+  most_like_top_three: string[] | null;
+  least_like_top_three: string[] | null;
+  is_recommended: null;
+}
+
 export interface IBusinessesRes extends Pagination {
   items: IBusinessesItem[];
 }
@@ -23,13 +56,18 @@ export const businessesApi = (
   return axios.get(`/api/businesses?page=${p.page}&size=${p.size}`);
 };
 
+export const businessesWithSearchApi = (
+  p: Pick<Pagination, 'page' | 'size'>,
+  term: string
+): Promise<IBusinessesRes> => {
+  return axios.get(`/api/quickSearchCompanies?page=${p.page}&size=${p.size}&term=${term}`);
+};
+
 export interface IBusinessDetailParams {
   slug: string;
 }
-export const businessDetailApi = (params: IBusinessDetailParams): Promise<IBusinessesItem> => {
-  return axios.get('/api/business', {
-    params,
-  });
+export const businessDetailApi = (params: IBusinessDetailParams): Promise<IBusinessItemInfo> => {
+  return axios.get(`/api/business/${params.slug}`);
 };
 
 export interface IRateCompanyBody {

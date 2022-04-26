@@ -9,6 +9,7 @@ import { ROUTE_BLOG } from 'app-constants';
 
 export const BlogList: FC = () => {
   const [blogs, setBlogs] = useState<ICard[] | []>([]);
+  const [isBlogsLoading, setIsBlogsLoading] = useState<boolean>(true);
   const [pagination, setPagination] = useState<Pagination>();
   const { register, handleSubmit, reset, control } = useForm<any>();
 
@@ -21,6 +22,7 @@ export const BlogList: FC = () => {
 
     setBlogs([]);
     getBlogs({ page, size: 12 });
+    setIsBlogsLoading(true);
   }, [location]);
 
   const getBlogs = (params: Pick<Pagination, 'page' | 'size'>) => {
@@ -35,6 +37,7 @@ export const BlogList: FC = () => {
 
       setPagination({ total: res.total, page: res.page, size: res.size });
       setBlogs(newData || []);
+      setIsBlogsLoading(false);
     });
   };
 
@@ -42,7 +45,7 @@ export const BlogList: FC = () => {
     <div>
       <PageTitle title={'Blog'} />
 
-      <Cards cards={blogs} button={null} pagination={pagination} />
+      <Cards cards={blogs} button={null} pagination={pagination} isLoading={isBlogsLoading} />
     </div>
   );
 };

@@ -12,8 +12,13 @@ export const HomePage: FC = () => {
   const navigate = useNavigate();
   const [businesses, setBusinesses] = useState<ICard[] | []>([]);
   const [blogs, setBlogs] = useState<ICard[] | []>([]);
+  const [isBusinessLoading, setIsBusinessLoading] = useState<boolean>(true);
+  const [isBlogsLoading, setIsBlogsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setIsBlogsLoading(true);
+    setIsBusinessLoading(true);
+
     businessesApi({ page: 1, size: 3 }, true).then((res) => {
       const newData: ICard[] | [] = res.items?.map((el) => ({
         type: 'company',
@@ -25,6 +30,7 @@ export const HomePage: FC = () => {
       }));
 
       setBusinesses(newData || []);
+      setIsBusinessLoading(false);
     });
 
     blogsApi({ page: 1, size: 3 }).then((res) => {
@@ -37,6 +43,7 @@ export const HomePage: FC = () => {
       }));
 
       setBlogs(newData || []);
+      setIsBlogsLoading(false);
     });
   }, []);
 
@@ -53,6 +60,7 @@ export const HomePage: FC = () => {
           <Cards
             cards={businesses}
             button={{ text: 'View more', onClick: () => navigate(ROUTE_COMPANY_RATING) }}
+            isLoading={isBusinessLoading}
           />
         </div>
       </section>
@@ -67,6 +75,7 @@ export const HomePage: FC = () => {
           <Cards
             cards={blogs}
             button={{ text: 'View more', onClick: () => navigate(ROUTE_BLOG) }}
+            isLoading={isBlogsLoading}
           />
         </div>
       </section>

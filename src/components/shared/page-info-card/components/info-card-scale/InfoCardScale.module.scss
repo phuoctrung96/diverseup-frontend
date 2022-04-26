@@ -1,5 +1,11 @@
+@import 'src/styles/utilities/mixins';
+
 .scaleWrapper {
   display: flex;
+
+  @include mobile-max() {
+    margin: 0 auto;
+  }
 
   .circleContent {
     display: flex;

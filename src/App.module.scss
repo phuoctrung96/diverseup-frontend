@@ -1,3 +1,5 @@
+@import 'src/styles/utilities/mixins';
+
 .App {
   display: flex;
   flex-direction: column;
@@ -13,6 +15,10 @@
       max-height: 550px;
       background-size: cover;
       position: relative;
+
+      @include tablet-min() {
+        max-height: 350px;
+      }
 
       &:before {
         content: '';

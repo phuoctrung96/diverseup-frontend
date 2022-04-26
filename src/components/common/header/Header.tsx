@@ -29,10 +29,17 @@ export const Header: FC<IHeaderProps> = ({ showSearch }) => {
   };
 
   const logout = () => {
-    logoutApi().then(() => {
-      AuthHelpers.clearStorage();
-      setIsLoggedIn(false);
-    });
+    logoutApi()
+      .then(() => {
+        AuthHelpers.clearStorage();
+        setIsLoggedIn(false);
+      })
+      .catch((error) => {
+        if (error.status === 401) {
+          AuthHelpers.clearStorage();
+          setIsLoggedIn(false);
+        }
+      });
   };
 
   return (

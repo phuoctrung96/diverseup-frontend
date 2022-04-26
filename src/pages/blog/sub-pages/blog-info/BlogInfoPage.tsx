@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import PageTitle from '../../../../components/common/page-title/PageTitle';
 import Image from '../../../../components/shared/image/Image';
 import Text from '../../../../components/shared/text/Text';
@@ -9,13 +9,14 @@ import banner from '../../../../assets/images/blog/content.jpg';
 import content1 from '../../../../assets/images/blog/content1.jpg';
 import content2 from '../../../../assets/images/blog/content2.jpg';
 import Note from '../../../../components/shared/note/Note';
-import { ICard } from '../../../../interfaces/card';
+import { ICard } from 'interfaces';
 import Cards from '../../../../components/shared/cards/Cards';
 import ShareSocial from '../../../../components/shared/share-social/ShareSocial';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
 
 const BlogInfoPage: FC = () => {
   const breadcrumbs = useBreadcrumbs();
+  const [isBlogsLoading, setIsBlogsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     breadcrumbs[2].match.pathname = '5';
@@ -92,7 +93,7 @@ const BlogInfoPage: FC = () => {
         <ShareSocial />
       </div>
       <PageTitle title={'Related articles'} classList={['blogTitle']} />
-      <Cards cards={blogCards} button={null} pagination={undefined} />
+      <Cards cards={blogCards} button={null} pagination={undefined} isLoading={isBlogsLoading} />
     </>
   );
 };
