@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import PageTitle from 'components/common/page-title/PageTitle';
 import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
 import RadioButtonGroup from 'components/shared/form-controls/radio-button-group/RadioButtonGroup';
@@ -6,14 +6,38 @@ import { useForm } from 'react-hook-form';
 import InfoCardTitle from 'components/shared/page-info-card/components/info-card-title/InfoCardTitle';
 import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
+import { useNavigate } from 'react-router-dom';
+import { recommendToFriends } from 'api/job-placement';
+import ModalWindow from 'components/shared/modal-window/ModalWindow';
 
 export const JPStepFive: FC = () => {
   const { register, handleSubmit, reset, control } = useForm<any>();
+  const navigate = useNavigate();
+  const [isAlertSubmit, setIsAlertSubmit] = useState(false);
 
   const shareRadio = [
-    { label: 'An Iphone/wallet case with DiverseUp Logo', value: 'qqq' },
-    { label: 'Free resume review by your career professionals', value: 'ddd' },
+    { label: 'An Iphone/wallet case with DiverseUp Logo', value: '1' },
+    { label: 'Free resume review by your career professionals', value: '2' },
   ];
+
+  const handleRecommendToFriend = (data: any) => {
+    console.log(data);
+    const groupEmail = [data.email1, data.email2, data.email3, data.email4, data.email5].filter(
+      (item) => item
+    );
+    const body = {
+      selected_prize_option: parseInt(data.share, 10) || 1,
+      user_fullname: data.name,
+      friend_emails: groupEmail,
+      message: data.message,
+    };
+
+    recommendToFriends(body).then(() => {
+      setIsAlertSubmit(true);
+    });
+
+    return null;
+  };
 
   return (
     <PageInfoCard classList={['center']}>
@@ -59,17 +83,35 @@ export const JPStepFive: FC = () => {
               <div className="card-section">
                 <div className="form-group">
                   <label className="label">Your message:</label>
-                  <textarea className="input textarea" placeholder="Enter your message" />
+                  <textarea
+                    className="input textarea"
+                    placeholder="Enter your message"
+                    {...register('message')}
+                    name="message"
+                  />
                 </div>
               </div>
             </form>
           </div>
         </div>
         <div className="buttons-group">
-          <Button text={'Skip'} classList={['white']} />
-          <Button text={'Recommend to friends'} />
+          <Button text={'Skip'} classList={['white']} onClick={() => navigate('/')} />
+          <Button
+            text={'Recommend to friends'}
+            onClick={handleSubmit((data) => handleRecommendToFriend(data))}
+          />
         </div>
       </div>
+
+      <ModalWindow
+        visible={isAlertSubmit}
+        setVisible={() => {
+          setIsAlertSubmit(false);
+          navigate('/');
+        }}
+      >
+        <div>Thank you! Your request has been submitted</div>
+      </ModalWindow>
     </PageInfoCard>
   );
 };

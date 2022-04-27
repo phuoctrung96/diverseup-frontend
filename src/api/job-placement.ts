@@ -13,6 +13,17 @@ export interface IJobPlacementBody {
   notification_receive_job_alerts?: boolean;
 }
 
+export interface IRecommendToFriendsBody {
+  selected_prize_option?: any;
+  user_fullname?: string;
+  friend_emails?: string[];
+  message?: string;
+}
+
 export const submitJobPlacement = (body: IJobPlacementBody): Promise<unknown> => {
   return axios.post('/api/jobPlacement', body);
+};
+
+export const recommendToFriends = (body: IRecommendToFriendsBody): Promise<unknown> => {
+  return axios.post('/api/recommendToFriends', body);
 };

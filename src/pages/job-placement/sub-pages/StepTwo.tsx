@@ -8,6 +8,7 @@ import { SECOND_JOB_PLACEMENT_STEP } from 'app-constants/job-placement-steps';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setJobPlacementForm, setJobPlacementStep } from 'redux/actions/job-placement';
+import AuthHelper from '../../../utils/AuthHelpers';
 
 const KEY_STEP_2 = {
   important: 'selected_choosing_employer_importance_options',
@@ -22,6 +23,7 @@ export const JPStepTwo: FC = () => {
   const [answerImportant, setAnswerImportant] = useState<string[]>([]);
   const [answerMotivation, setAnswerMotivation] = useState<string[]>([]);
   const [answerDealBreak, setAnswerDealBreak] = useState<string[]>([]);
+  const accessToken = AuthHelper.getAccessToken();
 
   const handleClickItem = (item, answer) => {
     if (item.key === 'important') {
@@ -71,8 +73,8 @@ export const JPStepTwo: FC = () => {
 
   const handleClickNext = () => {
     dispatch(
-      setJobPlacementStep(3, () => {
-        navigate('/job-placement/step3');
+      setJobPlacementStep(accessToken ? 4 : 3, () => {
+        navigate(accessToken ? '/job-placement/step4' : '/job-placement/step3');
       })
     );
   };
