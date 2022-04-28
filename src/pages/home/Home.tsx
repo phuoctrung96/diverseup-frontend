@@ -6,7 +6,7 @@ import SecondaryBanner from 'pages/home/components/secondary-banner/SecondaryBan
 import PageTitle from 'components/common/page-title/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_BLOG, ROUTE_COMPANY_RATING } from 'app-constants';
-import { blogsApi, businessesApi } from 'api';
+import { blogsApi, businessesApi, highlightedBusinesses } from 'api';
 
 export const HomePage: FC = () => {
   const navigate = useNavigate();
@@ -19,13 +19,13 @@ export const HomePage: FC = () => {
     setIsBlogsLoading(true);
     setIsBusinessLoading(true);
 
-    businessesApi({ page: 1, size: 3 }, true).then((res) => {
+    highlightedBusinesses().then((res) => {
       const newData: ICard[] | [] = res.items?.map((el) => ({
         type: 'company',
         description: el.short_description || '',
         imageUrl: el.logo || '',
         link: `/${ROUTE_COMPANY_RATING}/${el.slug}`,
-        rating: el.rating || 5,
+        rating: el.rating || 0,
         title: el.name,
       }));
 

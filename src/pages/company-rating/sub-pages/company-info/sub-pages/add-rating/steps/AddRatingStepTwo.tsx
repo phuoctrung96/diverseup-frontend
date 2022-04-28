@@ -6,7 +6,7 @@ import Button from 'components/shared/button/Button';
 
 export const AddRatingStepTwo: FC = () => {
   return (
-    <PageInfoCard classList={['center']}>
+    <PageInfoCard classList={['center', 'no-margin']}>
       <PageTitle
         type={'card'}
         title={'Equal opportunity for men and women'}

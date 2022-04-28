@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, ReactNode, SetStateAction } from 'react';
+import React, { Dispatch, FC, ReactNode, SetStateAction, useEffect } from 'react';
 import style from './ModalWindow.module.scss';
 
 interface ModalWindowProps {
@@ -8,6 +8,12 @@ interface ModalWindowProps {
 }
 
 export const ModalWindow: FC<ModalWindowProps> = ({ visible = false, setVisible, children }) => {
+  useEffect(() => {
+    window.document.getElementsByTagName('body')[0].setAttribute('class', 'show-modal');
+    return () => {
+      window.document.getElementsByTagName('body')[0].removeAttribute('class');
+    };
+  }, []);
   const rootClasses = [style.modal];
   if (visible) {
     rootClasses.push(style.active);

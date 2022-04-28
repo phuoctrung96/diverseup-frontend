@@ -3,16 +3,45 @@ import style from 'styles/modules/Auth.module.scss';
 import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { forgotPasswordApi } from '../../../../api';
 
 interface IForgotForm {
   onSend: () => void;
 }
 
-export const ForgotForm: FC<IForgotForm> = ({ onSend }) => {
-  const { register, handleSubmit, reset } = useForm<any>();
+interface IForm {
+  email: string;
+}
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    alert('forgot' + JSON.stringify(data));
+export const ForgotForm: FC<IForgotForm> = ({ onSend }) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    getValues,
+    formState: { errors },
+  } = useForm<IForm>();
+
+  const onSubmit: SubmitHandler<IForm> = async ({ email }) => {
+    if (getValues('email') == '') {
+      return setError('email', {
+        type: 'required',
+        message: 'This is required',
+      });
+    }
+    try {
+      await forgotPasswordApi({ email });
+      localStorage.setItem('forgot', getValues('email'));
+      reset();
+      onSend();
+    } catch (e: any) {
+      console.log(e.data);
+      setError('email', {
+        type: 'required',
+        message: e.data.detail[0].msg,
+      });
+    }
   };
 
   return (
@@ -29,8 +58,9 @@ export const ForgotForm: FC<IForgotForm> = ({ onSend }) => {
           register={register}
           type="text"
           placeholder="Enter you e-mail address"
+          errors={errors}
         />
-        <Button text="Send" classList={['auth']} onClick={onSend} />
+        <Button text="Send" classList={['auth']} />
       </form>
     </>
   );

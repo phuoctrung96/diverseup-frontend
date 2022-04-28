@@ -18,7 +18,7 @@ export const AddRatingStepOne: FC = () => {
   ];
 
   return (
-    <PageInfoCard classList={['center']}>
+    <PageInfoCard classList={['center', 'no-margin']}>
       <PageTitle
         type={'card'}
         title={'Tell us about yourself'}

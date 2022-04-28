@@ -26,6 +26,11 @@ body {
     font-size: 14px;
   }
 }
+
+.show-modal {
+  overflow: hidden;
+}
+
 button[disabled] {
   background-color: rgba(131, 131, 131, 0.8);
 }

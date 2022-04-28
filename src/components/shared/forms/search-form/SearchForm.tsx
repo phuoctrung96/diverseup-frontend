@@ -5,6 +5,7 @@ import Button from 'components/shared/button/Button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ROUTE_COMPANY_RATING } from 'app-constants';
+import { removeEmptyValues } from 'utils/object.utils';
 
 interface ISearchForm {
   hideOnMobile?: boolean;
@@ -21,15 +22,21 @@ export const SearchForm: FC<ISearchForm> = ({ hideOnMobile = false }) => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
 
-    setValue('term', params.term || '');
+    setValue('term', params.search_term || '');
   }, [location]);
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    setSearchParams({ ...searchParams, page: '1', term: data.term });
+    setSearchParams({ ...searchParams, page: '1', search_term: data.term });
     navigate(
       {
         pathname: ROUTE_COMPANY_RATING,
-        search: createSearchParams({ ...searchParams, page: '1', term: data.term }).toString(),
+        search: createSearchParams(
+          removeEmptyValues({
+            ...searchParams,
+            page: '1',
+            search_term: data.term,
+          })
+        ).toString(),
       },
       { replace: true }
     );

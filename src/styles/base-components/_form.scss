@@ -47,6 +47,10 @@
       position: relative;
       display: block;
 
+      @include tablet-min() {
+        margin-bottom: 15px;
+      }
+
       &::placeholder {
         font-size: 14px;
         color: var(--color-secondary-dark-gray);

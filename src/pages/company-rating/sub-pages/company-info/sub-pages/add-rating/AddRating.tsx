@@ -28,7 +28,9 @@ export const AddRating: FC = () => {
       />
       <StepperComponent steps={steps} />
 
-      <Outlet />
+      <div className="section__block no-top-padding">
+        <Outlet />
+      </div>
     </>
   );
 };

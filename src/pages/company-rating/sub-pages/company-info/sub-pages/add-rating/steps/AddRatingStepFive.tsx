@@ -9,7 +9,7 @@ export const AddRatingStepFive: FC = () => {
   const { register, handleSubmit, reset, control } = useForm<any>();
 
   return (
-    <PageInfoCard classList={['center']}>
+    <PageInfoCard classList={['center', 'no-margin']}>
       <PageTitle
         type={'card'}
         title={'Just a little bit more about you'}

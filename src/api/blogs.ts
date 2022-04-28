@@ -21,3 +21,18 @@ export const blogsApi = (
 
   return axios.get(`/api/blogs?page=${p.page}&size=${p.size}`);
 };
+
+export const relatedBlogsApi = (
+  slug: string,
+  p: Pick<Pagination, 'page' | 'size'> = { page: 1, size: 3 }
+): Promise<IBlogsRes> => {
+  return axios.get(`/api/blog/${slug}/related?page=${p.page}&size=${p.size}`);
+};
+
+export interface IBlogDetails extends IBlogItem {
+  body: string;
+}
+
+export const getBlogApi = (slug: string): Promise<IBlogDetails> => {
+  return axios.get(`/api/blog/${slug}`);
+};

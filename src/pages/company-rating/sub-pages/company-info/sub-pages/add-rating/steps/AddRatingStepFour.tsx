@@ -9,7 +9,7 @@ import { FOUR_STEP_CARD_SECTIONS } from 'app-constants';
 
 export const AddRatingStepFour: FC = () => {
   return (
-    <PageInfoCard classList={['center']}>
+    <PageInfoCard classList={['center', 'no-margin']}>
       <PageTitle
         type={'card'}
         title={'Overall Company Culture'}

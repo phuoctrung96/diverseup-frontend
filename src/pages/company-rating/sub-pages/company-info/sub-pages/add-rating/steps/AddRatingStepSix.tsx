@@ -4,7 +4,7 @@ import UserFlow from 'components/common/user-flow/UserFlow';
 
 export const AddRatingStepSix: FC = () => {
   return (
-    <PageInfoCard classList={['center']}>
+    <PageInfoCard classList={['center', 'no-margin']}>
       <UserFlow
         loginFirst={false}
         title={'Sign in or Sign up'}

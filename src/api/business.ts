@@ -1,5 +1,7 @@
 import axios from '../utils/axios.config';
 import { Pagination } from 'interfaces';
+import { getUrlWithParams } from 'utils/http.utils';
+import { removeEmptyValues } from 'utils/object.utils';
 
 export interface IBusinessesItem {
   slug: string;
@@ -26,41 +28,43 @@ export interface IBusinessItemInfo {
   sector: string;
   country: string;
   employees_count: number | null;
-  rate_sponsorship_mentorship_opportunity: null;
-  rate_equal_treatment_of_men_and_women: null;
-  rate_equal_pay_for_equal_performance: null;
-  rate_equal_opportunities_to_move_up_organization: null;
-  paid_leave: null;
-  unpaid_leave: null;
-  motherhood_supports: null;
-  flexible_hours: null;
-  job_sharing: null;
-  working_remotely: null;
-  part_time_opportunity: null;
+  rate_sponsorship_mentorship_opportunity: number | null;
+  rate_equal_treatment_of_men_and_women: number | null;
+  rate_equal_pay_for_equal_performance: number | null;
+  rate_equal_opportunities_to_move_up_organization: number | null;
+  paid_leave: number | null;
+  unpaid_leave: number | null;
+  motherhood_supports: string[] | null;
+  flexible_hours: number | null;
+  job_sharing: number | null;
+  working_remotely: number | null;
+  part_time_opportunity: number | null;
   most_like_top_three: string[] | null;
   least_like_top_three: string[] | null;
-  is_recommended: null;
+  is_recommended: boolean | null;
+  how_likely_to_recommend_company: number | null;
 }
 
 export interface IBusinessesRes extends Pagination {
   items: IBusinessesItem[];
 }
-export const businessesApi = (
-  p: Pick<Pagination, 'page' | 'size'>,
-  highlighted = false
-): Promise<IBusinessesRes> => {
-  if (highlighted) {
-    return axios.get(`/api/businesses?page=${p.page}&size=${p.size}&highlighted=true`);
-  }
+export interface IBusinessReq {
+  page: number;
+  size: number;
+  search_term?: string;
+  sort_by?: '' | 'name' | 'rating' | 'ratingDate';
+  order?: '' | 'asc' | 'desc';
+}
 
-  return axios.get(`/api/businesses?page=${p.page}&size=${p.size}`);
+export const businessesApi = (params: IBusinessReq): Promise<IBusinessesRes> => {
+  return axios.get(getUrlWithParams(removeEmptyValues(params), '/api/businesses'));
 };
 
-export const businessesWithSearchApi = (
-  p: Pick<Pagination, 'page' | 'size'>,
-  term: string
+export const highlightedBusinesses = (
+  p: Pick<Pagination, 'page' | 'size'> = { page: 1, size: 3 },
+  limit = 3
 ): Promise<IBusinessesRes> => {
-  return axios.get(`/api/quickSearchCompanies?page=${p.page}&size=${p.size}&term=${term}`);
+  return axios.get(`/api/highlightedBusinesses?page=${p.page}&size=${p.size}&limit=${limit}`);
 };
 
 export interface IBusinessDetailParams {

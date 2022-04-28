@@ -1,9 +1,24 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import style from 'styles/modules/Auth.module.scss';
 import Button from 'components/shared/button/Button';
+import { forgotPasswordApi } from '../../../../api';
 
 export const EmailSent: FC = () => {
   const [canResend, setCanResend] = useState<boolean>(true);
+
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem('forgot');
+    };
+  }, []);
+
+  const onResent = async () => {
+    const email = localStorage.getItem('forgot');
+    if (email) {
+      await forgotPasswordApi({ email });
+    }
+    setCanResend(false);
+  };
 
   return (
     <>
@@ -15,7 +30,7 @@ export const EmailSent: FC = () => {
       {canResend && (
         <div className={style.variant}>
           <span>Didn’t recieve the link?</span>
-          <Button text="Resend" classList={['linkBtn']} onClick={() => setCanResend(false)} />
+          <Button text="Resend" classList={['linkBtn']} onClick={onResent} />
         </div>
       )}
     </>

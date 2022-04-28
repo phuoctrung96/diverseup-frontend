@@ -9,18 +9,51 @@ import banner from '../../../../assets/images/blog/content.jpg';
 import content1 from '../../../../assets/images/blog/content1.jpg';
 import content2 from '../../../../assets/images/blog/content2.jpg';
 import Note from '../../../../components/shared/note/Note';
-import { ICard } from 'interfaces';
 import Cards from '../../../../components/shared/cards/Cards';
 import ShareSocial from '../../../../components/shared/share-social/ShareSocial';
-import useBreadcrumbs from 'use-react-router-breadcrumbs';
+import { ICard } from 'interfaces';
+import { businessDetailApi, getBlogApi, IBlogDetails, relatedBlogsApi } from 'api';
+import { ROUTE_BLOG } from 'app-constants';
+import { useLocation, useParams } from 'react-router-dom';
+import { BREADCRUMBS_TYPES, useDynamicBreadcrumbContext } from 'DynamicBreadcrumb';
+import Loader from 'components/common/loader/Loader';
 
 const BlogInfoPage: FC = () => {
-  const breadcrumbs = useBreadcrumbs();
+  const [blogDetails, setBlogDetails] = useState<IBlogDetails>();
+  const [isBlogDetailsLoading, setIsBlogDetailsLoading] = useState<boolean>(true);
   const [isBlogsLoading, setIsBlogsLoading] = useState<boolean>(true);
+  const [relatedBlogs, setRelatedBlogs] = useState<ICard[]>([]);
+  const { setDynamicBreadcrumb } = useDynamicBreadcrumbContext();
+
+  const location = useLocation();
+  const { slug } = useParams();
 
   useEffect(() => {
-    breadcrumbs[2].match.pathname = '5';
-  }, []);
+    setIsBlogsLoading(true);
+    relatedBlogsApi(slug || '').then((res) => {
+      const newData: ICard[] | [] = res.items?.map((el) => ({
+        type: 'card',
+        description: el.short_description,
+        imageUrl: el.image,
+        link: `/${ROUTE_BLOG}/${el.slug}`,
+        title: el.title,
+      }));
+
+      setRelatedBlogs(newData || []);
+      setIsBlogsLoading(false);
+    });
+
+    loadBlogDetails();
+  }, [location]);
+
+  const loadBlogDetails = () => {
+    setDynamicBreadcrumb(BREADCRUMBS_TYPES.BLOG, '');
+    getBlogApi(slug || '').then((res) => {
+      setBlogDetails(res);
+      setDynamicBreadcrumb(BREADCRUMBS_TYPES.COMPANY, res.title);
+      setIsBlogDetailsLoading(false);
+    });
+  };
 
   const images = [
     { src: banner, alt: 'banner image', author: 'Photo of London by Alex M., 01.05.2021 ' },
@@ -51,49 +84,35 @@ const BlogInfoPage: FC = () => {
   const note =
     'What they once sang about New York is actually truer of London today - if you can make it here then you can make it anywhere.';
 
-  const blogCards: ICard[] = [
-    {
-      type: 'card',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-card.png',
-      link: '2',
-      title: 'How to make an impression on my first interview',
-    },
-    {
-      type: 'card',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-card.png',
-      link: '',
-      title: 'How to make an impression on my first interview',
-    },
-    {
-      type: 'card',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et aliqua.',
-      imageUrl: '/images/mock-card.png',
-      link: '',
-      title: 'How to make an impression on my first interview',
-    },
-  ];
-
   return (
     <>
-      <div className={style.wrapper}>
-        <PageTitle
-          title={'How to make an impression on my first interview'}
-          classList={['blogTitle']}
-        />
-        <Image images={images} />
-        <Text content={content} />
-        <Note text={note} />
-        <Image images={images2} />
-        <Text content={content_2} />
-        <ShareSocial />
-      </div>
-      <PageTitle title={'Related articles'} classList={['blogTitle']} />
-      <Cards cards={blogCards} button={null} pagination={undefined} isLoading={isBlogsLoading} />
+      {!blogDetails || isBlogDetailsLoading ? (
+        <div className="flexWrapper flexWrapper--center">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <div className={style.wrapper}>
+            <PageTitle
+              title={'How to make an impression on my first interview'}
+              classList={['blogTitle']}
+            />
+            <Image images={images} />
+            <Text content={content} />
+            <Note text={note} />
+            <Image images={images2} />
+            <Text content={content_2} />
+            <ShareSocial />
+          </div>
+          <PageTitle title={'Related articles'} classList={['blogTitle']} />
+          <Cards
+            cards={relatedBlogs}
+            button={null}
+            pagination={undefined}
+            isLoading={isBlogsLoading}
+          />
+        </>
+      )}
     </>
   );
 };

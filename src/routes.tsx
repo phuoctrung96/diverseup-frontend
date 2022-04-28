@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   ROUTE_ABOUT,
@@ -10,7 +10,7 @@ import {
   ROUTE_ROOT,
 } from 'app-constants';
 import HomePage from 'pages/home/Home';
-import { BreadcrumbsRoute } from 'use-react-router-breadcrumbs';
+import { BreadcrumbComponentType, BreadcrumbsRoute } from 'use-react-router-breadcrumbs';
 import CompanyRating from 'pages/company-rating/CompanyRating';
 import JobPlacement from 'pages/job-placement/JobPlacement';
 import Blog from 'pages/blog/Blog';
@@ -33,6 +33,13 @@ import JPStepFive from 'pages/job-placement/sub-pages/StepFive';
 import AddRating from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/AddRating';
 import BlogInfoPage from './pages/blog/sub-pages/blog-info/BlogInfoPage';
 import BlogList from './pages/blog/sub-pages/blog-list/BlogList';
+import { useDynamicBreadcrumbContext } from 'DynamicBreadcrumb';
+
+const ContextBreadcrumb = () => {
+  const { store } = useDynamicBreadcrumbContext();
+
+  return <span>{store.props}</span>;
+};
 
 export const ROUTES: BreadcrumbsRoute[] = [
   { path: ROUTE_ROOT, element: <HomePage />, breadcrumb: null },
@@ -46,7 +53,11 @@ export const ROUTES: BreadcrumbsRoute[] = [
         path: ':slug',
         element: <CompanyInfoPage />,
         children: [
-          { path: '', element: <CompanyInfo /> },
+          {
+            path: '',
+            element: <CompanyInfo />,
+            breadcrumb: ContextBreadcrumb,
+          },
           {
             path: ROUTE_ADD_RATING,
             element: <AddRating />,
@@ -82,7 +93,11 @@ export const ROUTES: BreadcrumbsRoute[] = [
     breadcrumb: 'Blog',
     children: [
       { index: true, element: <BlogList /> },
-      { path: ':id', element: <BlogInfoPage /> },
+      {
+        path: ':slug',
+        element: <BlogInfoPage />,
+        breadcrumb: ContextBreadcrumb,
+      },
     ],
   },
   { path: ROUTE_EMPLOYER, element: <Employer />, breadcrumb: null },

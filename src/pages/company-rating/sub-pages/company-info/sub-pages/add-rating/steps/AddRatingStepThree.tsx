@@ -85,7 +85,7 @@ export const AddRatingStepThree: FC = () => {
   }, [watchAllFields]);
 
   return (
-    <PageInfoCard classList={['center']}>
+    <PageInfoCard classList={['center', 'no-margin']}>
       <PageTitle
         type={'card'}
         title={'Family Support'}

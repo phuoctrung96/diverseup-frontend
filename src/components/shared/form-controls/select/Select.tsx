@@ -3,8 +3,13 @@ import { Controller } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 import Select from 'react-select';
 
+export interface ISelectOption {
+  label: string;
+  value: unknown;
+}
+
 interface ISelect {
-  options: any[];
+  options: ISelectOption[];
   control: any;
   name: string;
   required?: boolean;
@@ -32,8 +37,11 @@ export const FormSelect: FC<ISelect> = ({
           <Select
             {...field}
             styles={customStyles}
-            options={options}
+            options={[{ label: selectPlaceholder, value: undefined }, ...options]}
             placeholder={selectPlaceholder || ''}
+            isOptionSelected={(option) =>
+              field?.value ? option.label === field.value.label : false
+            }
           />
         )}
       />

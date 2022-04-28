@@ -5,19 +5,17 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GlobalModal } from 'GlobalModal';
-import { Provider } from 'react-redux';
-import configureStore from 'redux/stores';
-const store = configureStore();
+import { DynamicBreadcrumb } from 'DynamicBreadcrumb';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <GlobalModal>
+  <BrowserRouter>
+    <GlobalModal>
+      <DynamicBreadcrumb>
         <App />
-      </GlobalModal>
-    </BrowserRouter>
-  </Provider>
+      </DynamicBreadcrumb>
+    </GlobalModal>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -7,7 +7,7 @@ interface IAppLogo {
 export const AppLogo: FC<IAppLogo> = ({ footer = false }) => {
   return (
     <div>
-      <img src="/Logo.svg" alt="Logo" className={`logo ${footer && 'footer'}`} />
+      <img src="/Logo.png" alt="Logo" className={`logo ${footer && 'footer'}`} />
     </div>
   );
 };

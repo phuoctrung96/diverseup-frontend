@@ -1,3 +1,5 @@
+@import 'src/styles/utilities/mixins';
+
 .contact-us-modal {
   display: flex;
   flex-direction: column;
@@ -10,8 +12,18 @@
     margin-bottom: 15px;
     vertical-align: center;
 
+    @include tablet-min {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .phone {
       margin-right: 46px;
+
+      @include tablet-min {
+        margin: 0 0 10px 0;
+      }
     }
 
     .phone,
@@ -34,10 +46,16 @@
 
   .subtext {
     margin-bottom: 30px;
+    @include tablet-min {
+      margin-bottom: 15px;
+    }
   }
 
   .textarea {
     height: 150px;
     resize: none;
+    @include tablet-min {
+      height: 120px;
+    }
   }
 }

@@ -50,10 +50,16 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
       showModal(MODAL_TYPES.SIGN_IN_MODAL);
     } catch (e: any) {
       console.log(e);
-      if (e.detail === 'REGISTER_USER_ALREADY_EXISTS') {
+      if (e.data.detail === 'REGISTER_USER_ALREADY_EXISTS') {
         setError('email', {
           type: 'required',
           message: `user with email: ${email} already exist`,
+        });
+      } else {
+        console.log(e.data);
+        setError(e.data.detail[0].loc[1], {
+          type: 'required',
+          message: e.data.detail[0].msg,
         });
       }
     }

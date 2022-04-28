@@ -1,3 +1,5 @@
+@import 'src/styles/utilities/mixins';
+
 .modal {
   position: fixed;
   right: 0;
@@ -7,11 +9,14 @@
   display: none;
   background-color: rgba(15, 27, 54, 0.23);
   z-index: 99999;
+  @include tablet-min() {
+    background-color: transparent;
+  }
 
   .close {
-    position: relative;
-    top: -34px;
-    right: -54px;
+    position: absolute;
+    top: 30px;
+    right: 20px;
     margin-left: auto;
     width: 16px;
     height: 16px;
@@ -19,6 +24,7 @@
   }
 
   .content {
+    position: relative;
     padding: 50px 70px;
     background: #ffffff;
     border-radius: 16px;
@@ -27,6 +33,18 @@
     flex-direction: column;
     align-items: center;
     width: 570px;
+    @include tablet-min() {
+      border-radius: 0;
+      justify-content: flex-start;
+      margin-top: auto;
+      width: 100%;
+      height: calc(100vh - 66px);
+      padding: 75px 20px;
+    }
+
+    @include height-max {
+      padding: 20px 20px;
+    }
   }
 }
 

@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import PageTitle from 'components/common/page-title/PageTitle';
 import Cards from 'components/shared/cards/Cards';
 import { ICard } from 'interfaces/card';
-import { businessesApi, businessesWithSearchApi, IBusinessesRes } from 'api/business';
+import { businessesApi, IBusinessesRes, IBusinessReq } from 'api/business';
 import { ROUTE_COMPANY_RATING } from 'app-constants';
-import Select from 'components/shared/form-controls/select/Select';
+import Select, { ISelectOption } from 'components/shared/form-controls/select/Select';
 import { useForm } from 'react-hook-form';
 import { Pagination } from 'interfaces';
 import { useLocation } from 'react-router-dom';
@@ -13,28 +13,44 @@ export const CompanyList: FC = () => {
   const [businesses, setBusinesses] = useState<ICard[] | []>([]);
   const [pagination, setPagination] = useState<Pagination>();
   const [isBusinessLoading, setIsBusinessLoading] = useState<boolean>(true);
-  const { register, handleSubmit, reset, control } = useForm<any>();
+  const { control, watch, getValues } = useForm<any>();
+  const watchSort = watch('sort');
 
   const location = useLocation();
+  const filterOptions: ISelectOption[] = [
+    { label: 'Company Name (A-Z)', value: { sort_by: 'name', order: 'asc' } },
+    { label: 'Company Name (Z-A)', value: { sort_by: 'name', order: 'desc' } },
+    { label: 'Company Rating (Low to High)', value: { sort_by: 'rating', order: 'desc' } },
+    { label: 'Company Rating (High to Low)', value: { sort_by: 'rating', order: 'asc' } },
+    { label: 'Rating Date (New to Oldest)', value: { sort_by: 'ratingDate', order: 'asc' } },
+    { label: 'Rating Date (Oldest to New)', value: { sort_by: 'ratingDate', order: 'desc' } },
+  ];
+
+  useEffect(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+
+    setBusinesses([]);
+    setIsBusinessLoading(true);
+    if (watchSort && watchSort.value) {
+      getBusinesses({ page: 1, size: 12, ...params, ...watchSort.value });
+    } else {
+      getBusinesses({ page: 1, size: 12, ...params });
+    }
+  }, [watchSort]);
 
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     const page = parseInt(params.page) || 1;
-    const term = params.term || '';
+    const search_term = params.search_term || '';
 
     setBusinesses([]);
     setIsBusinessLoading(true);
-    term ? searchBusinesses({ page, size: 12 }, term) : getBusinesses({ page, size: 12 });
+    getBusinesses({ page, size: 12, search_term });
   }, [location]);
 
-  const searchBusinesses = (params: Pick<Pagination, 'page' | 'size'>, term: string) => {
-    businessesWithSearchApi(params, term).then((res) => {
-      setBusinesses(mapBusinessResponse(res));
-    });
-  };
-
-  const getBusinesses = (params: Pick<Pagination, 'page' | 'size'>) => {
+  const getBusinesses = (params: IBusinessReq) => {
     businessesApi(params).then((res) => {
       setBusinesses(mapBusinessResponse(res));
     });
@@ -46,7 +62,7 @@ export const CompanyList: FC = () => {
       description: el.short_description || '',
       imageUrl: el.logo || '',
       link: `/${ROUTE_COMPANY_RATING}/${el.slug}`,
-      rating: el.rating || 5,
+      rating: el.rating || 0,
       title: el.name,
     }));
 
@@ -62,7 +78,7 @@ export const CompanyList: FC = () => {
       <div className="filters">
         <form className="form">
           <Select
-            options={[]}
+            options={filterOptions}
             control={control}
             name={'sort'}
             selectLabel={'Sort by:'}

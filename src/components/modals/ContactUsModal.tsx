@@ -5,13 +5,38 @@ import Button from 'components/shared/button/Button';
 import Input from 'components/shared/form-controls/input/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import auth from 'styles/modules/Auth.module.scss';
+import { contactUsApi } from '../../api/contact-us';
+
+interface IForm {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
 
 export const ContactUsModal: FC = () => {
   const { hideModal } = useGlobalModalContext();
-  const { register, handleSubmit, reset } = useForm<any>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors },
+  } = useForm<IForm>();
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    alert('contact us' + JSON.stringify(data));
+  const onSubmit: SubmitHandler<IForm> = async (data) => {
+    try {
+      await contactUsApi(data);
+      hideModal();
+      reset();
+    } catch (e: any) {
+      e.data.detail.map((err) => {
+        setError(err.loc[1], {
+          type: 'required',
+          message: err.msg,
+        });
+      });
+    }
   };
 
   return (
@@ -37,6 +62,7 @@ export const ContactUsModal: FC = () => {
             register={register}
             type="text"
             placeholder="Enter your name"
+            errors={errors}
           />
           <Input
             inputLabel="E-mail address"
@@ -44,6 +70,7 @@ export const ContactUsModal: FC = () => {
             register={register}
             type="text"
             placeholder="Enter your e-mail address"
+            errors={errors}
           />
           <Input
             inputLabel="Subject"
@@ -51,6 +78,7 @@ export const ContactUsModal: FC = () => {
             register={register}
             type="text"
             placeholder="Enter e-mail subject"
+            errors={errors}
           />
           <div className="form-group">
             <label className="label">Message</label>

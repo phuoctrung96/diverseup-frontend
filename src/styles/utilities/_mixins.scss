@@ -1,5 +1,11 @@
 @import 'variables';
 
+@mixin height-max() {
+  @media screen and (max-height: $MAX_HEIGHT_SMALL) {
+    @content;
+  }
+}
+
 @mixin mobile-max() {
   @media screen and (max-width: $MAX_WIDTH_EXTRA_SMALL) {
     @content;

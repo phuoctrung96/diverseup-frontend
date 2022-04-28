@@ -13,14 +13,23 @@ import { ICard } from 'interfaces/card';
 import Button from 'components/shared/button/Button';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_ADD_RATING, ROUTE_COMPANY_RATING } from 'app-constants';
-import { businessDetailApi, businessesApi, IBusinessItemInfo } from 'api';
+import { businessDetailApi, businessesApi, highlightedBusinesses, IBusinessItemInfo } from 'api';
 import Loader from 'components/common/loader/Loader';
+import { BREADCRUMBS_TYPES, useDynamicBreadcrumbContext } from 'DynamicBreadcrumb';
 
 export const CompanyInfo: FC = () => {
   const [businesses, setBusinesses] = useState<ICard[] | []>([]);
   const [isBusinessLoading, setIsBusinessLoading] = useState<boolean>(true);
   const [company, setCompany] = useState<IBusinessItemInfo>();
   const [isCompanyLoading, setIsCompanyLoading] = useState<boolean>(true);
+  const { setDynamicBreadcrumb } = useDynamicBreadcrumbContext();
+
+  const motherhoodSupport = [
+    'Onsite child care',
+    'Lactation rooms',
+    'Accessible parking',
+    'Discounted childcare',
+  ];
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,13 +39,13 @@ export const CompanyInfo: FC = () => {
     setIsCompanyLoading(true);
     setIsBusinessLoading(true);
 
-    businessesApi({ page: 1, size: 3 }, true).then((res) => {
+    highlightedBusinesses().then((res) => {
       const newData: ICard[] | [] = res.items?.map((el) => ({
         type: 'company',
         description: el.short_description || '',
         imageUrl: el.logo || '',
         link: `/${ROUTE_COMPANY_RATING}/${el.slug}`,
-        rating: el.rating || 5,
+        rating: el.rating || 0,
         title: el.name,
       }));
 
@@ -48,8 +57,10 @@ export const CompanyInfo: FC = () => {
   }, [location]);
 
   const loadCompanyData = () => {
+    setDynamicBreadcrumb(BREADCRUMBS_TYPES.COMPANY, '');
     businessDetailApi({ slug: slug || '' }).then((res) => {
       setCompany(res);
+      setDynamicBreadcrumb(BREADCRUMBS_TYPES.COMPANY, res.name);
       setIsCompanyLoading(false);
     });
   };
@@ -70,19 +81,21 @@ export const CompanyInfo: FC = () => {
                   <div className={styles.mainInfo}>
                     <div className={styles.mainInfoData}>
                       <h1 className={styles.companyName}>{company.name}</h1>
-                      <span
-                        className={styles.companyLocation}
-                      >{`${company.city}, ${company.state}`}</span>
+                      <span className={styles.companyLocation}>{`${
+                        company.city ? company.city + ',' : ''
+                      } ${company.state}`}</span>
                     </div>
                     <div className={styles.recommendation}>
-                      <div className={styles.recommendationBlock}>Recommended</div>
+                      <div className={styles.recommendationBlock}>
+                        {company.is_recommended ? 'Recommended' : 'Not Recommended'}
+                      </div>
                       <span className={styles.recommendationCount}>
                         {company.review_count} Reviews
                       </span>
                     </div>
                     <div className={styles.recommenderToFriends}>
                       <span className={`${styles.recommenderToFriendsStatus} ${styles.like}`} />
-                      <span>90% Recommend to Friend</span>
+                      <span>{company.avg_recommended || 0} % Recommend to Friend</span>
                     </div>
                   </div>
                 </div>
@@ -95,12 +108,12 @@ export const CompanyInfo: FC = () => {
             </PageInfoCard>
 
             <PageInfoCard>
-              <InfoCardValue label={'Website'} value={company.website} />
-              <InfoCardValue label={'Country'} value={company.country} />
-              <InfoCardValue label={'Sector'} value={company.sector} />
+              <InfoCardValue label={'Website'} value={company.website || '—\t'} />
+              <InfoCardValue label={'Country'} value={company.country || '—\t'} />
+              <InfoCardValue label={'Sector'} value={company.sector || '—\t'} />
               <InfoCardValue
                 label={'Employees'}
-                value={company.employees_count?.toString() || ''}
+                value={company.employees_count?.toString() || '—\t'}
               />
             </PageInfoCard>
 
@@ -128,35 +141,54 @@ export const CompanyInfo: FC = () => {
               <InfoCardTitle text={'Maternity Leave'} />
               <InfoCardValue
                 label={'Paid leave'}
-                value={company.paid_leave ? `${company.paid_leave} weeks` : ''}
+                value={company.paid_leave ? `${company.paid_leave} weeks` : '—\t'}
                 classList={['fullWidth']}
               />
               <InfoCardValue
                 label={'Unpaid leave'}
-                value={company.unpaid_leave ? `${company.unpaid_leave} weeks` : ''}
+                value={company.unpaid_leave ? `${company.unpaid_leave} weeks` : '—\t'}
                 classList={['fullWidth']}
               />
             </PageInfoCard>
 
             <PageInfoCard>
               <InfoCardTitle text={'Motherhood Support'} />
-              <InfoCardValue label={'Accessible parking'} value={''} />
-              <InfoCardValue label={'Onsite childcare'} value={''} />
-              <InfoCardValue label={'Lactation room'} value={''} />
-              <InfoCardValue label={'Discounted childcare'} value={''} />
+              {company.motherhood_supports?.length &&
+              company.motherhood_supports[0] !== 'Not Offered' ? (
+                motherhoodSupport.map((item, index) => {
+                  return (
+                    <InfoCardValue
+                      key={index}
+                      label={`${item}`}
+                      value={company?.motherhood_supports?.includes(item) ? 'Yes' : 'No'}
+                    />
+                  );
+                })
+              ) : company.motherhood_supports === null ? (
+                '—\t'
+              ) : (
+                <InfoCardValue label={'Not Offered'} value={'Yes'} />
+              )}
             </PageInfoCard>
 
             <PageInfoCard>
               <InfoCardTitle text={'Work Flexibility'} />
               <InfoCardValue
                 label={'Flexible hours'}
-                value={company.flexible_hours ? `${company.flexible_hours}% said it’s offered` : ''}
+                value={
+                  company.flexible_hours ? `${company.flexible_hours}% said it’s offered` : '—\t'
+                }
               />
-              <InfoCardValue label={'Job sharing'} value={company.job_sharing ? 'Yes' : 'No'} />
+              <InfoCardValue
+                label={'Job sharing'}
+                value={company.job_sharing !== null ? (company.job_sharing ? 'Yes' : 'No') : '—\t'}
+              />
               <InfoCardValue
                 label={'Working remotely'}
                 value={
-                  company.working_remotely ? `${company.working_remotely}% said it’s offered` : ''
+                  company.working_remotely
+                    ? `${company.working_remotely}% said it’s offered`
+                    : '—\t'
                 }
               />
               <InfoCardValue
@@ -164,7 +196,7 @@ export const CompanyInfo: FC = () => {
                 value={
                   company.part_time_opportunity
                     ? `${company.part_time_opportunity}% said it’s offered`
-                    : ''
+                    : '—\t'
                 }
               />
             </PageInfoCard>
@@ -172,20 +204,22 @@ export const CompanyInfo: FC = () => {
             <PageInfoCard>
               <InfoCardTitle text={`What women most like about ${company.name}`} />
               <div className={'flexWrapper'}>
-                {company.most_like_top_three?.length &&
-                  company.most_like_top_three.map((item, index) => {
-                    return <JobTrend key={index} text={item} />;
-                  })}
+                {company.most_like_top_three?.length
+                  ? company.most_like_top_three.map((item, index) => {
+                      return <JobTrend key={index} text={item} />;
+                    })
+                  : '—\t'}
               </div>
             </PageInfoCard>
 
             <PageInfoCard>
               <InfoCardTitle text={`What women least like about ${company.name}`} />
               <div className={'flexWrapper'}>
-                {company.least_like_top_three?.length &&
-                  company.least_like_top_three.map((item, index) => {
-                    return <JobTrend key={index} text={item} />;
-                  })}
+                {company.least_like_top_three?.length
+                  ? company.least_like_top_three.map((item, index) => {
+                      return <JobTrend key={index} text={item} />;
+                    })
+                  : '—\t'}
               </div>
             </PageInfoCard>
 
@@ -193,7 +227,11 @@ export const CompanyInfo: FC = () => {
               <InfoCardTitle
                 text={`On a scale of 0-5, how likely is ${company.name} recommendable to another woman`}
               />
-              <InfoCardScale />
+              {company.how_likely_to_recommend_company ? (
+                <InfoCardScale selected={company.how_likely_to_recommend_company} />
+              ) : (
+                '—\t'
+              )}
             </PageInfoCard>
           </div>
           <div className="section__block no-bottom-padding">
