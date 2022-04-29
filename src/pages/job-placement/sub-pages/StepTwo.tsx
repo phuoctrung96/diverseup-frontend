@@ -5,10 +5,9 @@ import PageTitle from 'components/common/page-title/PageTitle';
 import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
 import InfoCardTitle from 'components/shared/page-info-card/components/info-card-title/InfoCardTitle';
 import { SECOND_JOB_PLACEMENT_STEP } from 'app-constants/job-placement-steps';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setJobPlacementForm, setJobPlacementStep } from 'redux/actions/job-placement';
 import AuthHelper from '../../../utils/AuthHelpers';
+import { useGlobalJobPlacementContext } from '../JobPlacement';
 
 const KEY_STEP_2 = {
   important: 'selected_choosing_employer_importance_options',
@@ -17,9 +16,12 @@ const KEY_STEP_2 = {
 };
 
 export const JPStepTwo: FC = () => {
-  const dispatch = useDispatch();
+  const {
+    store: { jobPlacementForm },
+    setJobPlacementForm,
+    setJobPlacementStep,
+  } = useGlobalJobPlacementContext();
   const navigate = useNavigate();
-  const jobPlacementForm = useSelector((state: any) => state?.jobPlacement?.jobPlacementForm);
   const [answerImportant, setAnswerImportant] = useState<string[]>([]);
   const [answerMotivation, setAnswerMotivation] = useState<string[]>([]);
   const [answerDealBreak, setAnswerDealBreak] = useState<string[]>([]);
@@ -35,11 +37,9 @@ export const JPStepTwo: FC = () => {
       } else {
         setAnswerImportant([...answerImportant, answer.value]);
       }
-      dispatch(
-        setJobPlacementForm({
-          selected_choosing_employer_importance_options: [...answerImportant, answer.value],
-        })
-      );
+      setJobPlacementForm({
+        selected_choosing_employer_importance_options: [...answerImportant, answer.value],
+      });
     } else if (item.key === 'motivation') {
       if (answerMotivation.includes(answer.value)) {
         const filterSelected = answerMotivation.filter(
@@ -49,11 +49,9 @@ export const JPStepTwo: FC = () => {
       } else {
         setAnswerMotivation([...answerMotivation, answer.value]);
       }
-      dispatch(
-        setJobPlacementForm({
-          selected_what_motivates_best_job_options: [...answerMotivation, answer.value],
-        })
-      );
+      setJobPlacementForm({
+        selected_what_motivates_best_job_options: [...answerMotivation, answer.value],
+      });
     } else if (item.key === 'deal_break') {
       if (answerDealBreak.includes(answer.value)) {
         const filterSelected = answerDealBreak.filter(
@@ -63,28 +61,22 @@ export const JPStepTwo: FC = () => {
       } else {
         setAnswerDealBreak([...answerDealBreak, answer.value]);
       }
-      dispatch(
-        setJobPlacementForm({
-          selected_deal_breaker_options: [...answerDealBreak, answer.value],
-        })
-      );
+      setJobPlacementForm({
+        selected_deal_breaker_options: [...answerDealBreak, answer.value],
+      });
     }
   };
 
   const handleClickNext = () => {
-    dispatch(
-      setJobPlacementStep(accessToken ? 4 : 3, () => {
-        navigate(accessToken ? '/job-placement/step4' : '/job-placement/step3');
-      })
-    );
+    setJobPlacementStep(accessToken ? 4 : 3, () => {
+      navigate(accessToken ? '/job-placement/step4' : '/job-placement/step3');
+    });
   };
 
   const handleClickBack = () => {
-    dispatch(
-      setJobPlacementStep(1, () => {
-        navigate(-1);
-      })
-    );
+    setJobPlacementStep(1, () => {
+      navigate('/job-placement');
+    });
   };
 
   return (

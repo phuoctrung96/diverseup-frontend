@@ -1,33 +1,31 @@
+import { submitJobPlacement } from 'api/job-placement';
+import Button from 'components/shared/button/Button';
+import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
-import Button from 'components/shared/button/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { setJobPlacementForm, setJobPlacementStep } from 'redux/actions/job-placement';
 import { useNavigate } from 'react-router-dom';
-import { submitJobPlacement } from 'api/job-placement';
+import { useGlobalJobPlacementContext } from '../JobPlacement';
 
 export const JPStepFour: FC = () => {
   const { register } = useForm<any>();
-  const jobPlacementForm = useSelector((state: any) => state?.jobPlacement?.jobPlacementForm);
-  const dispatch = useDispatch();
+  const {
+    store: { jobPlacementForm },
+    setJobPlacementForm,
+    setJobPlacementStep,
+  } = useGlobalJobPlacementContext();
   const navigate = useNavigate();
 
   const handleOnClickCheckBox = (type, value) => {
-    dispatch(
-      setJobPlacementForm({
-        [type]: value,
-      })
-    );
+    setJobPlacementForm({
+      [type]: value,
+    });
   };
 
   const handleSubmitForm = () => {
     submitJobPlacement(jobPlacementForm).then((res: any) => {
-      dispatch(
-        setJobPlacementStep(5, () => {
-          navigate('/job-placement/step5');
-        })
-      );
+      setJobPlacementStep(5, () => {
+        navigate('/job-placement/step5');
+      });
     });
   };
 
