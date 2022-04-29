@@ -1,9 +1,9 @@
-import { IJobPlacementBody } from 'api/job-placement';
 import { ROUTE_JOB_PLACEMENT } from 'app-constants';
 import PageTitle from 'components/common/page-title/PageTitle';
 import StepperComponent from 'components/shared/stepper/Stepper';
-import React, { createContext, FC, useCallback, useContext, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import AuthHelper from '../../utils/AuthHelpers';
 import { GlobalJobPlacement, GlobalJobPlacementContext } from './GlobalJobPlacementContext';
 
 const steps = [
@@ -15,15 +15,30 @@ const steps = [
 ];
 
 export const JobPlacementPage: FC = () => {
+  const [stepsState, setStepsState] = useState(steps);
+  const accessToken = AuthHelper.getAccessToken();
   const renderStepperComponent = () => {
     return (
       <GlobalJobPlacementContext.Consumer>
         {(value) => {
-          return <StepperComponent steps={steps} />;
+          return <StepperComponent steps={stepsState} />;
         }}
       </GlobalJobPlacementContext.Consumer>
     );
   };
+
+  useEffect(() => {
+    if (accessToken) {
+      const newSteps = steps.filter((item) => {
+        if (item.name === 'Step 3') return null;
+        if (item.name === 'Step 4') item.name = 'Step 3';
+        if (item.name === 'Step 5') item.name = 'Step 4';
+        return item;
+      });
+      setStepsState(newSteps);
+    }
+  }, [accessToken]);
+
   return (
     <GlobalJobPlacement>
       <PageTitle title={'Job Placement'} />
