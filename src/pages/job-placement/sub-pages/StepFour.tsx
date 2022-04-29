@@ -5,7 +5,7 @@ import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useGlobalJobPlacementContext } from '../GlobalJobPlacement';
+import { useGlobalJobPlacementContext } from '../GlobalJobPlacementContext';
 
 export const JPStepFour: FC = () => {
   const { register } = useForm<any>();

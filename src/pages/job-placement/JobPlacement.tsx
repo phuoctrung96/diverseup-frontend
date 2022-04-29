@@ -4,11 +4,7 @@ import PageTitle from 'components/common/page-title/PageTitle';
 import StepperComponent from 'components/shared/stepper/Stepper';
 import React, { createContext, FC, useCallback, useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import {
-  GlobalJobPlacement,
-  GlobalJobPlacementContext,
-  useGlobalJobPlacementContext,
-} from './GlobalJobPlacement';
+import { GlobalJobPlacement, GlobalJobPlacementContext } from './GlobalJobPlacementContext';
 
 const steps = [
   { name: 'Step 1', route: `/${ROUTE_JOB_PLACEMENT}` },
