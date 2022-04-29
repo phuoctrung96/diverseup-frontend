@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import JobTrend from 'components/shared/job-trend/JobTrend';
 import Button from 'components/shared/button/Button';
 import PageTitle from 'components/common/page-title/PageTitle';
@@ -18,64 +18,90 @@ const KEY_STEP_2 = {
 
 export const JPStepTwo: FC = () => {
   const {
-    store: { jobPlacementForm },
+    store: { jobPlacementForm, steps },
+    handleClickStep,
     setJobPlacementForm,
-    setJobPlacementStep,
   } = useGlobalJobPlacementContext();
+
   const navigate = useNavigate();
-  const [answerImportant, setAnswerImportant] = useState<string[]>([]);
-  const [answerMotivation, setAnswerMotivation] = useState<string[]>([]);
-  const [answerDealBreak, setAnswerDealBreak] = useState<string[]>([]);
   const accessToken = AuthHelper.getAccessToken();
+
+  const disabledButton = useMemo(() => {
+    return (
+      jobPlacementForm.selected_choosing_employer_importance_options.length === 0 ||
+      jobPlacementForm.selected_what_motivates_best_job_options.length === 0 ||
+      jobPlacementForm.selected_deal_breaker_options.length === 0
+    );
+  }, [
+    jobPlacementForm.selected_choosing_employer_importance_options,
+    jobPlacementForm.selected_what_motivates_best_job_options.length,
+    jobPlacementForm.selected_deal_breaker_options.length,
+  ]);
 
   const handleClickItem = (item, answer) => {
     if (item.key === 'important') {
-      if (answerImportant.includes(answer.value)) {
-        const filterSelected = answerImportant.filter(
-          (typFilter: any) => typFilter.value !== answer.value
-        );
-        setAnswerImportant(filterSelected);
+      if (jobPlacementForm.selected_choosing_employer_importance_options.includes(answer.value)) {
+        const filterSelected =
+          jobPlacementForm.selected_choosing_employer_importance_options.filter(
+            (typFilter: any) => typFilter !== answer.value
+          );
+        setJobPlacementForm({
+          selected_choosing_employer_importance_options: filterSelected,
+        });
       } else {
-        setAnswerImportant([...answerImportant, answer.value]);
+        setJobPlacementForm({
+          selected_choosing_employer_importance_options: [
+            ...jobPlacementForm.selected_choosing_employer_importance_options,
+            answer.value,
+          ],
+        });
       }
-      setJobPlacementForm({
-        selected_choosing_employer_importance_options: [...answerImportant, answer.value],
-      });
     } else if (item.key === 'motivation') {
-      if (answerMotivation.includes(answer.value)) {
-        const filterSelected = answerMotivation.filter(
-          (typFilter: any) => typFilter.value !== answer.value
+      if (jobPlacementForm.selected_what_motivates_best_job_options.includes(answer.value)) {
+        const filterSelected = jobPlacementForm.selected_what_motivates_best_job_options.filter(
+          (typFilter: any) => typFilter !== answer.value
         );
-        setAnswerMotivation(filterSelected);
+        setJobPlacementForm({
+          selected_what_motivates_best_job_options: filterSelected,
+        });
       } else {
-        setAnswerMotivation([...answerMotivation, answer.value]);
+        setJobPlacementForm({
+          selected_what_motivates_best_job_options: [
+            ...jobPlacementForm.selected_what_motivates_best_job_options,
+            answer.value,
+          ],
+        });
       }
-      setJobPlacementForm({
-        selected_what_motivates_best_job_options: [...answerMotivation, answer.value],
-      });
     } else if (item.key === 'deal_break') {
-      if (answerDealBreak.includes(answer.value)) {
-        const filterSelected = answerDealBreak.filter(
-          (typFilter: any) => typFilter.value !== answer.value
+      if (jobPlacementForm.selected_deal_breaker_options.includes(answer.value)) {
+        const filterSelected = jobPlacementForm.selected_deal_breaker_options.filter(
+          (typFilter: any) => typFilter !== answer.value
         );
-        setAnswerDealBreak(filterSelected);
+        setJobPlacementForm({
+          selected_deal_breaker_options: filterSelected,
+        });
       } else {
-        setAnswerDealBreak([...answerDealBreak, answer.value]);
+        setJobPlacementForm({
+          selected_deal_breaker_options: [
+            ...jobPlacementForm.selected_deal_breaker_options,
+            answer.value,
+          ],
+        });
       }
-      setJobPlacementForm({
-        selected_deal_breaker_options: [...answerDealBreak, answer.value],
-      });
     }
   };
 
   const handleClickNext = () => {
-    setJobPlacementStep(accessToken ? 4 : 3, () => {
+    const numberStep = accessToken ? 3 : 2;
+    const filterStep = steps.find((item) => item.id === numberStep);
+    handleClickStep(filterStep, () => {
       navigate(accessToken ? `/${ROUTE_JOB_PLACEMENT}/step4` : `/${ROUTE_JOB_PLACEMENT}/step3`);
     });
   };
 
   const handleClickBack = () => {
-    setJobPlacementStep(1, () => {
+    const filterStep = steps.find((item) => item.id === 0);
+    handleClickStep(filterStep, () => {
       navigate(`/${ROUTE_JOB_PLACEMENT}`);
     });
   };
@@ -108,7 +134,7 @@ export const JPStepTwo: FC = () => {
 
         <div className="buttons-group">
           <Button text={'Go Back'} classList={['white']} onClick={handleClickBack} />
-          <Button text={'Next Step'} onClick={handleClickNext} />
+          <Button text={'Next Step'} onClick={handleClickNext} disabled={disabledButton} />
         </div>
       </div>
     </PageInfoCard>

@@ -10,9 +10,9 @@ import { useGlobalJobPlacementContext } from '../GlobalJobPlacementContext';
 export const JPStepFour: FC = () => {
   const { register } = useForm<any>();
   const {
-    store: { jobPlacementForm },
+    store: { jobPlacementForm, steps },
+    handleClickStep,
     setJobPlacementForm,
-    setJobPlacementStep,
   } = useGlobalJobPlacementContext();
   const navigate = useNavigate();
 
@@ -24,7 +24,8 @@ export const JPStepFour: FC = () => {
 
   const handleSubmitForm = () => {
     submitJobPlacement(jobPlacementForm).then((res: any) => {
-      setJobPlacementStep(5, () => {
+      const filterStep = steps.find((item) => item.id === 4);
+      handleClickStep(filterStep, () => {
         navigate(`/${ROUTE_JOB_PLACEMENT}/step5`);
       });
     });

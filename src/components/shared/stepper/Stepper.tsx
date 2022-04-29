@@ -3,14 +3,18 @@ import { Link } from 'react-router-dom';
 import styles from './Stepper.module.scss';
 
 interface StepModel {
+  id: number;
   name: string;
   route: string;
+  isActived: boolean;
 }
 interface IStepperProps {
   steps: StepModel[];
+  onClick?: (step: StepModel) => void;
+  disabled?: boolean;
 }
 
-const StepperComponent: FC<IStepperProps> = ({ steps }) => {
+const StepperComponent: FC<IStepperProps> = ({ steps, onClick, disabled = false }) => {
   const [activeKey, setActiveKey] = useState(0);
 
   return (
@@ -20,12 +24,17 @@ const StepperComponent: FC<IStepperProps> = ({ steps }) => {
           return (
             <li
               className={`${location.pathname == step.route ? styles.active : ''} ${
-                activeKey > index ? styles.completed : ''
+                activeKey > index || step.isActived ? styles.completed : ''
               }`}
               key={index}
-              onClick={() => setActiveKey(index)}
+              onClick={() => {
+                if (!disabled) {
+                  onClick?.(step);
+                  setActiveKey(index);
+                }
+              }}
             >
-              <Link to={step.route}>
+              <Link to={!disabled ? step.route : '#'}>
                 <span>{index + 1}</span>
                 <h6>{step.name}</h6>
               </Link>
