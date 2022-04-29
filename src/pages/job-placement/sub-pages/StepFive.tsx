@@ -1,21 +1,30 @@
-import React, { FC, useState } from 'react';
-import PageTitle from 'components/common/page-title/PageTitle';
-import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
-import RadioButtonGroup from 'components/shared/form-controls/radio-button-group/RadioButtonGroup';
-import { useForm } from 'react-hook-form';
-import InfoCardTitle from 'components/shared/page-info-card/components/info-card-title/InfoCardTitle';
-import Input from 'components/shared/form-controls/input/Input';
-import Button from 'components/shared/button/Button';
-import { useNavigate } from 'react-router-dom';
 import { recommendToFriends } from 'api/job-placement';
-import ModalWindow from 'components/shared/modal-window/ModalWindow';
-import AuthHelper from '../../../utils/AuthHelpers';
+import PageTitle from 'components/common/page-title/PageTitle';
+import Button from 'components/shared/button/Button';
+import Input from 'components/shared/form-controls/input/Input';
+import RadioButtonGroup from 'components/shared/form-controls/radio-button-group/RadioButtonGroup';
+import InfoCardTitle from 'components/shared/page-info-card/components/info-card-title/InfoCardTitle';
+import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
+import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
+import React, { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+interface IForm {
+  share?: string;
+  name?: string;
+  email1?: string;
+  email2?: string;
+  email3?: string;
+  email4?: string;
+  email5?: string;
+  message?: string;
+}
 
 export const JPStepFive: FC = () => {
-  const { register, handleSubmit, reset, control } = useForm<any>();
+  const { register, handleSubmit, reset, control } = useForm<IForm>();
   const navigate = useNavigate();
-  const [isAlertSubmit, setIsAlertSubmit] = useState(false);
-  const userInfo = AuthHelper.getUserInfo();
+  const { showModal } = useGlobalModalContext();
 
   const shareRadio = [
     { label: 'An Iphone/wallet case with DiverseUp Logo', value: '1' },
@@ -23,7 +32,6 @@ export const JPStepFive: FC = () => {
   ];
 
   const handleRecommendToFriend = (data: any) => {
-    console.log(data);
     const groupEmail = [data.email1, data.email2, data.email3, data.email4, data.email5].filter(
       (item) => item
     );
@@ -35,7 +43,7 @@ export const JPStepFive: FC = () => {
     };
 
     recommendToFriends(body).then(() => {
-      setIsAlertSubmit(true);
+      showModal(MODAL_TYPES.JOB_PLACEMENT_FINISH_MODAL);
     });
 
     return null;
@@ -104,19 +112,6 @@ export const JPStepFive: FC = () => {
           />
         </div>
       </div>
-
-      <ModalWindow
-        visible={isAlertSubmit}
-        setVisible={() => {
-          setIsAlertSubmit(false);
-          navigate('/');
-        }}
-      >
-        <div>
-          Thank you {userInfo.username || userInfo.email} for filling out DiverseUp job placement.
-          Once we find your ideal match, we will contact you.
-        </div>
-      </ModalWindow>
     </PageInfoCard>
   );
 };
