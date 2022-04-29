@@ -4,7 +4,7 @@ import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useGlobalJobPlacementContext } from '../JobPlacement';
+import { useGlobalJobPlacementContext } from '../GlobalJobPlacement';
 import {
   JOB_OPPORTUNITY_TYPE,
   SELECTED_COMMUTE_OPTIONS,

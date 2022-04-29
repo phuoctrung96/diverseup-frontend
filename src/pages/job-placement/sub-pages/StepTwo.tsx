@@ -7,8 +7,8 @@ import InfoCardTitle from 'components/shared/page-info-card/components/info-card
 import { SECOND_JOB_PLACEMENT_STEP } from 'app-constants/job-placement-steps';
 import { useNavigate } from 'react-router-dom';
 import AuthHelper from '../../../utils/AuthHelpers';
-import { useGlobalJobPlacementContext } from '../JobPlacement';
 import { ROUTE_JOB_PLACEMENT } from 'app-constants';
+import { useGlobalJobPlacementContext } from '../GlobalJobPlacement';
 
 const KEY_STEP_2 = {
   important: 'selected_choosing_employer_importance_options',

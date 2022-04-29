@@ -4,6 +4,11 @@ import PageTitle from 'components/common/page-title/PageTitle';
 import StepperComponent from 'components/shared/stepper/Stepper';
 import React, { createContext, FC, useCallback, useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import {
+  GlobalJobPlacement,
+  GlobalJobPlacementContext,
+  useGlobalJobPlacementContext,
+} from './GlobalJobPlacement';
 
 const steps = [
   { name: 'Step 1', route: `/${ROUTE_JOB_PLACEMENT}` },
@@ -13,79 +18,24 @@ const steps = [
   { name: 'Step 5', route: `/${ROUTE_JOB_PLACEMENT}/step5` },
 ];
 
-export const STEP_TYPES = {
-  SET_JOB_PLACEMENT_FORM: 'SET_JOB_PLACEMENT_FORM',
-  SET_JOB_PLACEMENT_STEP: 'SET_JOB_PLACEMENT_STEP',
-};
-
-type GlobalJobPlacementContext = {
-  setJobPlacementForm: (body: IJobPlacementBody, resolve?: () => void) => void;
-  setJobPlacementStep: (body: number, resolve?: () => void) => void;
-  store: any;
-};
-
-/* eslint-disable */
-const initialState: GlobalJobPlacementContext = {
-  setJobPlacementForm: () => {},
-  setJobPlacementStep: () => {},
-  store: {
-    jobPlacementForm: {
-      selected_job_opportunity_type: [],
-      selected_work_flexibility: [],
-      selected_commute_options: [],
-      selected_travel_options: [],
-      selected_choosing_employer_importance_options: [],
-      selected_what_motivates_best_job_options: [],
-      selected_deal_breaker_options: [],
-      notification_new_companies_are_rated: false,
-      notification_latest_women_news: false,
-      notification_receive_job_alerts: false,
-    },
-    jobPlacementStep: 1,
-  },
-};
-
-const GlobalJobPlacementContext = createContext(initialState);
-export const useGlobalJobPlacementContext = () => useContext(GlobalJobPlacementContext);
-
 export const JobPlacementPage: FC = () => {
-  const [store, setStore] = useState(initialState.store);
-
-  const renderStepperComponent = useCallback(() => {
-    return <StepperComponent steps={steps} />;
-  }, [store.jobPlacementStep]);
-
-  const setJobPlacementForm = (body: IJobPlacementBody, resolve?: () => void) => {
-    setStore({
-      ...store,
-      jobPlacementForm: {
-        ...store.jobPlacementForm,
-        ...body,
-      },
-    });
-    resolve?.();
+  const renderStepperComponent = () => {
+    return (
+      <GlobalJobPlacementContext.Consumer>
+        {(value) => {
+          return <StepperComponent steps={steps} />;
+        }}
+      </GlobalJobPlacementContext.Consumer>
+    );
   };
-
-  const setJobPlacementStep = (body: number, resolve?: () => void) => {
-    setStore({
-      ...store,
-      jobPlacementStep: body,
-    });
-    resolve?.();
-  };
-
   return (
-    <>
-      <GlobalJobPlacementContext.Provider
-        value={{ store, setJobPlacementForm, setJobPlacementStep }}
-      >
-        <PageTitle title={'Job Placement'} />
-        {renderStepperComponent()}
-        <div className="job-placement-container">
-          <Outlet />
-        </div>
-      </GlobalJobPlacementContext.Provider>
-    </>
+    <GlobalJobPlacement>
+      <PageTitle title={'Job Placement'} />
+      {renderStepperComponent()}
+      <div className="job-placement-container">
+        <Outlet />
+      </div>
+    </GlobalJobPlacement>
   );
 };
 
