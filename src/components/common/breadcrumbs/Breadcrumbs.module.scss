@@ -1,3 +1,5 @@
+@import 'src/styles/utilities/mixins';
+
 .breadcrumbs {
   padding-top: 30px;
 
@@ -5,10 +7,17 @@
     font-weight: 400;
     color: var(--color-secondary-dark-gray);
     line-height: 19px;
+    white-space: nowrap;
+    margin-bottom: 5px;
+    display: inline-block;
 
     &:after {
       content: url('../../../assets/images/icons/breadcrumb-arrow.svg');
       padding: 0 12px;
+
+      @include mobile-max() {
+        padding: 0 6px;
+      }
     }
 
     &.breadcrumbActive {

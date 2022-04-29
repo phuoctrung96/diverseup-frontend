@@ -24,14 +24,16 @@ export const InfoCardRating: FC<IInfoCardRating> = ({ rating, question, editable
   return (
     <div className={`${styles.infoCardRating} ${editable && styles.editable}`}>
       <span className={styles.question}>{question}</span>
-      <RatingStars rating={starRating} clickable={editable} onRatingChange={onRatingChanged} />
-      {editable && (
-        <Button
-          text={'N/A'}
-          classList={['btnNA', `${starRating === -1 ? 'active' : ''}`]}
-          onClick={onBtnNAClick}
-        />
-      )}
+      <div className={styles.ratingWrapper}>
+        <RatingStars rating={starRating} clickable={editable} onRatingChange={onRatingChanged} />
+        {editable && (
+          <Button
+            text={'N/A'}
+            classList={['btnNA', `${starRating === -1 ? 'active' : ''}`]}
+            onClick={onBtnNAClick}
+          />
+        )}
+      </div>
     </div>
   );
 };

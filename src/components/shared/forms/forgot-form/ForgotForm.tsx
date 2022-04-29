@@ -36,7 +36,6 @@ export const ForgotForm: FC<IForgotForm> = ({ onSend }) => {
       reset();
       onSend();
     } catch (e: any) {
-      console.log(e.data);
       setError('email', {
         type: 'required',
         message: e.data.detail[0].msg,

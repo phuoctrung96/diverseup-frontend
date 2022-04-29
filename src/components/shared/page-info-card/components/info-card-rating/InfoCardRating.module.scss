@@ -18,6 +18,14 @@
     font-size: 18px;
     margin-bottom: 30px;
 
+    .ratingWrapper {
+      display: flex;
+    }
+
+    @include tablet-min() {
+      font-size: 16px;
+    }
+
     button {
       margin-left: 20px;
     }

@@ -75,6 +75,10 @@ const customStyles = {
     ...provided,
     fontSize: 16,
     padding: '10px 14px',
+    '@media only screen and (max-width: 992px)': {
+      ...provided['@media only screen and (max-width: 992px)'],
+      fontSize: 14,
+    },
   }),
   indicatorSeparator: (provided: any) => ({
     ...provided,

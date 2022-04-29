@@ -12,3 +12,8 @@ export const getUrlWithParams = (query: any, endpoint: string): string => {
 
   return url.href + '?' + params.toString();
 };
+
+export const getParams = () => {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  return Object.fromEntries(urlSearchParams.entries());
+};

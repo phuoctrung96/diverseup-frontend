@@ -6,27 +6,31 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ROUTE_COMPANY_RATING } from 'app-constants';
 import { removeEmptyValues } from 'utils/object.utils';
+import { getParams } from '../../../../utils/http.utils';
 
 interface ISearchForm {
   hideOnMobile?: boolean;
 }
 
+interface IForm {
+  term: string;
+}
+
 export const SearchForm: FC<ISearchForm> = ({ hideOnMobile = false }) => {
-  const { register, handleSubmit, setValue } = useForm<{ term: string }>();
+  const { register, handleSubmit, setValue } = useForm<IForm>();
   const [showForm, setShowForm] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
+    const params = getParams();
 
     setValue('term', params.search_term || '');
   }, [location]);
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    setSearchParams({ ...searchParams, page: '1', search_term: data.term });
+  const onSubmit: SubmitHandler<IForm> = ({ term }) => {
+    setSearchParams({ ...searchParams, page: '1', search_term: term });
     navigate(
       {
         pathname: ROUTE_COMPANY_RATING,
@@ -34,7 +38,7 @@ export const SearchForm: FC<ISearchForm> = ({ hideOnMobile = false }) => {
           removeEmptyValues({
             ...searchParams,
             page: '1',
-            search_term: data.term,
+            search_term: term,
           })
         ).toString(),
       },

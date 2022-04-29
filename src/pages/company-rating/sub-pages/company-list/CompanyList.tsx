@@ -8,12 +8,17 @@ import Select, { ISelectOption } from 'components/shared/form-controls/select/Se
 import { useForm } from 'react-hook-form';
 import { Pagination } from 'interfaces';
 import { useLocation } from 'react-router-dom';
+import { getParams } from '../../../../utils/http.utils';
+
+interface IForm {
+  sort: any;
+}
 
 export const CompanyList: FC = () => {
   const [businesses, setBusinesses] = useState<ICard[] | []>([]);
   const [pagination, setPagination] = useState<Pagination>();
   const [isBusinessLoading, setIsBusinessLoading] = useState<boolean>(true);
-  const { control, watch, getValues } = useForm<any>();
+  const { control, watch } = useForm<IForm>();
   const watchSort = watch('sort');
 
   const location = useLocation();
@@ -27,9 +32,7 @@ export const CompanyList: FC = () => {
   ];
 
   useEffect(() => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-
+    const params = getParams();
     setBusinesses([]);
     setIsBusinessLoading(true);
     if (watchSort && watchSort.value) {
@@ -40,8 +43,7 @@ export const CompanyList: FC = () => {
   }, [watchSort]);
 
   useEffect(() => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
+    const params = getParams();
     const page = parseInt(params.page) || 1;
     const search_term = params.search_term || '';
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {
   ROUTE_ABOUT,
@@ -10,7 +10,7 @@ import {
   ROUTE_ROOT,
 } from 'app-constants';
 import HomePage from 'pages/home/Home';
-import { BreadcrumbComponentType, BreadcrumbsRoute } from 'use-react-router-breadcrumbs';
+import { BreadcrumbsRoute } from 'use-react-router-breadcrumbs';
 import CompanyRating from 'pages/company-rating/CompanyRating';
 import JobPlacement from 'pages/job-placement/JobPlacement';
 import Blog from 'pages/blog/Blog';
@@ -34,6 +34,8 @@ import AddRating from 'pages/company-rating/sub-pages/company-info/sub-pages/add
 import BlogInfoPage from './pages/blog/sub-pages/blog-info/BlogInfoPage';
 import BlogList from './pages/blog/sub-pages/blog-list/BlogList';
 import { useDynamicBreadcrumbContext } from 'DynamicBreadcrumb';
+import NewPasswordModal from './components/modals/NewPasswordModal';
+import { Outlet } from 'react-router-dom';
 
 const ContextBreadcrumb = () => {
   const { store } = useDynamicBreadcrumbContext();
@@ -42,7 +44,16 @@ const ContextBreadcrumb = () => {
 };
 
 export const ROUTES: BreadcrumbsRoute[] = [
-  { path: ROUTE_ROOT, element: <HomePage />, breadcrumb: null },
+  {
+    path: ROUTE_ROOT,
+    element: <HomePage />,
+    breadcrumb: null,
+  },
+  {
+    path: '/reset_password',
+    breadcrumb: null,
+    element: <NewPasswordModal />,
+  },
   {
     path: ROUTE_COMPANY_RATING,
     element: <CompanyRating />,

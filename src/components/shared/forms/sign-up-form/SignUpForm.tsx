@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import style from 'styles/modules/Auth.module.scss';
 import Input from 'components/shared/form-controls/input/Input';
@@ -6,6 +6,7 @@ import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import { registerApi } from 'api/user';
 import { MODAL_TYPES, useGlobalModalContext } from '../../../../GlobalModal';
+import { confirmValidate } from '../../../../utils/confirm-validate.utils';
 
 interface ISignUpFormProps {
   switchOnLogin: () => void;
@@ -34,8 +35,9 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
     formState: { errors },
   } = useForm<IForm>();
 
+  confirmValidate(getValues('confirm'), getValues('password'), setError, watch, clearErrors);
+
   const { showModal } = useGlobalModalContext();
-  const [validateTimeout, setValidateTimeout] = useState<any>(false);
 
   const onRegister: SubmitHandler<IForm> = async ({ email, password, subscribe }) => {
     try {
@@ -49,7 +51,6 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
       });
       showModal(MODAL_TYPES.SIGN_IN_MODAL);
     } catch (e: any) {
-      console.log(e);
       if (e.data.detail === 'REGISTER_USER_ALREADY_EXISTS') {
         setError('email', {
           type: 'required',
@@ -64,24 +65,6 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
       }
     }
   };
-
-  useEffect(() => {
-    if (validateTimeout != false) {
-      clearTimeout(validateTimeout);
-    }
-    setValidateTimeout(
-      setTimeout(() => {
-        if (getValues('confirm') !== getValues('password')) {
-          setError('confirm', {
-            type: 'confirm',
-            message: 'Passwords do not match',
-          });
-        } else {
-          clearErrors();
-        }
-      }, 500)
-    );
-  }, [watch('confirm')]);
 
   return (
     <>
@@ -118,7 +101,7 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
             checkboxLabel="I want to subscribe to a newsletter"
           />
         )}
-        <Button text={'Sign up'} classList={['auth']} />
+        <Button text={'Sign up'} classList={['auth']} disabled={!!errors?.confirm} />
       </form>
       <div className={style.variant}>
         <span>{'Already have an account?'}</span>

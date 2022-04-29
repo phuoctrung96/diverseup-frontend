@@ -19,7 +19,7 @@
     }
 
     .validation-error {
-      display: none;
+      display: block;
       margin-top: -17px;
       font-size: 13px;
       font-weight: 400;
@@ -29,6 +29,11 @@
       & ~ .validation-error {
         margin: 0;
       }
+    }
+
+    .input-wrapper {
+      position: relative;
+      width: 100%;
     }
 
     .input {
@@ -44,7 +49,6 @@
       color: var(--color-primary-black);
       line-height: 22px;
       margin-bottom: 22px;
-      position: relative;
       display: block;
 
       @include tablet-min() {
@@ -67,7 +71,7 @@
       & ~ .eye-icon {
         position: absolute;
         right: 16px;
-        top: 69%;
+        top: 55%;
         transform: translateY(-50%);
         cursor: pointer;
 
@@ -136,6 +140,55 @@
 
         .input {
           max-width: 110px;
+        }
+      }
+    }
+
+    @include tablet-min() {
+      .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .label {
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
+
+        .radio-buttons-group {
+          flex-direction: column;
+
+          &__label {
+            font-size: 16px;
+            margin-bottom: 15px;
+          }
+
+          .radio-button {
+            margin-bottom: 16px;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        &.number {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-bottom: 15px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .label {
+            font-size: 14px;
+            margin: 0;
+          }
+
+          .input {
+            padding: 9px 20px;
+          }
         }
       }
     }

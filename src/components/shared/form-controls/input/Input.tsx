@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Path, UseFormRegister } from 'react-hook-form';
+import { Path, useForm, UseFormRegister } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 
 type InputType = 'text' | 'password' | 'number';
@@ -12,6 +12,7 @@ type InputProps = {
   errors?: FieldErrors<any>;
   required?: boolean;
   inputLabel?: string;
+  value?: any;
 };
 
 export const Input: FC<InputProps> = ({
@@ -35,15 +36,20 @@ export const Input: FC<InputProps> = ({
   return (
     <div className={`form-group ${type === 'number' ? 'number' : ''}`}>
       {inputLabel && <label className="label">{inputLabel}</label>}
-      <input
-        className={`input ${errors && errors[label] && 'field-invalid'}`}
-        type={inputType}
-        placeholder={placeholder}
-        {...register(label, { required })}
-      />
-      {type === 'password' && (
-        <span className={`eye-icon ${showPass && 'show'}`} onClick={() => setShowPass(!showPass)} />
-      )}
+      <div className="input-wrapper">
+        <input
+          className={`input ${errors && errors[label] && 'field-invalid'}`}
+          type={inputType}
+          placeholder={placeholder}
+          {...register(label, { required })}
+        />
+        {type === 'password' && (
+          <span
+            className={`eye-icon ${showPass && 'show'}`}
+            onClick={() => setShowPass(!showPass)}
+          />
+        )}
+      </div>
       {errors && errors[label]?.type && (
         <span className={'validation-error'}>{errors[label].message}</span>
       )}

@@ -6,11 +6,15 @@
   &.withClear {
     padding-bottom: 25px;
 
+    @include tablet-min() {
+      padding-bottom: 20px;
+    }
+
     .cardTitleWrapper {
       display: flex;
 
       .cardTitle {
-        flex: none;
+        flex: unset;
         margin-right: 30px;
         margin-bottom: 10px;
       }

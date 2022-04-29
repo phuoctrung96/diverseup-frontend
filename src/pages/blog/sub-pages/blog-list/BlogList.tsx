@@ -2,22 +2,20 @@ import React, { FC, useEffect, useState } from 'react';
 import PageTitle from '../../../../components/common/page-title/PageTitle';
 import Cards from '../../../../components/shared/cards/Cards';
 import { ICard, Pagination } from 'interfaces';
-import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import { blogsApi } from 'api';
 import { ROUTE_BLOG } from 'app-constants';
+import { getParams } from '../../../../utils/http.utils';
 
 export const BlogList: FC = () => {
   const [blogs, setBlogs] = useState<ICard[] | []>([]);
   const [isBlogsLoading, setIsBlogsLoading] = useState<boolean>(true);
   const [pagination, setPagination] = useState<Pagination>();
-  const { register, handleSubmit, reset, control } = useForm<any>();
 
   const location = useLocation();
 
   useEffect(() => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
+    const params = getParams();
     const page = parseInt(params.page) || 1;
 
     setBlogs([]);

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import ModalWindow from 'components/shared/modal-window/ModalWindow';
 import { useGlobalModalContext } from 'GlobalModal';
 import Button from 'components/shared/button/Button';
@@ -6,6 +6,7 @@ import Input from 'components/shared/form-controls/input/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import auth from 'styles/modules/Auth.module.scss';
 import { contactUsApi } from '../../api/contact-us';
+import AuthHelpers from '../../utils/AuthHelpers';
 
 interface IForm {
   name: string;
@@ -21,14 +22,28 @@ export const ContactUsModal: FC = () => {
     handleSubmit,
     reset,
     setError,
+    setValue,
     formState: { errors },
   } = useForm<IForm>();
+
+  const user = AuthHelpers.getUserInfo();
+
+  useEffect(() => {
+    if (user) {
+      setValue('email', user.email);
+    }
+  }, []);
+
+  const [success, setSuccess] = useState(false);
 
   const onSubmit: SubmitHandler<IForm> = async (data) => {
     try {
       await contactUsApi(data);
-      hideModal();
-      reset();
+      setSuccess(true);
+      setTimeout(() => {
+        hideModal();
+        reset();
+      }, 2000);
     } catch (e: any) {
       e.data.detail.map((err) => {
         setError(err.loc[1], {
@@ -71,6 +86,7 @@ export const ContactUsModal: FC = () => {
             type="text"
             placeholder="Enter your e-mail address"
             errors={errors}
+            value={user ? user.email : null}
           />
           <Input
             inputLabel="Subject"
@@ -88,8 +104,8 @@ export const ContactUsModal: FC = () => {
               placeholder="Enter your message"
             />
           </div>
-
-          <Button text="Send" classList={['auth']} />
+          {!success && <Button text="Send" classList={['auth']} />}
+          {success && <p className={auth.success}>Message sent successfully!</p>}
         </form>
       </div>
     </ModalWindow>

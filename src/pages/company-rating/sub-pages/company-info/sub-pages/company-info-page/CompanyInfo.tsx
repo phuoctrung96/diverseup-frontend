@@ -73,7 +73,7 @@ export const CompanyInfo: FC = () => {
         </div>
       ) : (
         <>
-          <div className="section__block no-top-padding">
+          <div className="section__block no-top-padding no-bottom-padding">
             <PageInfoCard>
               <div className={styles.mainInfoWrapper}>
                 <div className={styles.infoContent}>
@@ -234,7 +234,7 @@ export const CompanyInfo: FC = () => {
               )}
             </PageInfoCard>
           </div>
-          <div className="section__block no-bottom-padding">
+          <div className="section__block">
             <PageTitle title={'Recent Ratings'} classList={['sectionTitle']} />
             <Cards cards={businesses} button={null} isLoading={isBusinessLoading} />
           </div>

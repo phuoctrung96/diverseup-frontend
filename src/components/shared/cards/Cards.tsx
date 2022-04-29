@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate';
 import { Pagination } from 'interfaces';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import Loader from 'components/common/loader/Loader';
+import { getParams } from '../../../utils/http.utils';
 
 interface ICards {
   cards: ICard[];
@@ -34,8 +35,7 @@ export const Cards: FC<ICards> = ({ cards, button, pagination, isLoading }) => {
 
   const handlePageClick = (event: any) => {
     const page = event.selected + 1;
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
+    const params = getParams();
 
     if (page !== pagination?.page) {
       setSearchParams({ ...params, page });
