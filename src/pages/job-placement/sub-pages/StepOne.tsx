@@ -2,9 +2,8 @@ import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setJobPlacementForm, setJobPlacementStep } from 'redux/actions/job-placement';
+import { useGlobalJobPlacementContext } from '../JobPlacement';
 import {
   JOB_OPPORTUNITY_TYPE,
   SELECTED_COMMUTE_OPTIONS,
@@ -14,8 +13,12 @@ import {
 
 export const JPStepOne: FC = () => {
   const { register } = useForm<any>();
-  const jobPlacementForm = useSelector((state: any) => state?.jobPlacement?.jobPlacementForm);
-  const dispatch = useDispatch();
+  const {
+    store: { jobPlacementForm },
+    setJobPlacementForm,
+    setJobPlacementStep,
+  } = useGlobalJobPlacementContext();
+
   const navigate = useNavigate();
   const [selectedJobOpportunityType, setSelectedJobOpportunityType] = useState<string[]>([]);
   const [selectedWorkFlexibility, setSelectedWorkFlexibility] = useState<string[]>([]);
@@ -31,11 +34,9 @@ export const JPStepOne: FC = () => {
       );
       setSelectedJobOpportunityType(filterSelected);
     }
-    dispatch(
-      setJobPlacementForm({
-        selected_job_opportunity_type: [...selectedJobOpportunityType, item.title],
-      })
-    );
+    setJobPlacementForm({
+      selected_job_opportunity_type: [...selectedJobOpportunityType, item.title],
+    });
   };
 
   const handleOnChangeCheckBoxFlexibility = (item, value: boolean) => {
@@ -47,11 +48,9 @@ export const JPStepOne: FC = () => {
       );
       setSelectedWorkFlexibility(filterSelected);
     }
-    dispatch(
-      setJobPlacementForm({
-        selected_work_flexibility: [...selectedWorkFlexibility, item.title],
-      })
-    );
+    setJobPlacementForm({
+      selected_work_flexibility: [...selectedWorkFlexibility, item.title],
+    });
   };
 
   const handleOnChangeCheckBoxCommuteOption = (item, value: boolean) => {
@@ -63,11 +62,9 @@ export const JPStepOne: FC = () => {
       );
       setSelectedCommuteOptions(filterSelected);
     }
-    dispatch(
-      setJobPlacementForm({
-        selected_commute_options: [...selectedCommuteOptions, item.title],
-      })
-    );
+    setJobPlacementForm({
+      selected_commute_options: [...selectedCommuteOptions, item.title],
+    });
   };
 
   const handleOnChangeCheckBoxTravelOption = (item, value: boolean) => {
@@ -79,20 +76,15 @@ export const JPStepOne: FC = () => {
       );
       setSelectedTravelOptions(filterSelected);
     }
-    dispatch(
-      setJobPlacementForm({
-        selected_travel_options: [...selectedTravelOptions, item.title],
-      })
-    );
+    setJobPlacementForm({
+      selected_travel_options: [...selectedTravelOptions, item.title],
+    });
   };
 
   const handleClickNext = () => {
-    console.log(';asdfasdf');
-    dispatch(
-      setJobPlacementStep(2, () => {
-        navigate('/job-placement/step2');
-      })
-    );
+    setJobPlacementStep(2, () => {
+      navigate('/job-placement/step2');
+    });
   };
 
   return (
