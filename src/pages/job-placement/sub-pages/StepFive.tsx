@@ -9,11 +9,13 @@ import Button from 'components/shared/button/Button';
 import { useNavigate } from 'react-router-dom';
 import { recommendToFriends } from 'api/job-placement';
 import ModalWindow from 'components/shared/modal-window/ModalWindow';
+import AuthHelper from '../../../utils/AuthHelpers';
 
 export const JPStepFive: FC = () => {
   const { register, handleSubmit, reset, control } = useForm<any>();
   const navigate = useNavigate();
   const [isAlertSubmit, setIsAlertSubmit] = useState(false);
+  const userInfo = AuthHelper.getUserInfo();
 
   const shareRadio = [
     { label: 'An Iphone/wallet case with DiverseUp Logo', value: '1' },
@@ -110,7 +112,10 @@ export const JPStepFive: FC = () => {
           navigate('/');
         }}
       >
-        <div>Thank you! Your request has been submitted</div>
+        <div>
+          Thank you {userInfo.username || userInfo.email} for filling out DiverseUp job placement.
+          Once we find your ideal match, we will contact you.
+        </div>
       </ModalWindow>
     </PageInfoCard>
   );
