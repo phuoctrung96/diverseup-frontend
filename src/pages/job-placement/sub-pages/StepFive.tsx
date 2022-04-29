@@ -6,7 +6,7 @@ import RadioButtonGroup from 'components/shared/form-controls/radio-button-group
 import InfoCardTitle from 'components/shared/page-info-card/components/info-card-title/InfoCardTitle';
 import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
 import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ interface IForm {
 }
 
 export const JPStepFive: FC = () => {
-  const { register, handleSubmit, reset, control } = useForm<IForm>();
+  const { register, handleSubmit, getValues } = useForm<IForm>();
   const navigate = useNavigate();
   const { showModal } = useGlobalModalContext();
 
@@ -32,6 +32,13 @@ export const JPStepFive: FC = () => {
   ];
 
   const handleRecommendToFriend = (data: any) => {
+    if (
+      !data.share ||
+      !data.name ||
+      !(data.email1 || data.email2 || data.email3 || data.email4 || data.email5) ||
+      !data.message
+    )
+      return;
     const groupEmail = [data.email1, data.email2, data.email3, data.email4, data.email5].filter(
       (item) => item
     );

@@ -1,7 +1,7 @@
 import { ROUTE_JOB_PLACEMENT } from 'app-constants';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalJobPlacementContext } from '../GlobalJobPlacementContext';
@@ -15,75 +15,94 @@ import {
 export const JPStepOne: FC = () => {
   const { register } = useForm<any>();
   const {
-    store: { jobPlacementForm },
+    store: { jobPlacementForm, steps },
     setJobPlacementForm,
-    setJobPlacementStep,
+    handleClickStep,
   } = useGlobalJobPlacementContext();
 
   const navigate = useNavigate();
-  const [selectedJobOpportunityType, setSelectedJobOpportunityType] = useState<string[]>([]);
-  const [selectedWorkFlexibility, setSelectedWorkFlexibility] = useState<string[]>([]);
-  const [selectedCommuteOptions, setSelectedCommuteOptions] = useState<string[]>([]);
-  const [selectedTravelOptions, setSelectedTravelOptions] = useState<string[]>([]);
+  const disabledButton = useMemo(() => {
+    return (
+      jobPlacementForm.selected_job_opportunity_type.length === 0 ||
+      jobPlacementForm.selected_work_flexibility.length === 0 ||
+      jobPlacementForm.selected_commute_options.length === 0 ||
+      jobPlacementForm.selected_travel_options.length === 0
+    );
+  }, [
+    jobPlacementForm.selected_job_opportunity_type,
+    jobPlacementForm.selected_work_flexibility.length,
+    jobPlacementForm.selected_commute_options.length,
+    jobPlacementForm.selected_travel_options.length,
+  ]);
 
   const handleOnChangeCheckBoxSelectedJob = (item, value: boolean) => {
     if (value) {
-      setSelectedJobOpportunityType([...selectedJobOpportunityType, item.title]);
+      setJobPlacementForm({
+        selected_job_opportunity_type: [
+          ...jobPlacementForm.selected_job_opportunity_type,
+          item.title,
+        ],
+      });
     } else {
-      const filterSelected = selectedJobOpportunityType.filter(
-        (typFilter: any) => typFilter.id !== item.id
+      const filterSelected = jobPlacementForm.selected_job_opportunity_type.filter(
+        (typFilter: any) => typFilter !== item.title
       );
-      setSelectedJobOpportunityType(filterSelected);
+      setJobPlacementForm({
+        selected_job_opportunity_type: filterSelected,
+      });
     }
-    setJobPlacementForm({
-      selected_job_opportunity_type: [...selectedJobOpportunityType, item.title],
-    });
   };
 
   const handleOnChangeCheckBoxFlexibility = (item, value: boolean) => {
     if (value) {
-      setSelectedWorkFlexibility([...selectedWorkFlexibility, item.title]);
+      setJobPlacementForm({
+        selected_work_flexibility: [...jobPlacementForm.selected_work_flexibility, item.title],
+      });
     } else {
-      const filterSelected = selectedWorkFlexibility.filter(
-        (typFilter: any) => typFilter.id !== item.id
+      const filterSelected = jobPlacementForm.selected_work_flexibility.filter(
+        (typFilter: any) => typFilter !== item.title
       );
-      setSelectedWorkFlexibility(filterSelected);
+      setJobPlacementForm({
+        selected_work_flexibility: filterSelected,
+      });
     }
-    setJobPlacementForm({
-      selected_work_flexibility: [...selectedWorkFlexibility, item.title],
-    });
   };
 
   const handleOnChangeCheckBoxCommuteOption = (item, value: boolean) => {
     if (value) {
-      setSelectedCommuteOptions([...selectedCommuteOptions, item.title]);
+      setJobPlacementForm({
+        selected_commute_options: [...jobPlacementForm.selected_commute_options, item.title],
+      });
     } else {
-      const filterSelected = selectedCommuteOptions.filter(
-        (typFilter: any) => typFilter.id !== item.id
+      const filterSelected = jobPlacementForm.selected_commute_options.filter(
+        (typFilter: any) => typFilter !== item.title
       );
-      setSelectedCommuteOptions(filterSelected);
+      setJobPlacementForm({
+        selected_commute_options: filterSelected,
+      });
     }
-    setJobPlacementForm({
-      selected_commute_options: [...selectedCommuteOptions, item.title],
-    });
   };
 
   const handleOnChangeCheckBoxTravelOption = (item, value: boolean) => {
     if (value) {
-      setSelectedTravelOptions([...selectedTravelOptions, item.title]);
+      setJobPlacementForm({
+        selected_travel_options: [...jobPlacementForm.selected_travel_options, item.title],
+      });
     } else {
-      const filterSelected = selectedTravelOptions.filter(
-        (typFilter: any) => typFilter.id !== item.id
+      const filterSelected = jobPlacementForm.selected_travel_options.filter(
+        (typFilter: any) => typFilter !== item.title
       );
-      setSelectedTravelOptions(filterSelected);
+      setJobPlacementForm({
+        selected_travel_options: filterSelected,
+      });
     }
-    setJobPlacementForm({
-      selected_travel_options: [...selectedTravelOptions, item.title],
-    });
   };
 
   const handleClickNext = () => {
-    setJobPlacementStep(2, () => {
+    if (disabledButton) return;
+
+    const filterStep = steps.find((item) => item.id === 1);
+    handleClickStep(filterStep, () => {
       navigate(`/${ROUTE_JOB_PLACEMENT}/step2`);
     });
   };
@@ -169,7 +188,7 @@ export const JPStepOne: FC = () => {
         </ul>
       </div>
       <div className="step-buttons">
-        <Button text={'Next Step'} onClick={handleClickNext} />
+        <Button text={'Next Step'} onClick={handleClickNext} disabled={disabledButton} />
       </div>
     </div>
   );
