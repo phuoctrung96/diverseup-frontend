@@ -1,3 +1,4 @@
+import { ROUTE_JOB_PLACEMENT } from 'app-constants';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import React, { FC, useState } from 'react';
@@ -83,7 +84,7 @@ export const JPStepOne: FC = () => {
 
   const handleClickNext = () => {
     setJobPlacementStep(2, () => {
-      navigate('/job-placement/step2');
+      navigate(`/${ROUTE_JOB_PLACEMENT}/step2`);
     });
   };
 

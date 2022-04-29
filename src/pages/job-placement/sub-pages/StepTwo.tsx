@@ -8,6 +8,7 @@ import { SECOND_JOB_PLACEMENT_STEP } from 'app-constants/job-placement-steps';
 import { useNavigate } from 'react-router-dom';
 import AuthHelper from '../../../utils/AuthHelpers';
 import { useGlobalJobPlacementContext } from '../JobPlacement';
+import { ROUTE_JOB_PLACEMENT } from 'app-constants';
 
 const KEY_STEP_2 = {
   important: 'selected_choosing_employer_importance_options',
@@ -69,13 +70,13 @@ export const JPStepTwo: FC = () => {
 
   const handleClickNext = () => {
     setJobPlacementStep(accessToken ? 4 : 3, () => {
-      navigate(accessToken ? '/job-placement/step4' : '/job-placement/step3');
+      navigate(accessToken ? `/${ROUTE_JOB_PLACEMENT}/step4` : `/${ROUTE_JOB_PLACEMENT}/step3`);
     });
   };
 
   const handleClickBack = () => {
     setJobPlacementStep(1, () => {
-      navigate('/job-placement');
+      navigate(`/${ROUTE_JOB_PLACEMENT}`);
     });
   };
 

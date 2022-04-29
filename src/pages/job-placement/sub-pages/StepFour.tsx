@@ -1,4 +1,5 @@
 import { submitJobPlacement } from 'api/job-placement';
+import { ROUTE_JOB_PLACEMENT } from 'app-constants';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import React, { FC } from 'react';
@@ -24,7 +25,7 @@ export const JPStepFour: FC = () => {
   const handleSubmitForm = () => {
     submitJobPlacement(jobPlacementForm).then((res: any) => {
       setJobPlacementStep(5, () => {
-        navigate('/job-placement/step5');
+        navigate(`/${ROUTE_JOB_PLACEMENT}/step5`);
       });
     });
   };
