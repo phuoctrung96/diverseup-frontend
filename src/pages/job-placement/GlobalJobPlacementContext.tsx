@@ -45,7 +45,7 @@ const initialState: GlobalJobPlacementContext = {
       { id: 1, name: 'Step 2', route: `/${ROUTE_JOB_PLACEMENT}/step2`, isActived: false },
       { id: 2, name: 'Step 3', route: `/${ROUTE_JOB_PLACEMENT}/step3`, isActived: false },
       { id: 3, name: 'Step 4', route: `/${ROUTE_JOB_PLACEMENT}/step4`, isActived: false },
-      { id: 4, name: 'Step 5', route: `/${ROUTE_JOB_PLACEMENT}/step5`, isActived: false },
+      // { id: 4, name: 'Step 5', route: `/${ROUTE_JOB_PLACEMENT}/step5`, isActived: false },
     ],
   },
 };
