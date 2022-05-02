@@ -1,20 +1,19 @@
 import { submitJobPlacement } from 'api/job-placement';
-import { ROUTE_JOB_PLACEMENT } from 'app-constants';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
+import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useGlobalJobPlacementContext } from '../GlobalJobPlacementContext';
 
 export const JPStepFour: FC = () => {
   const { register } = useForm<any>();
+  const { showModal } = useGlobalModalContext();
   const {
     store: { jobPlacementForm, steps },
     handleClickStep,
     setJobPlacementForm,
   } = useGlobalJobPlacementContext();
-  const navigate = useNavigate();
 
   const handleOnClickCheckBox = (type, value) => {
     setJobPlacementForm({
@@ -26,7 +25,7 @@ export const JPStepFour: FC = () => {
     submitJobPlacement(jobPlacementForm).then((res: any) => {
       const filterStep = steps.find((item) => item.id === 4);
       handleClickStep(filterStep, () => {
-        navigate(`/${ROUTE_JOB_PLACEMENT}/step5`);
+        showModal(MODAL_TYPES.JOB_PLACEMENT_FINISH_MODAL);
       });
     });
   };
