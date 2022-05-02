@@ -1,11 +1,11 @@
+import { getUserApi, loginApi } from 'api/user';
+import Button from 'components/shared/button/Button';
+import Input from 'components/shared/form-controls/input/Input';
+import { useGlobalModalContext } from 'contexts/GlobalModalContext';
 import React, { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import style from 'styles/modules/Auth.module.scss';
-import Input from 'components/shared/form-controls/input/Input';
-import Button from 'components/shared/button/Button';
-import { getUserApi, loginApi } from 'api/user';
 import AuthHelpers from '../../../../utils/AuthHelpers';
-import { useGlobalModalContext } from 'contexts/GlobalModalContext';
 
 interface ISignInForm {
   switchOnSignUpForm: () => void;
@@ -82,7 +82,7 @@ export const SignInForm: FC<ISignInForm> = ({
           placeholder="Enter you password"
           errors={errors}
         />
-
+        <input type={'submit'} hidden />
         <Button
           classList={['linkBtn']}
           text="Forgot your password?"
