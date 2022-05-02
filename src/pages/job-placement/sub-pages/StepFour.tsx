@@ -1,10 +1,10 @@
 import { submitJobPlacement } from 'api/job-placement';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
-import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
+import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGlobalJobPlacementContext } from '../GlobalJobPlacementContext';
+import { useGlobalJobPlacementContext } from '../../../contexts/GlobalJobPlacementContext';
 
 export const JPStepFour: FC = () => {
   const { register } = useForm<any>();

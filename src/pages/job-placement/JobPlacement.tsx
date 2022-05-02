@@ -2,7 +2,10 @@ import PageTitle from 'components/common/page-title/PageTitle';
 import StepperComponent from 'components/shared/stepper/Stepper';
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { GlobalJobPlacement, GlobalJobPlacementContext } from './GlobalJobPlacementContext';
+import {
+  GlobalJobPlacement,
+  GlobalJobPlacementContext,
+} from '../../contexts/GlobalJobPlacementContext';
 
 export const JobPlacementPage: FC = () => {
   const renderStepperComponent = () => {

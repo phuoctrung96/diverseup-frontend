@@ -4,15 +4,18 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { GlobalModal } from 'GlobalModal';
-import { DynamicBreadcrumb } from 'DynamicBreadcrumb';
+import { GlobalModal } from 'contexts/GlobalModalContext';
+import { DynamicBreadcrumb } from 'contexts/DynamicBreadcrumbContext';
+import { BlogContextContainer } from 'contexts/BlogContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <BrowserRouter>
     <GlobalModal>
       <DynamicBreadcrumb>
-        <App />
+        <BlogContextContainer>
+          <App />
+        </BlogContextContainer>
       </DynamicBreadcrumb>
     </GlobalModal>
   </BrowserRouter>

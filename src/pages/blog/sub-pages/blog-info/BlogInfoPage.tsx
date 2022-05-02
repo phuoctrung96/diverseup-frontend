@@ -7,7 +7,8 @@ import { ICard } from 'interfaces';
 import { getBlogApi, IBlogDetails, relatedBlogsApi } from 'api';
 import { ROUTE_BLOG } from 'app-constants';
 import { useLocation, useParams } from 'react-router-dom';
-import { BREADCRUMBS_TYPES, useDynamicBreadcrumbContext } from 'DynamicBreadcrumb';
+import { BREADCRUMBS_TYPES, useDynamicBreadcrumbContext } from 'contexts/DynamicBreadcrumbContext';
+import { useBlogContext } from 'contexts/BlogContext';
 import Loader from 'components/common/loader/Loader';
 
 const BlogInfoPage: FC = () => {
@@ -16,6 +17,7 @@ const BlogInfoPage: FC = () => {
   const [isBlogsLoading, setIsBlogsLoading] = useState<boolean>(true);
   const [relatedBlogs, setRelatedBlogs] = useState<ICard[]>([]);
   const { setDynamicBreadcrumb } = useDynamicBreadcrumbContext();
+  const { setBlogPageBannerImage } = useBlogContext();
 
   const location = useLocation();
   const { slug } = useParams();
@@ -42,6 +44,7 @@ const BlogInfoPage: FC = () => {
     setDynamicBreadcrumb(BREADCRUMBS_TYPES.BLOG, '');
     getBlogApi(slug || '').then((res) => {
       setBlogDetails(res);
+      setBlogPageBannerImage(res.image);
       setDynamicBreadcrumb(BREADCRUMBS_TYPES.COMPANY, res.title);
       setIsBlogDetailsLoading(false);
     });

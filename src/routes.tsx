@@ -33,9 +33,8 @@ import JPStepFive from 'pages/job-placement/sub-pages/StepFive';
 import AddRating from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/AddRating';
 import BlogInfoPage from './pages/blog/sub-pages/blog-info/BlogInfoPage';
 import BlogList from './pages/blog/sub-pages/blog-list/BlogList';
-import { useDynamicBreadcrumbContext } from 'DynamicBreadcrumb';
+import { useDynamicBreadcrumbContext } from 'contexts/DynamicBreadcrumbContext';
 import NewPasswordModal from './components/modals/NewPasswordModal';
-import { Outlet } from 'react-router-dom';
 
 const ContextBreadcrumb = () => {
   const { store } = useDynamicBreadcrumbContext();

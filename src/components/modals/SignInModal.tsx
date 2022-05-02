@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import ModalWindow from 'components/shared/modal-window/ModalWindow';
 import SignInForm from 'components/shared/forms/sign-in-form/SignInForm';
-import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
+import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 import style from 'styles/modules/Auth.module.scss';
 import SocialSignInButtons from 'components/shared/forms/social-sign-in-buttons/SocialSignInButtons';
 

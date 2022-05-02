@@ -5,7 +5,7 @@ import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import { registerApi } from 'api/user';
-import { MODAL_TYPES, useGlobalModalContext } from '../../../../GlobalModal';
+import { MODAL_TYPES, useGlobalModalContext } from '../../../../contexts/GlobalModalContext';
 import { confirmValidate } from '../../../../utils/confirm-validate.utils';
 
 interface ISignUpFormProps {

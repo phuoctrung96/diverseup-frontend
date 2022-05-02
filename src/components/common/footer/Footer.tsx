@@ -12,7 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import { FooterNavLink } from 'interfaces';
 import Button from 'components/shared/button/Button';
-import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
+import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 
 export const Footer: FC = () => {
   const { hideModal, showModal } = useGlobalModalContext();

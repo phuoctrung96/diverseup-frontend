@@ -1,5 +1,5 @@
 import ModalWindow from 'components/shared/modal-window/ModalWindow';
-import { useGlobalModalContext } from 'GlobalModal';
+import { useGlobalModalContext } from 'contexts/GlobalModalContext';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthHelper from '../../utils/AuthHelpers';

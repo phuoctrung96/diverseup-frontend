@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
+import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 import ModalWindow from 'components/shared/modal-window/ModalWindow';
 import style from 'styles/modules/Auth.module.scss';
 import linkedin from 'assets/images/auth/Linkedin.svg';

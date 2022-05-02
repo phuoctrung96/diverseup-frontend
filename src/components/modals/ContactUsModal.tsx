@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import ModalWindow from 'components/shared/modal-window/ModalWindow';
-import { useGlobalModalContext } from 'GlobalModal';
+import { useGlobalModalContext } from 'contexts/GlobalModalContext';
 import Button from 'components/shared/button/Button';
 import Input from 'components/shared/form-controls/input/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';

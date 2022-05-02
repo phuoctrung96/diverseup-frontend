@@ -13,9 +13,9 @@ import { ICard } from 'interfaces/card';
 import Button from 'components/shared/button/Button';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ROUTE_ADD_RATING, ROUTE_COMPANY_RATING } from 'app-constants';
-import { businessDetailApi, businessesApi, highlightedBusinesses, IBusinessItemInfo } from 'api';
+import { businessDetailApi, highlightedBusinesses, IBusinessItemInfo } from 'api';
 import Loader from 'components/common/loader/Loader';
-import { BREADCRUMBS_TYPES, useDynamicBreadcrumbContext } from 'DynamicBreadcrumb';
+import { BREADCRUMBS_TYPES, useDynamicBreadcrumbContext } from 'contexts/DynamicBreadcrumbContext';
 
 export const CompanyInfo: FC = () => {
   const [businesses, setBusinesses] = useState<ICard[] | []>([]);

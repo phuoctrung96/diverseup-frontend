@@ -5,7 +5,7 @@ import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
 import { getUserApi, loginApi } from 'api/user';
 import AuthHelpers from '../../../../utils/AuthHelpers';
-import { useGlobalModalContext } from 'GlobalModal';
+import { useGlobalModalContext } from 'contexts/GlobalModalContext';
 
 interface ISignInForm {
   switchOnSignUpForm: () => void;

@@ -8,8 +8,8 @@ import Breadcrumbs from 'components/common/breadcrumbs/Breadcrumbs';
 import { ROUTES } from 'routes';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
 import ScrollToTop from 'ScrollToTop';
-import blogBanner from './assets/images/blog/blog-banner.jpg';
 import { getTitle } from 'utils/Title';
+import { useBlogContext } from 'contexts/BlogContext';
 
 function AppRoutes() {
   return useRoutes(ROUTES);
@@ -23,6 +23,7 @@ function App() {
 
   const location = useLocation();
   const breadcrumbs = useBreadcrumbs(ROUTES);
+  const { bannerImage, setBlogPageBannerImage } = useBlogContext();
 
   useEffect(() => {
     const title =
@@ -48,7 +49,7 @@ function App() {
       <div className={styles.Layout}>
         {showBlogPageBanner && (
           <div className={styles.blogPageBanner}>
-            <img src={blogBanner} alt="banner" />
+            <img src={bannerImage} alt="banner" />
           </div>
         )}
         <Breadcrumbs />

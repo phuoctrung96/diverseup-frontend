@@ -5,7 +5,7 @@ import { NAV_LINKS, ROUTE_ROOT } from 'app-constants';
 import { INavLink } from 'interfaces';
 import AppLogo from 'components/shared/logo/Logo';
 import SearchForm from 'components/shared/forms/search-form/SearchForm';
-import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
+import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 import AuthHelpers from 'utils/AuthHelpers';
 import { logoutApi } from 'api/user';
 

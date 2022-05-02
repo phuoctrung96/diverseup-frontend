@@ -6,7 +6,7 @@ import { confirmValidate } from 'utils/confirm-validate.utils';
 import { useNavigate } from 'react-router-dom';
 import { resetPasswordApi } from 'api';
 import { getParams } from 'utils/http.utils';
-import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
+import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 import style from './NewPasswordForm.module.scss';
 
 interface IForm {

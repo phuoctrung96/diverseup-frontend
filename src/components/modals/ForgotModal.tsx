@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import ModalWindow from 'components/shared/modal-window/ModalWindow';
-import { MODAL_TYPES, useGlobalModalContext } from 'GlobalModal';
+import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 import ForgotForm from 'components/shared/forms/forgot-form/ForgotForm';
 
 export const ForgotModal: FC = () => {
