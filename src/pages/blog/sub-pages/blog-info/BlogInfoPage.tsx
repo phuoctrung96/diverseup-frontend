@@ -1,18 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import PageTitle from '../../../../components/common/page-title/PageTitle';
-import Image from '../../../../components/shared/image/Image';
-import Text from '../../../../components/shared/text/Text';
-
 import style from './BlogInfoPage.module.scss';
-
-import banner from '../../../../assets/images/blog/content.jpg';
-import content1 from '../../../../assets/images/blog/content1.jpg';
-import content2 from '../../../../assets/images/blog/content2.jpg';
-import Note from '../../../../components/shared/note/Note';
 import Cards from '../../../../components/shared/cards/Cards';
 import ShareSocial from '../../../../components/shared/share-social/ShareSocial';
 import { ICard } from 'interfaces';
-import { businessDetailApi, getBlogApi, IBlogDetails, relatedBlogsApi } from 'api';
+import { getBlogApi, IBlogDetails, relatedBlogsApi } from 'api';
 import { ROUTE_BLOG } from 'app-constants';
 import { useLocation, useParams } from 'react-router-dom';
 import { BREADCRUMBS_TYPES, useDynamicBreadcrumbContext } from 'DynamicBreadcrumb';
@@ -49,7 +41,6 @@ const BlogInfoPage: FC = () => {
   const loadBlogDetails = () => {
     setDynamicBreadcrumb(BREADCRUMBS_TYPES.BLOG, '');
     getBlogApi(slug || '').then((res) => {
-      console.log('res => ', res);
       setBlogDetails(res);
       setDynamicBreadcrumb(BREADCRUMBS_TYPES.COMPANY, res.title);
       setIsBlogDetailsLoading(false);
