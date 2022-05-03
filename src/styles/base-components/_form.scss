@@ -2,6 +2,7 @@
 
 .form {
   .form-group {
+    display: inline-grid;
     width: 100%;
     position: relative;
 
@@ -34,6 +35,19 @@
     .input-wrapper {
       position: relative;
       width: 100%;
+      margin-bottom: 22px;
+
+      @include tablet-min() {
+        margin-bottom: 18px;
+      }
+    }
+
+    .select-input {
+      margin-bottom: 22px;
+
+      @include tablet-min() {
+        margin-bottom: 18px;
+      }
     }
 
     .input {
@@ -48,12 +62,12 @@
       font-weight: 400;
       color: var(--color-primary-black);
       line-height: 22px;
-      margin-bottom: 22px;
+      //margin-bottom: 22px;
       display: block;
 
-      @include tablet-min() {
-        margin-bottom: 15px;
-      }
+      //@include tablet-min() {
+      //  margin-bottom: 18px;
+      //}
 
       &::placeholder {
         font-size: 14px;
@@ -100,19 +114,24 @@
 
     .form-group {
       display: flex;
-      margin-bottom: 20px;
-      align-items: center;
+      flex-wrap: wrap;
 
       .label {
-        margin: 0;
         font-weight: 600;
         font-size: 20px;
-        line-height: 24px;
+        line-height: 50px;
         flex: 0 0 35%;
       }
 
-      .input {
-        margin-bottom: 0;
+      .input-wrapper {
+        flex-basis: 65%;
+      }
+
+      .validation-error {
+        position: absolute;
+        top: 100%;
+        left: 35%;
+        margin-top: -22px;
       }
 
       .radio-buttons-group {
@@ -135,11 +154,11 @@
         .label {
           font-weight: 500;
           font-size: 16px;
-          line-height: 19px;
         }
 
         .input {
           max-width: 110px;
+          margin-bottom: 0;
         }
       }
     }
@@ -148,10 +167,18 @@
       .form-group {
         flex-direction: column;
         align-items: flex-start;
+        flex-wrap: nowrap;
 
         .label {
           font-size: 16px;
-          margin-bottom: 10px;
+          margin-bottom: 0;
+        }
+
+        .validation-error {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          margin-top: -18px;
         }
 
         .radio-buttons-group {
@@ -159,7 +186,7 @@
 
           &__label {
             font-size: 16px;
-            margin-bottom: 15px;
+            margin-top: 15px;
           }
 
           .radio-button {
@@ -174,7 +201,6 @@
         &.number {
           display: flex;
           flex-direction: row;
-          align-items: center;
           margin-bottom: 15px;
 
           &:last-child {
@@ -224,12 +250,18 @@
     }
 
     .form-group {
+      &:not(:first-child) {
+        &:before {
+          content: unset !important;
+        }
+      }
+
       &:not(:last-child):before {
         content: '';
         position: absolute;
-        top: 25%;
+        top: 15%;
         right: 0;
-        height: 50%;
+        height: 40%;
         border-right: 1px solid var(--color-secondary-light-gray);
         transform: rotate(180deg);
         z-index: 99;

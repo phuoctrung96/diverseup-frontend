@@ -23,10 +23,10 @@ export const InfoCardScale: FC<IInfoCardScale> = ({ clickable = false, onSelect,
     <div className={styles.scaleWrapper}>
       {[...new Array(totalCircles)].map((arr, index) => {
         return (
-          <div className={styles.circleContent} onClick={() => handleClick(index)} key={index}>
+          <div className={styles.circleContent} onClick={() => handleClick(index + 1)} key={index}>
             <div
               key={index}
-              className={`${styles.circle} ${index === selectedItem && styles.selected} ${
+              className={`${styles.circle} ${index + 1 === selectedItem && styles.selected} ${
                 clickable && styles.clickable
               }`}
             >

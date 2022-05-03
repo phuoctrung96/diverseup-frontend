@@ -13,9 +13,9 @@ export const JobTrend: FC<IJobTrend> = ({ text, value, clickable, onClick, selec
   const [itemSelected, setItemSelected] = useState<boolean>(!!selected);
 
   const handleClick = () => {
-    if (clickable) {
+    if (clickable && onClick) {
       setItemSelected(!itemSelected);
-      onClick && onClick(value || '');
+      onClick(value || '');
     }
   };
 

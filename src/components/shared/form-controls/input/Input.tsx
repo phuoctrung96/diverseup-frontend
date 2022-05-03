@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { Path, useForm, UseFormRegister } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 
-type InputType = 'text' | 'password' | 'number';
+type InputType = 'text' | 'password' | 'number' | 'date';
 
 type InputProps = {
   label: Path<any>;
@@ -19,10 +19,10 @@ export const Input: FC<InputProps> = ({
   label,
   inputLabel,
   register,
-  required,
+  required = false,
   type,
   placeholder = '',
-  errors,
+  errors = {},
 }) => {
   const [showPass, setShowPass] = useState(false);
   const [inputType, setInputType] = useState(type);
@@ -50,8 +50,10 @@ export const Input: FC<InputProps> = ({
           />
         )}
       </div>
-      {errors && errors[label]?.type && (
-        <span className={'validation-error'}>{errors[label].message}</span>
+      {errors && errors[label]?.type && errors[label]?.type === 'required' ? (
+        <span className={'validation-error'}>This field must be filled</span>
+      ) : (
+        <span className={'validation-error'}>{errors[label]?.message}</span>
       )}
     </div>
   );

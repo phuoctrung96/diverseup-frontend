@@ -8,17 +8,25 @@ interface IInfoCardRating {
   rating: number;
   question: string;
   editable?: boolean;
+  onRatingClick?: (rating: number) => void;
 }
 
-export const InfoCardRating: FC<IInfoCardRating> = ({ rating, question, editable = false }) => {
+export const InfoCardRating: FC<IInfoCardRating> = ({
+  rating,
+  question,
+  editable = false,
+  onRatingClick,
+}) => {
   const [starRating, setStarRating] = useState<number>(rating);
 
   const onRatingChanged = (rating: number) => {
     setStarRating(rating);
+    onRatingClick?.(rating);
   };
 
   const onBtnNAClick = () => {
-    setStarRating(-1);
+    setStarRating(0);
+    onRatingClick?.(0);
   };
 
   return (
@@ -29,7 +37,7 @@ export const InfoCardRating: FC<IInfoCardRating> = ({ rating, question, editable
         {editable && (
           <Button
             text={'N/A'}
-            classList={['btnNA', `${starRating === -1 ? 'active' : ''}`]}
+            classList={['btnNA', `${starRating === 0 ? 'active' : ''}`]}
             onClick={onBtnNAClick}
           />
         )}

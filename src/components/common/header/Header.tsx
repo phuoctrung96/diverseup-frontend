@@ -28,6 +28,10 @@ export const Header: FC<IHeaderProps> = ({ showSearch }) => {
     !isLoggedIn ? showModal(MODAL_TYPES.SIGN_IN_MODAL) : logout();
   };
 
+  useEffect(() => {
+    setIsLoggedIn(!!AuthHelpers.getUserInfo());
+  }, [AuthHelpers.getUserInfo()]);
+
   const logout = () => {
     logoutApi()
       .then(() => {

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Path, UseFormRegister } from 'react-hook-form';
 
 interface IRadioButtonGroup {
@@ -6,6 +6,7 @@ interface IRadioButtonGroup {
   register: UseFormRegister<any>;
   radioButtons: { value: string; label: string }[];
   groupLabel?: string;
+  defaultSelected?: string;
 }
 
 export const RadioButtonGroup: FC<IRadioButtonGroup> = ({
@@ -13,9 +14,14 @@ export const RadioButtonGroup: FC<IRadioButtonGroup> = ({
   register,
   radioButtons,
   groupLabel,
+  defaultSelected,
 }) => {
-  const [selectedInput, setSelectedInput] = useState('');
+  const [selectedInput, setSelectedInput] = useState(defaultSelected || '');
   const { name } = register(label);
+
+  useEffect(() => {
+    setSelectedInput(selectedInput);
+  }, [selectedInput]);
 
   const handleChange = (e: any) => {
     setSelectedInput(e.target.value);

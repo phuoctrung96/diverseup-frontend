@@ -1,7 +1,13 @@
+@import 'src/styles/utilities/mixins';
+
 .radio-buttons-group {
   display: flex;
   flex-direction: column;
-  padding-bottom: 9px;
+  margin-bottom: 22px;
+
+  @include tablet-min() {
+    margin-bottom: 18px;
+  }
 
   &__label {
     font-weight: 600;

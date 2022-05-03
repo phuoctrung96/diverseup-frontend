@@ -6,7 +6,7 @@ interface StepModel {
   id: number;
   name: string;
   route: string;
-  isActived: boolean;
+  isActivated: boolean;
 }
 interface IStepperProps {
   steps: StepModel[];
@@ -24,7 +24,7 @@ const StepperComponent: FC<IStepperProps> = ({ steps, onClick, disabled = false 
           return (
             <li
               className={`${location.pathname == step.route ? styles.active : ''} ${
-                activeKey > index || step.isActived ? styles.completed : ''
+                activeKey > index || step.isActivated ? styles.completed : ''
               }`}
               key={index}
               onClick={() => {

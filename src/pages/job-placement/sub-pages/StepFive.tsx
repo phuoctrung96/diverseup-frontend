@@ -6,7 +6,7 @@ import RadioButtonGroup from 'components/shared/form-controls/radio-button-group
 import InfoCardTitle from 'components/shared/page-info-card/components/info-card-title/InfoCardTitle';
 import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
 import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 

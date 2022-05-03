@@ -20,7 +20,7 @@ export const InfoCardTitle: FC<IInfoCardTitle> = ({
   stepItem,
 }) => {
   const [buttonActive, setButtonActive] = useState<boolean>(false);
-  const [isValue, setIsValue] = useState<boolean>(!!hasValue);
+  const [isValue, setIsValue] = useState<boolean>(false);
 
   const onButtonClick = () => {
     setButtonActive(!buttonActive);
@@ -29,9 +29,7 @@ export const InfoCardTitle: FC<IInfoCardTitle> = ({
   };
 
   useEffect(() => {
-    if (!!hasValue) {
-      setButtonActive(!hasValue);
-    }
+    setButtonActive(!hasValue);
   }, [hasValue]);
 
   return (

@@ -1,5 +1,4 @@
-import React, { FC } from 'react';
-import cardStyles from 'components/shared/page-info-card/PageInfoCard.module.scss';
+import React, { FC, useEffect } from 'react';
 
 import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
 import PageTitle from 'components/common/page-title/PageTitle';
@@ -8,14 +7,67 @@ import { useForm } from 'react-hook-form';
 import Select from 'components/shared/form-controls/select/Select';
 import RadioButtonGroup from 'components/shared/form-controls/radio-button-group/RadioButtonGroup';
 import Button from 'components/shared/button/Button';
+import {
+  EMPLOYER_STATUS_RADIO,
+  EMPLOYMENT_STATUS_OPTIONS,
+  GENDER_OPTIONS,
+  JOB_FUNCTION_OPTIONS,
+} from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/data/add-rating-step-one.data';
+import { useAddRatingContext } from 'contexts/AddRatingContext';
+
+interface IFirstStepForm {
+  location: string;
+  gender: string;
+  employer_status: string;
+  last_year_at_employer: number;
+  employment_status: string;
+  job_function: string;
+  job_title: string;
+}
 
 export const AddRatingStepOne: FC = () => {
-  const { register, handleSubmit, reset, control } = useForm<any>();
+  const {
+    store: { addRatingForm },
+    goNext,
+  } = useAddRatingContext();
 
-  const employerStatusRadio = [
-    { label: 'Current Employee', value: 'qqq' },
-    { label: 'Former Employee', value: 'ddd' },
-  ];
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<IFirstStepForm>({
+    mode: 'onTouched',
+    defaultValues: {
+      location: addRatingForm.location || '',
+      gender: addRatingForm.gender || '',
+      employer_status: addRatingForm.employer_status || EMPLOYER_STATUS_RADIO[0].value,
+      last_year_at_employer: addRatingForm.last_year_at_employer,
+      employment_status: addRatingForm.employment_status || '',
+      job_function: addRatingForm.job_function || '',
+      job_title: addRatingForm.job_title || '',
+    },
+  });
+
+  const handleNextStep = (data: IFirstStepForm) => {
+    goNext({
+      ...addRatingForm,
+      ...data,
+    });
+  };
+
+  useEffect(() => {
+    reset({
+      location: addRatingForm.location || '',
+      gender: addRatingForm.gender || '',
+      employer_status: addRatingForm.employer_status || EMPLOYER_STATUS_RADIO[0].value,
+      last_year_at_employer: addRatingForm.last_year_at_employer,
+      employment_status: addRatingForm.employment_status || '',
+      job_function: addRatingForm.job_function || '',
+      job_title: addRatingForm.job_title || '',
+    });
+  }, []);
 
   return (
     <PageInfoCard classList={['center', 'no-margin']}>
@@ -31,54 +83,71 @@ export const AddRatingStepOne: FC = () => {
             inputLabel="Location:"
             label="location"
             register={register}
+            required={true}
+            errors={errors}
             type="text"
             placeholder="City, State"
           />
           <Select
-            options={[]}
+            options={GENDER_OPTIONS}
             control={control}
             name={'gender'}
+            required={true}
+            errors={errors}
             selectLabel={'Gender:'}
             selectPlaceholder={'Select a gender'}
           />
           <div className="form-group">
             <RadioButtonGroup
-              label={'employerStatus'}
+              label={'employer_status'}
               register={register}
-              radioButtons={employerStatusRadio}
+              radioButtons={EMPLOYER_STATUS_RADIO}
               groupLabel={'Employer Status:'}
+              defaultSelected={EMPLOYER_STATUS_RADIO[0].value}
             />
           </div>
-          <Select
-            options={[]}
-            control={control}
-            name={'lastYear'}
-            selectLabel={'Last year at Employer:'}
-            selectPlaceholder={'Select a year'}
+          <Input
+            register={register}
+            label={'last_year_at_employer'}
+            inputLabel={'Last year at Employer:'}
+            type={'text'}
+            required={true}
+            errors={errors}
+            placeholder={'Type a year'}
           />
           <Select
-            options={[]}
+            options={EMPLOYMENT_STATUS_OPTIONS}
             control={control}
-            name={'employmentStatus'}
+            name={'employment_status'}
+            required={true}
+            errors={errors}
             selectLabel={'Employment Status:'}
             selectPlaceholder={'Select employment status'}
           />
           <Select
-            options={[]}
+            options={JOB_FUNCTION_OPTIONS}
             control={control}
-            name={'jobFunction'}
+            required={true}
+            errors={errors}
+            name={'job_function'}
             selectLabel={'Job Function:'}
             selectPlaceholder={'Choose your industry'}
           />
           <Input
             inputLabel="Job Title:"
-            label="jobTitle"
+            label="job_title"
             register={register}
+            required={true}
+            errors={errors}
             type="text"
             placeholder="Enter your job title"
           />
         </form>
-        <Button text={'Next Step'} />
+        <Button
+          text={'Next Step'}
+          disabled={!isValid}
+          onClick={handleSubmit((data) => handleNextStep(data))}
+        />
       </div>
     </PageInfoCard>
   );

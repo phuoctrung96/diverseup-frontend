@@ -1,10 +1,26 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import PageTitle from 'components/common/page-title/PageTitle';
 import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
 import InfoCardRating from 'components/shared/page-info-card/components/info-card-rating/InfoCardRating';
 import Button from 'components/shared/button/Button';
+import { QUESTION_LIST } from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/data/add-rating-step-two.data';
+import { useAddRatingContext } from 'contexts/AddRatingContext';
 
 export const AddRatingStepTwo: FC = () => {
+  const {
+    store: { addRatingForm },
+    setAddRatingForm,
+    goNext,
+    goBack,
+  } = useAddRatingContext();
+
+  const handleRatingClick = (key: string, rating: number) => {
+    setAddRatingForm({
+      ...addRatingForm,
+      [`${key}`]: rating,
+    });
+  };
+
   return (
     <PageInfoCard classList={['center', 'no-margin']}>
       <PageTitle
@@ -14,31 +30,20 @@ export const AddRatingStepTwo: FC = () => {
       />
 
       <div className="info-card-content">
-        <form className={'form'} onSubmit={(e) => e.preventDefault()}>
-          <InfoCardRating
-            rating={1}
-            question={'Opportunity for sponsorship and mentorship program?'}
-            editable={true}
-          />
-          <InfoCardRating
-            rating={2}
-            question={'Equal  treatment of men and women?'}
-            editable={true}
-          />
-          <InfoCardRating
-            rating={0}
-            question={'Equal  pay for equal performance?'}
-            editable={true}
-          />
-          <InfoCardRating
-            rating={0}
-            question={'Equal  opportunity to move up in the organization?'}
-            editable={true}
-          />
-        </form>
+        <div className={'form'}>
+          {QUESTION_LIST.map((item) => (
+            <InfoCardRating
+              rating={addRatingForm[item.key] || 0}
+              key={item.key}
+              question={item.question}
+              editable={true}
+              onRatingClick={(rating) => handleRatingClick(item.key, rating)}
+            />
+          ))}
+        </div>
         <div className="buttons-group">
-          <Button text={'Go Back'} classList={['white']} />
-          <Button text={'Next Step'} />
+          <Button text={'Go Back'} classList={['white']} onClick={goBack} />
+          <Button text={'Next Step'} onClick={() => goNext()} />
         </div>
       </div>
     </PageInfoCard>

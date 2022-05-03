@@ -24,7 +24,6 @@ import AddRatingStepTwo from 'pages/company-rating/sub-pages/company-info/sub-pa
 import AddRatingStepThree from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/steps/AddRatingStepThree';
 import AddRatingStepFour from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/steps/AddRatingStepFour';
 import AddRatingStepFive from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/steps/AddRatingStepFive';
-import AddRatingStepSix from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/steps/AddRatingStepSix';
 import JPStepOne from 'pages/job-placement/sub-pages/StepOne';
 import JPStepTwo from 'pages/job-placement/sub-pages/StepTwo';
 import JPStepThree from 'pages/job-placement/sub-pages/StepThree';
@@ -74,11 +73,10 @@ export const ROUTES: BreadcrumbsRoute[] = [
             breadcrumb: null,
             children: [
               { index: true, element: <AddRatingStepOne /> },
-              { path: 'step2', element: <AddRatingStepTwo /> },
-              { path: 'step3', element: <AddRatingStepThree /> },
-              { path: 'step4', element: <AddRatingStepFour /> },
-              { path: 'step5', element: <AddRatingStepFive /> },
-              { path: 'step6', element: <AddRatingStepSix /> },
+              { path: 'step2', element: <AddRatingStepTwo />, breadcrumb: 'Equal opportunity' },
+              { path: 'step3', element: <AddRatingStepThree />, breadcrumb: 'Family Support' },
+              { path: 'step4', element: <AddRatingStepFour />, breadcrumb: 'Company Culture' },
+              { path: 'step5', element: <AddRatingStepFive />, breadcrumb: 'Your profile' },
             ],
           },
         ],

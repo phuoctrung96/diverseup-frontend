@@ -6,6 +6,7 @@ import NewPasswordModal from 'components/modals/NewPasswordModal';
 import EmailSentModal from 'components/modals/EmailSentModal';
 import ContactUsModal from 'components/modals/ContactUsModal';
 import JobPlacementFinishModal from 'components/modals/JobPlacementFinishModal';
+import AddRatingFinishModal from 'components/modals/AddRatingFinishModal';
 
 export const MODAL_TYPES = {
   SIGN_IN_MODAL: 'SIGN_IN_MODAL',
@@ -15,6 +16,7 @@ export const MODAL_TYPES = {
   EMAIL_SENT_MODAL: 'EMAIL_SENT_MODAL',
   CONTACT_US_MODAL: 'CONTACT_US_MODAL',
   JOB_PLACEMENT_FINISH_MODAL: 'JOB_PLACEMENT_FINISH_MODAL',
+  ADD_RATING_FINISH_MODAL: 'ADD_RATING_FINISH_MODAL',
 };
 
 const MODAL_COMPONENTS: any = {
@@ -25,6 +27,7 @@ const MODAL_COMPONENTS: any = {
   [MODAL_TYPES.EMAIL_SENT_MODAL]: EmailSentModal,
   [MODAL_TYPES.CONTACT_US_MODAL]: ContactUsModal,
   [MODAL_TYPES.JOB_PLACEMENT_FINISH_MODAL]: JobPlacementFinishModal,
+  [MODAL_TYPES.ADD_RATING_FINISH_MODAL]: AddRatingFinishModal,
 };
 
 type GlobalModalContext = {

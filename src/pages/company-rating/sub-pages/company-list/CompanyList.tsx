@@ -8,7 +8,7 @@ import Select, { ISelectOption } from 'components/shared/form-controls/select/Se
 import { useForm } from 'react-hook-form';
 import { Pagination } from 'interfaces';
 import { useLocation } from 'react-router-dom';
-import { getParams } from '../../../../utils/http.utils';
+import { getParams } from 'utils/http.utils';
 
 interface IForm {
   sort: any;
@@ -35,8 +35,8 @@ export const CompanyList: FC = () => {
     const params = getParams();
     setBusinesses([]);
     setIsBusinessLoading(true);
-    if (watchSort && watchSort.value) {
-      getBusinesses({ page: 1, size: 12, ...params, ...watchSort.value });
+    if (watchSort) {
+      getBusinesses({ page: 1, size: 12, ...params, ...watchSort });
     } else {
       getBusinesses({ page: 1, size: 12, ...params });
     }

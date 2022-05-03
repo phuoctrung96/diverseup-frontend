@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ROUTE_COMPANY_RATING } from 'app-constants';
 import { removeEmptyValues } from 'utils/object.utils';
-import { getParams } from '../../../../utils/http.utils';
+import { getParams } from 'utils/http.utils';
 
 interface ISearchForm {
   hideOnMobile?: boolean;

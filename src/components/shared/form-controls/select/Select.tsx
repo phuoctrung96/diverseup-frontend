@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 import Select from 'react-select';
@@ -27,27 +27,48 @@ export const FormSelect: FC<ISelect> = ({
   required,
   selectPlaceholder,
 }) => {
+  const [value, setValue] = useState(
+    options.find((item) => item.value === control._formValues[name]) || null
+  );
+
   return (
     <div className="form-group">
       {selectLabel && <label className="label">{selectLabel}</label>}
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <Select
-            {...field}
-            styles={customStyles}
-            options={[{ label: selectPlaceholder, value: undefined }, ...options]}
-            placeholder={selectPlaceholder || ''}
-            isOptionSelected={(option) =>
-              field?.value ? option.label === field.value.label : false
-            }
-          />
+        rules={{ required: required }}
+        render={({ field, fieldState }) => (
+          <>
+            <div className="input-wrapper select-input">
+              <Select
+                {...field}
+                styles={{
+                  ...customStyles,
+                  control: (provided, state) => ({
+                    ...customStyles.control(provided, state),
+                    borderColor: fieldState.error
+                      ? 'var(--color-validation-error) !important'
+                      : 'var(--color-secondary-light-gray) !important',
+                  }),
+                }}
+                options={options}
+                placeholder={selectPlaceholder || ''}
+                isOptionSelected={(option) => option?.value === field?.value}
+                value={[value]}
+                getOptionLabel={(option) => option?.label || ''}
+                onChange={(option) => {
+                  setValue(option);
+                  field?.onChange(option?.value);
+                }}
+              />
+            </div>
+            {errors && errors[name]?.type === 'required' && (
+              <span className={'validation-error'}>This field must be filled</span>
+            )}
+          </>
         )}
       />
-      {errors && errors['filter']?.type === 'required' && (
-        <span className={'validation-error'}>This field must be filled</span>
-      )}
     </div>
   );
 };
@@ -61,9 +82,10 @@ const customStyles = {
   }),
   control: (provided: any, state: any) => ({
     ...provided,
-    border: '1px solid var(--color-secondary-light-gray)',
+    border: '1px solid',
     borderRadius: state.menuIsOpen ? '8px 8px 0 0' : '8px',
-    background: 'var(--color-secondary-extra-light-gray)',
+    borderColor: 'var(--color-secondary-light-gray)',
+    backgroundColor: 'var(--color-secondary-extra-light-gray) !important',
     fontSize: '14px',
     fontWeight: '400',
     '&:hover': {

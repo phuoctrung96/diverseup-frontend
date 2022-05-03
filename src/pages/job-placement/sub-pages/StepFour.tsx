@@ -4,14 +4,13 @@ import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGlobalJobPlacementContext } from '../../../contexts/GlobalJobPlacementContext';
+import { useGlobalJobPlacementContext } from 'contexts/GlobalJobPlacementContext';
 
 export const JPStepFour: FC = () => {
   const { register } = useForm<any>();
   const { showModal } = useGlobalModalContext();
   const {
-    store: { jobPlacementForm, steps },
-    handleClickStep,
+    store: { jobPlacementForm },
     setJobPlacementForm,
   } = useGlobalJobPlacementContext();
 

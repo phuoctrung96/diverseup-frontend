@@ -5,8 +5,8 @@ import Input from 'components/shared/form-controls/input/Input';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import { registerApi } from 'api/user';
-import { MODAL_TYPES, useGlobalModalContext } from '../../../../contexts/GlobalModalContext';
-import { confirmValidate } from '../../../../utils/confirm-validate.utils';
+import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
+import { confirmValidate } from 'utils/confirm-validate.utils';
 
 interface ISignUpFormProps {
   switchOnLogin: () => void;
@@ -51,13 +51,20 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
       });
       showModal(MODAL_TYPES.SIGN_IN_MODAL);
     } catch (e: any) {
-      if (e.data.detail === 'REGISTER_USER_ALREADY_EXISTS') {
+      if (
+        typeof e.data.detail === 'object' &&
+        e.data.detail.find((error) => error.type === 'value_error.email')
+      ) {
         setError('email', {
-          type: 'required',
+          type: 'invalid-email',
+          message: `value is not a valid email address`,
+        });
+      } else if (e.data.detail === 'REGISTER_USER_ALREADY_EXISTS') {
+        setError('email', {
+          type: 'exist',
           message: `user with email: ${email} already exist`,
         });
       } else {
-        console.log(e.data);
         setError(e.data.detail[0].loc[1], {
           type: 'required',
           message: e.data.detail[0].msg,
@@ -73,6 +80,7 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
           inputLabel="E-mail address"
           label="email"
           register={register}
+          required={true}
           type="text"
           placeholder="Enter your e-mail address"
           errors={errors}
@@ -81,6 +89,8 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
           inputLabel="Password"
           label="password"
           register={register}
+          required={true}
+          errors={errors}
           type="password"
           placeholder="Enter your password"
         />
@@ -88,6 +98,7 @@ export const SignUpForm: FC<ISignUpFormProps> = ({
           inputLabel="Confirm password"
           label="confirm"
           register={register}
+          required={true}
           type="password"
           placeholder="Confirm your password"
           errors={errors}

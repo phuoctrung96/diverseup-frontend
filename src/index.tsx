@@ -11,13 +11,13 @@ import { BlogContextContainer } from 'contexts/BlogContext';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <BrowserRouter>
-    <GlobalModal>
-      <DynamicBreadcrumb>
+    <DynamicBreadcrumb>
+      <GlobalModal>
         <BlogContextContainer>
           <App />
         </BlogContextContainer>
-      </DynamicBreadcrumb>
-    </GlobalModal>
+      </GlobalModal>
+    </DynamicBreadcrumb>
   </BrowserRouter>
 );
 
