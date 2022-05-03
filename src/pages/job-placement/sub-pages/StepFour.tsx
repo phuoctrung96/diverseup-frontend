@@ -23,10 +23,6 @@ export const JPStepFour: FC = () => {
 
   const handleSubmitForm = () => {
     submitJobPlacement(jobPlacementForm).then((res: any) => {
-      // const filterStep = steps.find((item) => item.id === 4);
-      // handleClickStep(filterStep, () => {
-      //   showModal(MODAL_TYPES.JOB_PLACEMENT_FINISH_MODAL);
-      // });
       showModal(MODAL_TYPES.JOB_PLACEMENT_FINISH_MODAL);
     });
   };
