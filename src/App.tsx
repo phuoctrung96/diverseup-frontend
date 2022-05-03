@@ -23,7 +23,7 @@ function App() {
 
   const location = useLocation();
   const breadcrumbs = useBreadcrumbs(ROUTES);
-  const { bannerImage, setBlogPageBannerImage } = useBlogContext();
+  const { bannerImage } = useBlogContext();
 
   useEffect(() => {
     const title =
