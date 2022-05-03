@@ -1,6 +1,7 @@
 import { getUserApi, loginApi } from 'api/user';
 import Button from 'components/shared/button/Button';
 import Input from 'components/shared/form-controls/input/Input';
+import { useGlobalJobPlacementContext } from 'contexts/GlobalJobPlacementContext';
 import { useGlobalModalContext } from 'contexts/GlobalModalContext';
 import React, { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -34,6 +35,7 @@ export const SignInForm: FC<ISignInForm> = ({
   } = useForm<IForm>();
   const { hideModal } = useGlobalModalContext();
   const [isDisabled, setIsDisabled] = useState(false);
+  const { setIsLogin } = useGlobalJobPlacementContext();
 
   const onLogin: SubmitHandler<IForm> = async ({ password, email }) => {
     setIsDisabled(true);
@@ -47,6 +49,7 @@ export const SignInForm: FC<ISignInForm> = ({
       AuthHelpers.storeUserInfo(user);
       reset();
       hideModal();
+      setIsLogin(true);
       onSignInClick?.();
     } catch (error: any) {
       setError('password', {

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import styles from './App.module.scss';
-import Header from './components/common/header/Header';
-import Footer from './components/common/footer/Footer';
-import { useLocation, useRoutes } from 'react-router-dom';
 import { ROUTE_BLOG, ROUTE_COMPANY_RATING, ROUTE_EMPLOYER, TITLE_MAP } from 'app-constants';
 import Breadcrumbs from 'components/common/breadcrumbs/Breadcrumbs';
-import { ROUTES } from 'routes';
-import useBreadcrumbs from 'use-react-router-breadcrumbs';
-import ScrollToTop from 'ScrollToTop';
-import { getTitle } from 'utils/Title';
 import { useBlogContext } from 'contexts/BlogContext';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useRoutes } from 'react-router-dom';
+import { ROUTES } from 'routes';
+import ScrollToTop from 'ScrollToTop';
+import useBreadcrumbs from 'use-react-router-breadcrumbs';
+import { getTitle } from 'utils/Title';
+import styles from './App.module.scss';
+import Footer from './components/common/footer/Footer';
+import Header from './components/common/header/Header';
 
 function AppRoutes() {
   return useRoutes(ROUTES);

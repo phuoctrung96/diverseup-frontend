@@ -2,7 +2,7 @@ import { submitJobPlacement } from 'api/job-placement';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
 import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useGlobalJobPlacementContext } from 'contexts/GlobalJobPlacementContext';
 
@@ -10,8 +10,9 @@ export const JPStepFour: FC = () => {
   const { register } = useForm<any>();
   const { showModal } = useGlobalModalContext();
   const {
-    store: { jobPlacementForm },
+    store: { jobPlacementForm, steps },
     setJobPlacementForm,
+    handleClickStep,
   } = useGlobalJobPlacementContext();
 
   const handleOnClickCheckBox = (type, value) => {
@@ -25,6 +26,11 @@ export const JPStepFour: FC = () => {
       showModal(MODAL_TYPES.JOB_PLACEMENT_FINISH_MODAL);
     });
   };
+
+  useEffect(() => {
+    const filterStep = steps.find((item) => item.id === 2);
+    handleClickStep(filterStep);
+  }, []);
 
   return (
     <div className="ls-multi-form">

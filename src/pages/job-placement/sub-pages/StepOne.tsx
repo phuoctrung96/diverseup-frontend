@@ -1,7 +1,7 @@
 import { ROUTE_JOB_PLACEMENT } from 'app-constants';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form-controls/checkbox/Checkbox';
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalJobPlacementContext } from '../../../contexts/GlobalJobPlacementContext';
@@ -101,11 +101,13 @@ export const JPStepOne: FC = () => {
   const handleClickNext = () => {
     if (disabledButton) return;
 
-    const filterStep = steps.find((item) => item.id === 1);
-    handleClickStep(filterStep, () => {
-      navigate(`/${ROUTE_JOB_PLACEMENT}/step2`);
-    });
+    navigate(`/${ROUTE_JOB_PLACEMENT}/step2`);
   };
+
+  useEffect(() => {
+    const filterStep = steps.find((item) => item.id === 0);
+    handleClickStep(filterStep);
+  }, []);
 
   return (
     <div className="ls-multi-form">

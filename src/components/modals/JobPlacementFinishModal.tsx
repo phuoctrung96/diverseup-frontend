@@ -1,4 +1,5 @@
 import ModalWindow from 'components/shared/modal-window/ModalWindow';
+import { useGlobalJobPlacementContext } from 'contexts/GlobalJobPlacementContext';
 import { useGlobalModalContext } from 'contexts/GlobalModalContext';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ import AuthHelper from '../../utils/AuthHelpers';
 export const JobPlacementFinishModal: FC = () => {
   const navigate = useNavigate();
   const { hideModal } = useGlobalModalContext();
+  const { resetStep } = useGlobalJobPlacementContext();
   const userInfo = AuthHelper.getUserInfo();
 
   return (
@@ -15,6 +17,7 @@ export const JobPlacementFinishModal: FC = () => {
       setVisible={() => {
         hideModal();
         navigate('/');
+        resetStep();
       }}
     >
       <div>

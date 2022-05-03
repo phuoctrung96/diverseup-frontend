@@ -7,16 +7,19 @@ import reportWebVitals from './reportWebVitals';
 import { GlobalModal } from 'contexts/GlobalModalContext';
 import { DynamicBreadcrumb } from 'contexts/DynamicBreadcrumbContext';
 import { BlogContextContainer } from 'contexts/BlogContext';
+import { GlobalJobPlacement } from 'contexts/GlobalJobPlacementContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <BrowserRouter>
     <DynamicBreadcrumb>
-      <GlobalModal>
-        <BlogContextContainer>
-          <App />
-        </BlogContextContainer>
-      </GlobalModal>
+      <GlobalJobPlacement>
+        <GlobalModal>
+          <BlogContextContainer>
+            <App />
+          </BlogContextContainer>
+        </GlobalModal>
+      </GlobalJobPlacement>
     </DynamicBreadcrumb>
   </BrowserRouter>
 );
