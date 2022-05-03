@@ -1,15 +1,14 @@
-import { logoutApi } from 'api/user';
-import { NAV_LINKS, ROUTE_ROOT } from 'app-constants';
+import React, { FC, useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import SearchForm from 'components/shared/forms/search-form/SearchForm';
 import AppLogo from 'components/shared/logo/Logo';
 import { useGlobalJobPlacementContext } from 'contexts/GlobalJobPlacementContext';
 import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
-import { INavLink } from 'interfaces';
-import React, { FC, useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
 import AuthHelpers from 'utils/AuthHelpers';
+import { logoutApi } from 'api/user';
+import { NAV_LINKS, ROUTE_ROOT } from 'app-constants';
+import { INavLink } from 'interfaces';
 import styles from './Header.module.scss';
-
 interface IHeaderProps {
   showSearch: boolean;
 }
