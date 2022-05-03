@@ -1,13 +1,12 @@
-import React, { FC, useMemo, useState } from 'react';
-import JobTrend from 'components/shared/job-trend/JobTrend';
-import Button from 'components/shared/button/Button';
-import PageTitle from 'components/common/page-title/PageTitle';
-import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
-import InfoCardTitle from 'components/shared/page-info-card/components/info-card-title/InfoCardTitle';
-import { SECOND_JOB_PLACEMENT_STEP } from 'app-constants/job-placement-steps';
-import { useNavigate } from 'react-router-dom';
-import AuthHelper from '../../../utils/AuthHelpers';
 import { ROUTE_JOB_PLACEMENT } from 'app-constants';
+import { SECOND_JOB_PLACEMENT_STEP } from 'app-constants/job-placement-steps';
+import PageTitle from 'components/common/page-title/PageTitle';
+import Button from 'components/shared/button/Button';
+import JobTrend from 'components/shared/job-trend/JobTrend';
+import InfoCardTitle from 'components/shared/page-info-card/components/info-card-title/InfoCardTitle';
+import PageInfoCard from 'components/shared/page-info-card/PageInfoCard';
+import React, { FC, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGlobalJobPlacementContext } from '../../../contexts/GlobalJobPlacementContext';
 
 const KEY_STEP_2 = {
@@ -24,7 +23,6 @@ export const JPStepTwo: FC = () => {
   } = useGlobalJobPlacementContext();
 
   const navigate = useNavigate();
-  const accessToken = AuthHelper.getAccessToken();
 
   const disabledButton = useMemo(() => {
     return (
@@ -92,19 +90,17 @@ export const JPStepTwo: FC = () => {
   };
 
   const handleClickNext = () => {
-    const numberStep = accessToken ? 3 : 2;
-    const filterStep = steps.find((item) => item.id === numberStep);
-    handleClickStep(filterStep, () => {
-      navigate(accessToken ? `/${ROUTE_JOB_PLACEMENT}/step4` : `/${ROUTE_JOB_PLACEMENT}/step3`);
-    });
+    navigate(`/${ROUTE_JOB_PLACEMENT}/step3`);
   };
 
   const handleClickBack = () => {
-    const filterStep = steps.find((item) => item.id === 0);
-    handleClickStep(filterStep, () => {
-      navigate(`/${ROUTE_JOB_PLACEMENT}`);
-    });
+    navigate(`/${ROUTE_JOB_PLACEMENT}`);
   };
+
+  useEffect(() => {
+    const filterStep = steps.find((item) => item.id === 1);
+    handleClickStep(filterStep);
+  }, []);
 
   return (
     <PageInfoCard classList={['center']}>

@@ -10,10 +10,19 @@ interface IStepModel {
   isActivated: boolean;
 }
 
+const INITIAL_STEPS = [
+  { id: 0, name: 'Step 1', route: `/${ROUTE_JOB_PLACEMENT}`, isActivated: true },
+  { id: 1, name: 'Step 2', route: `/${ROUTE_JOB_PLACEMENT}/step2`, isActivated: false },
+  { id: 2, name: 'Step 3', route: `/${ROUTE_JOB_PLACEMENT}/step3`, isActivated: false },
+  { id: 3, name: 'Step 4', route: `/${ROUTE_JOB_PLACEMENT}/step4`, isActivated: false },
+];
+
 type GlobalJobPlacementContext = {
   setJobPlacementForm: (body: IJobPlacementBody, resolve?: () => void) => void;
   setSteps: (body: IStepModel[], resolve?: () => void) => void;
   handleClickStep: (step: IStepModel, resolve?: () => void) => void;
+  resetStep: (resolve?: () => void) => void;
+  setIsLogin: (body: boolean, resolve?: () => void) => void;
   store: any;
 };
 
@@ -22,7 +31,10 @@ const initialState: GlobalJobPlacementContext = {
   setJobPlacementForm: () => {},
   setSteps: () => {},
   handleClickStep: () => {},
+  resetStep: () => {},
+  setIsLogin: () => {},
   store: {
+    isLogin: false,
     jobPlacementForm: {
       selected_job_opportunity_type: [],
       selected_work_flexibility: [],
@@ -70,6 +82,41 @@ export const GlobalJobPlacement: FC<{ children: ReactNode }> = ({ children }) =>
     resolve?.();
   };
 
+  const resetStep = (resolve?: () => void) => {
+    const newStore = {
+      isLogin: false,
+      jobPlacementForm: {
+        selected_job_opportunity_type: [],
+        selected_work_flexibility: [],
+        selected_commute_options: [],
+        selected_travel_options: [],
+        selected_choosing_employer_importance_options: [],
+        selected_what_motivates_best_job_options: [],
+        selected_deal_breaker_options: [],
+        notification_new_companies_are_rated: false,
+        notification_latest_women_news: false,
+        notification_receive_job_alerts: false,
+      },
+      steps: [
+        { id: 0, name: 'Step 1', route: `/${ROUTE_JOB_PLACEMENT}`, isActivated: true },
+        { id: 1, name: 'Step 2', route: `/${ROUTE_JOB_PLACEMENT}/step2`, isActivated: false },
+        { id: 2, name: 'Step 3', route: `/${ROUTE_JOB_PLACEMENT}/step3`, isActivated: false },
+      ],
+    };
+
+    if (!accessToken) {
+      newStore.steps.push({
+        id: 3,
+        name: 'Step 4',
+        route: `/${ROUTE_JOB_PLACEMENT}/step4`,
+        isActivated: false,
+      });
+    }
+    setStore(newStore);
+
+    resolve?.();
+  };
+
   const handleClickStep = (step: IStepModel, resolve?: () => void) => {
     const newStep = store.steps.map((item: IStepModel) => {
       item.isActivated = step.id >= item.id;
@@ -80,17 +127,27 @@ export const GlobalJobPlacement: FC<{ children: ReactNode }> = ({ children }) =>
     resolve?.();
   };
 
+  const setIsLogin = (body: boolean, resolve?: () => void) => {
+    setStore({
+      ...store,
+      isLogin: body,
+    });
+    resolve?.();
+  };
+
   useEffect(() => {
-    if (accessToken) {
-      const newSteps = store.steps.filter((item) => {
-        if (item.name === 'Step 3') return null;
-        if (item.name === 'Step 4') item.name = 'Step 3';
-        if (item.name === 'Step 5') item.name = 'Step 4';
-        return item;
-      });
+    if (accessToken || store.isLogin) {
+      const newSteps = store.steps.filter((item) => item.id !== 3);
       setSteps(newSteps);
+    } else {
+      setSteps([
+        { id: 0, name: 'Step 1', route: `/${ROUTE_JOB_PLACEMENT}`, isActivated: true },
+        { id: 1, name: 'Step 2', route: `/${ROUTE_JOB_PLACEMENT}/step2`, isActivated: false },
+        { id: 2, name: 'Step 3', route: `/${ROUTE_JOB_PLACEMENT}/step3`, isActivated: false },
+        { id: 3, name: 'Step 4', route: `/${ROUTE_JOB_PLACEMENT}/step4`, isActivated: false },
+      ]);
     }
-  }, [accessToken]);
+  }, [accessToken, store.isLogin]);
 
   return (
     <GlobalJobPlacementContext.Provider
@@ -99,6 +156,8 @@ export const GlobalJobPlacement: FC<{ children: ReactNode }> = ({ children }) =>
         setJobPlacementForm,
         setSteps,
         handleClickStep,
+        resetStep,
+        setIsLogin,
       }}
     >
       {children}

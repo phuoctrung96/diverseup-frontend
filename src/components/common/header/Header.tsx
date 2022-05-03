@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import styles from './Header.module.scss';
 import { Link, NavLink } from 'react-router-dom';
-import { NAV_LINKS, ROUTE_ROOT } from 'app-constants';
-import { INavLink } from 'interfaces';
-import AppLogo from 'components/shared/logo/Logo';
 import SearchForm from 'components/shared/forms/search-form/SearchForm';
+import AppLogo from 'components/shared/logo/Logo';
+import { useGlobalJobPlacementContext } from 'contexts/GlobalJobPlacementContext';
 import { MODAL_TYPES, useGlobalModalContext } from 'contexts/GlobalModalContext';
 import AuthHelpers from 'utils/AuthHelpers';
 import { logoutApi } from 'api/user';
-
+import { NAV_LINKS, ROUTE_ROOT } from 'app-constants';
+import { INavLink } from 'interfaces';
+import styles from './Header.module.scss';
 interface IHeaderProps {
   showSearch: boolean;
 }
@@ -17,6 +17,7 @@ export const Header: FC<IHeaderProps> = ({ showSearch }) => {
   const { showModal, store } = useGlobalModalContext();
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { setIsLogin } = useGlobalJobPlacementContext();
 
   useEffect(() => {
     if (store && AuthHelpers.getUserInfo()) {
@@ -37,6 +38,7 @@ export const Header: FC<IHeaderProps> = ({ showSearch }) => {
       .then(() => {
         AuthHelpers.clearStorage();
         setIsLoggedIn(false);
+        setIsLogin(false);
       })
       .catch((error) => {
         if (error.status === 401) {
