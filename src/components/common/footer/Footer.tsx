@@ -18,9 +18,9 @@ export const Footer: FC = () => {
   const { hideModal, showModal } = useGlobalModalContext();
 
   const socialLinks = [
-    { icon: 'facebook', link: '' },
-    { icon: 'linkedin', link: '' },
-    { icon: 'twitter', link: '' },
+    { icon: 'facebook', link: 'https://www.facebook.com/DiverseUp/' },
+    { icon: 'linkedin', link: 'https://www.linkedin.com/company/diverseup/about/' },
+    { icon: 'twitter', link: 'https://twitter.com/diverseup' },
   ];
 
   const onContactsClick = () => {
