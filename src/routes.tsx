@@ -1,13 +1,16 @@
 import React from 'react';
 
 import {
-  ROUTE_ABOUT,
+  ROUTE_ABOUT_US,
   ROUTE_ADD_RATING,
   ROUTE_BLOG,
   ROUTE_COMPANY_RATING,
   ROUTE_EMPLOYER,
   ROUTE_JOB_PLACEMENT,
   ROUTE_ROOT,
+  ROUTE_TERMS_OF_USE,
+  ROUTE_PRIVACY_POLICY,
+  ROUTE_POSTING_GUIDELINES,
 } from 'app-constants';
 import HomePage from 'pages/home/Home';
 import { BreadcrumbsRoute } from 'use-react-router-breadcrumbs';
@@ -30,8 +33,11 @@ import JPStepThree from 'pages/job-placement/sub-pages/StepThree';
 import JPStepFour from 'pages/job-placement/sub-pages/StepFour';
 import JPStepFive from 'pages/job-placement/sub-pages/StepFive';
 import AddRating from 'pages/company-rating/sub-pages/company-info/sub-pages/add-rating/AddRating';
-import BlogInfoPage from './pages/blog/sub-pages/blog-info/BlogInfoPage';
-import BlogList from './pages/blog/sub-pages/blog-list/BlogList';
+import BlogInfoPage from 'pages/blog/sub-pages/blog-info/BlogInfoPage';
+import BlogList from 'pages/blog/sub-pages/blog-list/BlogList';
+import TermsOfUse from 'pages/terms-of-use/TermsOfUse';
+import PrivacyPolicy from 'pages/privacy-policy/PrivacyPolicy';
+import PostingGuidelines from 'pages/posting-guidelines/PostingGuidelines';
 import { useDynamicBreadcrumbContext } from 'contexts/DynamicBreadcrumbContext';
 import NewPasswordModal from './components/modals/NewPasswordModal';
 
@@ -109,7 +115,14 @@ export const ROUTES: BreadcrumbsRoute[] = [
     ],
   },
   { path: ROUTE_EMPLOYER, element: <Employer />, breadcrumb: null },
-  { path: ROUTE_ABOUT, element: <AboutUs />, breadcrumb: 'About us' },
+  { path: ROUTE_ABOUT_US, element: <AboutUs />, breadcrumb: 'About Us' },
+  { path: ROUTE_TERMS_OF_USE, element: <TermsOfUse />, breadcrumb: 'Terms Of Use' },
+  { path: ROUTE_PRIVACY_POLICY, element: <PrivacyPolicy />, breadcrumb: 'Privacy Policy' },
+  {
+    path: ROUTE_POSTING_GUIDELINES,
+    element: <PostingGuidelines />,
+    breadcrumb: 'Posting Guidelines',
+  },
 ];
 
 export default ROUTES;

@@ -2,12 +2,14 @@ import React, { FC, useState } from 'react';
 import styles from './Footer.module.scss';
 import AppLogo from 'components/shared/logo/Logo';
 import {
-  ROUTE_ABOUT,
+  ROUTE_ABOUT_US,
   ROUTE_BLOG,
   ROUTE_COMPANY_RATING,
   ROUTE_EMPLOYER,
   ROUTE_JOB_PLACEMENT,
   ROUTE_TERMS_OF_USE,
+  ROUTE_PRIVACY_POLICY,
+  ROUTE_POSTING_GUIDELINES,
 } from 'app-constants';
 import { Link } from 'react-router-dom';
 import { FooterNavLink } from 'interfaces';
@@ -34,11 +36,12 @@ export const Footer: FC = () => {
     { name: 'Employer', link: ROUTE_EMPLOYER },
     {
       name: 'About',
-      link: ROUTE_ABOUT,
+      link: ROUTE_ABOUT_US,
       subLinks: [
-        { name: 'About us', link: `/${ROUTE_ABOUT}` },
-        { name: 'Privacy Policy', link: '' },
+        { name: 'About us', link: `/${ROUTE_ABOUT_US}` },
+        { name: 'Privacy Policy', link: ROUTE_PRIVACY_POLICY },
         { name: 'Terms of Use', link: ROUTE_TERMS_OF_USE },
+        { name: 'Posting Guidelines', link: ROUTE_POSTING_GUIDELINES },
       ],
     },
     {

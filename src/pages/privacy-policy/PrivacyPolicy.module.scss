@@ -1,0 +1,67 @@
+@import 'src/styles/utilities/mixins';
+
+.sectionContent {
+  padding: 45px;
+  flex: 1;
+  background-color: var(--color-primary-white);
+  filter: drop-shadow(0px 2px 40px rgba(0, 0, 0, 0.08));
+
+  @include tablet-min() {
+    padding: 30px 20px;
+  }
+  .alphaOrderedList {
+    list-style: upper-alpha;
+    padding-left: 50px;
+    li.listTitle {
+      &::marker {
+        font-size: 1.13rem;
+        line-height: 40px;
+        font-weight: bold;
+      }
+      h3 {
+        padding-left: 10px;
+      }
+    }
+
+    @include tablet-min() {
+      padding-left: 30px;
+    }
+  }
+  .decimalOrderedList {
+    list-style-type: decimal;
+    padding-left: 25px;
+    li {
+      p {
+        padding-left: 10px;
+        a {
+          text-decoration: underline;
+        }
+      }
+    }
+    @include tablet-min() {
+      padding-left: 10px;
+    }
+  }
+  .defaultList {
+    list-style-type: initial;
+    padding-left: 25px;
+  }
+
+  .title {
+    font-size: 1.13rem;
+    line-height: 40px;
+  }
+
+  .description {
+    line-height: 24px;
+    padding: 15px 0;
+    font-weight: 400;
+
+    @include tablet-min() {
+      padding: 10px 0 0 0;
+    }
+  }
+  .emailLink {
+    text-decoration: underline;
+  }
+}
